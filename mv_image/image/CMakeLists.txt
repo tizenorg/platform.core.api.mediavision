@@ -1,0 +1,33 @@
+project(${MV_IMAGE_LIB_NAME})
+cmake_minimum_required(VERSION 2.6)
+
+set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_DEBUG _DEBUG)
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${LIB_INSTALL_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${LIB_INSTALL_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+include_directories("${INC_DIR}")
+include_directories("${PROJECT_SOURCE_DIR}/include")
+include_directories("${PROJECT_SOURCE_DIR}/src")
+
+file(GLOB MV_IMAGE_INC_LIST "${PROJECT_SOURCE_DIR}/include/*.h")
+file(GLOB MV_IMAGE_SRC_LIST "${PROJECT_SOURCE_DIR}/src/*.cpp")
+
+find_package(OpenCV REQUIRED core highgui imgproc objdetect features2d calib3d)
+if(NOT OpenCV_FOUND)
+    message(SEND_ERROR "Failed to find OpenCV")
+    return()
+else()
+    include_directories(${OpenCV_INCLUDE_DIRS})
+endif()
+
+if(FORCED_STATIC_BUILD)
+    add_library(${PROJECT_NAME} STATIC ${MV_IMAGE_INC_LIST} ${MV_IMAGE_SRC_LIST})
+else()
+    add_library(${PROJECT_NAME} SHARED ${MV_IMAGE_INC_LIST} ${MV_IMAGE_SRC_LIST})
+endif()
+
+target_link_libraries(${PROJECT_NAME} ${MV_COMMON_LIB_NAME} ${OpenCV_LIBS})
+
+INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ${LIB_INSTALL_DIR})

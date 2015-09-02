@@ -1,0 +1,161 @@
+CONTENT
+
+1. GENERAL DESCRIPTION OF THE MEDIA VISION PACKAGE
+2. USAGE OF PORTING LAYER FOR CHANGING MEDIA VISION ENGINE MODULES
+3. OPEN PORT REQUIRED PACKAGES
+4. TEST SUITE
+
+
+
+
+1. GENERAL DESCRIPTION OF THE MEDIA VISION PACKAGE
+
+Media Vision package includes following modules: Common, Media Vision Barcode,
+Media Vision Face and Media Vision Image. Common module provides two handles
+(mv_source_h and mv_engine_config_h) and related fuctionality. It used by
+barcode detector and generator submodules. mv_source_h is used for wrapping raw
+image data buffers. mv_engine_config_h is optional. It can be used for fine
+tuning of internal libraries which are used by API. mv_engine_config_h handle
+usually can be used by barcode detector and/or generator modules (these modules
+provide mv_barcode_detector and mv_barcode_generator internal libraries) in the
+case when Native API doesn't cover all features supported by internal libraries.
+Using NULL instead of real mv_engine_h handle as functions parameter has to be
+taken into account. In most cases API user prefer to ignore detailed
+configuration of the modules.
+
+Barcode detector submodule API provides tools to analyze the image buffers using
+mv_barcode_detect() function. This analysis strives to detect barcodes at the
+image, determine the type and extract the message. Results can be processed
+using mv_barcode_detected_cb callback.
+
+Barcode generator submodule API provides tools to generate image buffer (or
+image file) with barcode. Barcodes generation can be configured by type,
+message, size, encoding mode, ECC (error correction level), version (three last
+setting are allowed only for QR Codes). One of two functions can be used:
+mv_barcode_generate_source() to generate the mv_source_h handle and
+mv_barcode_generate_image() to generate the file with barcode image.
+
+Media Vision Face module aggregates functionality for detecting, recognition and
+tracking the faces on images. More detailed description can be found in doxygen
+documentation.
+
+Media Vision Image module aggregates functionality for recognition and
+tracking the Flat Image objects. More detailed description can be found in
+doxygen documentation.
+
+
+2. USAGE OF PORTING LAYER FOR CHANGING MEDIA VISION ENGINE MODULES
+
+By default open source engine libraries are used to provide modules
+functionality. But it is possible to substitute them by licensed or other custom
+libraries. To enable building of custom library for the Media Vision package,
+follow these steps:
+
+a. Find CMakeLists.txt in the root of the package directory and change
+   MEDIA_VISION_BARCODE_DETECTOR_LICENSE_PORT (for enabling build of a custom
+   barcode detector library) and/or
+   MEDIA_VISION_BARCODE_GENERATOR_LICENSE_PORT (for enabling build of a custom
+   barcode generator library) and/or
+   MEDIA_VISION_FACE_LICENSE_PORT (for enabling build of a custom Media Vision
+   Face library) and/or MEDIA_VISION_IMAGE_LICENSE_PORT (for enabling build of
+   a custom Media Vision Image library) options to ON. Example:
+
+   # only barcode detector module will be customized
+   option(MEDIA_VISION_BARCODE_DETECTOR_LICENSE_PORT "..." ON)
+   # barcode generator module will be default
+   option(MEDIA_VISION_BARCODE_GENERATOR_LICENSE_PORT "..." OFF)
+   # face module will be default
+   option(MEDIA_VISION_FACE_LICENSE_PORT "..." OFF)
+   # image module will be default
+   option(MEDIA_VISION_IMAGE_LICENSE_PORT "..." OFF)
+
+b. Options change will cause CMake to build from different subdirectories of
+   mv_barcode/mv_face/mv_image directories. mv_barcode/barcode_detector,
+   mv_barcode/barcode_generator, mv_face/face, mv_image/image subdirectories are
+   used by default. mv_barcode/barcode_detector_lic,
+   mv_barcode/mv_barcode_generator_lic, mv_face/face_lic, mv_image/image_lic
+   subdirectories will be used during build if the corresponding option in ON.
+   *_lic subdirectories already include base structure of the porting layer
+   projects, and files will be used by main capi-media-vision library. Use this
+   files to call functions from custom libraries. For example, you can change
+   mv_barcode_detect_lic.c file in such a way:
+
+   #include "mv_barcode_detect_lic.h"
+   #include "custom_library_header.h"
+
+   int mv_barcode_detect_lic(
+       mv_source_h source,
+       mv_engine_config_h engine_cfg,
+       mv_rectangle_s roi,
+       mv_barcode_on_detected_cb detect_cb,
+       void *user_data)
+   {
+       mv_quadrangle_s *locations = NULL;
+       const char *messages = NULL;
+       mv_barcode_type_e *types = NULL;
+
+       // Here the call of the custom barcode detection function from
+       // custom_library_header.h:
+       int barcodes_number = custom_library_function(
+                                 source, roi, &locations, &messages, &types);
+
+       if (barcodes_number > 0)
+       {
+           detect_cb(
+               source, engine_cfg, locations, messages, types, barcodes_number,
+               user_data);
+           delete[] locations;
+           delete[] messages;
+           delete[] types;
+       }
+
+       return TIZEN_ERROR_NONE;
+   }
+
+c. Change the packaging/capi-media-vision.spec to support any packages required
+   to be found into the system for success build of the custom libraries.
+   You also can remove requirements on open packages that are required by
+   disabled barcode generator/detector, face, image ports. See list of the
+   dependencies in the section 3 of this README file.
+
+d. Modify mv_barcode/<name_of_the_(sub)module>_lic/CMakeLists.txt file for
+   linking required libraries and/or including additional headers. Don't modify
+   the project name or reset ${MV_BARCODE_DETECTOR_LIB_NAME},
+   ${MV_BARCODE_GENERATOR_LIB_NAME}, ${MV_FACE_LIB_NAME}, ${MV_IMAGE_LIB_NAME}
+   variables, because porting layer use these ones during the build. If it is
+   required to change projects/libraries names, best solution is to change
+   MV_BARCODE_DETECTOR_LIB_NAME, MV_BARCODE_GENERATOR_LIB_NAME,
+   MV_FACE_LIB_NAME, MV_IMAGE_LIB_NAME options in the CMakeLists.txt file that
+   is located in the root of the package sources.
+
+
+
+3. OPEN PORT REQUIRED PACKAGES
+
+Building default barcode detector and generator libraries requires following
+dependencies:
+
+Barcode detector: zbar
+Barcode generator: zint
+Media Vision Face: opencv_core, opencv_objdetect, opencv_contrib
+Media Vision Image: opencv_core, opencv_highgui, opencv_imgproc,
+                    opencv_objdetect, opencv_features2d, opencv_nonfree,
+                    opencv_calib3d
+
+You can remove BuildRequires sections for these libraries from
+packaging/capi-media-vision.spec file if corresponding module/modules is/are
+disabled with options mentioned in 2.a.
+
+
+
+3. TEST SUITE
+
+capi-media-vision package includes test suites which allow to check API
+functionality. The test suite applications provide console interface that allows
+to select options for barcode generation and detection, face detection,
+recognition and tracking, image recognition and tracking. Source codes of the
+testsuites are located in corresponding subdirectories of the test directory in
+the capi-media-vision project root:
+test/testsuites/barcode
+test/testsuites/face
+test/testsuites/image

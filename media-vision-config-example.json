@@ -1,0 +1,21 @@
+{
+    "attributes":
+    [
+        {   "name"  : "sample_double_attribute",
+            "type"  : "double",
+            "value" : 0.82,
+        },
+        {   "name"  : "sample_integer_attribute",
+            "type"  : "integer",
+            "value" : 50,
+        },
+        {   "name"  : "sample_boolean_attribute",
+            "type"  : "boolean",
+            "value" : true,
+        },
+        {   "name"  : "sample_string attribute",
+            "type"  : "string",
+            "value" : "test string",
+        },
+    ]
+}
