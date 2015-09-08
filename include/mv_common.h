@@ -439,8 +439,8 @@ int mv_engine_config_set_double_attribute(
  * @see mv_engine_config_set_double_attribute()
  * @see mv_engine_config_set_bool_attribute()
  * @see mv_engine_config_set_string_attribute()
- * @see mv_barcode_detect_attr_mode_e
  * @see mv_barcode_detect_attr_target_e
+ * @see mv_barcode_generate_attr_text_e
  */
 int mv_engine_config_set_int_attribute(
         mv_engine_config_h engine_cfg,
@@ -547,8 +547,8 @@ int mv_engine_config_get_double_attribute(
  * @see mv_engine_config_get_double_attribute()
  * @see mv_engine_config_get_bool_attribute()
  * @see mv_engine_config_get_string_attribute()
- * @see mv_barcode_detect_attr_mode_e
  * @see mv_barcode_detect_attr_target_e
+ * @see mv_barcode_generate_attr_text_e
  */
 int mv_engine_config_get_int_attribute(
         mv_engine_config_h engine_cfg,

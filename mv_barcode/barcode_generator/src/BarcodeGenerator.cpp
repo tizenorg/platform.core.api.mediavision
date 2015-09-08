@@ -74,6 +74,7 @@ int createBarcode(
         BarcodeQREncodingMode encodingMode,
         BarcodeQRErrorCorrectionLevel correctionLevel,
         int qrVersion,
+        int showText,
         zint_symbol *symbol)
 {
     // set input values
@@ -82,13 +83,19 @@ int createBarcode(
     symbol->option_1 = correctionLevel;
     symbol->option_2 = qrVersion;
     symbol->scale = 1;
+    symbol->show_hrt = showText;
 
     // set default values
-    std::strcpy(symbol->fgcolour, "000000");
-    std::strcpy(symbol->bgcolour, "ffffff");
+    std::strncpy(symbol->fgcolour, "000000", 10);
+    std::strncpy(symbol->bgcolour, "ffffff", 10);
     symbol->border_width = 1;
-    symbol->whitespace_width = 0;
     symbol->height = 50;
+
+    if (type == BARCODE_QR) {
+        symbol->whitespace_width = 0;
+    } else {
+        symbol->whitespace_width = 10;
+    }
 
     // create barcode
     const int rotationAngle = 0;
@@ -195,9 +202,17 @@ int BarcodeGenerator::generateBarcodeToImage(
         BarcodeType type,
         BarcodeQREncodingMode encodingMode,
         BarcodeQRErrorCorrectionLevel correctionLevel,
-        int qrVersion)
+        int qrVersion,
+        int showText)
 {
     zint_symbol *symbol = ZBarcode_Create();
+
+    if(symbol == NULL)
+    {
+        LOGE("ZBarcode creation failed");
+
+        return BARCODE_ERROR_ENCODING_PROBLEM;
+    }
 
     int error = createBarcode(
                     message,
@@ -205,6 +220,7 @@ int BarcodeGenerator::generateBarcodeToImage(
                     encodingMode,
                     correctionLevel,
                     qrVersion,
+                    showText,
                     symbol);
 
     if (error != BARCODE_ERROR_NONE)
@@ -243,9 +259,17 @@ int BarcodeGenerator::generateBarcodeToBuffer(
         BarcodeType type,
         BarcodeQREncodingMode encodingMode,
         BarcodeQRErrorCorrectionLevel correctionLevel,
-        int qrVersion)
+        int qrVersion,
+        int showText)
 {
     zint_symbol *symbol = ZBarcode_Create();
+
+    if(symbol == NULL)
+    {
+        LOGE("ZBarcode creation failed");
+
+        return BARCODE_ERROR_ENCODING_PROBLEM;
+    }
 
     int error = createBarcode(
                     message,
@@ -253,6 +277,7 @@ int BarcodeGenerator::generateBarcodeToBuffer(
                     encodingMode,
                     correctionLevel,
                     qrVersion,
+                    showText,
                     symbol);
 
     if (error != BARCODE_ERROR_NONE)

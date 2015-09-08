@@ -89,6 +89,17 @@ enum BarcodeImageFormat
 };
 
 /**
+ * @brief The Barcode generation text option enumeration.
+ *
+ * @since_tizen 2.4
+ */
+enum BarcodeGenTextOpt
+{
+	BARCODE_GEN_TEXT_INVISIBLE,
+	BARCODE_GEN_TEXT_VISIBLE
+};
+
+/**
  * @brief The Barcode error enumeration.
  *
  * @since_tizen 2.4

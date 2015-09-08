@@ -36,10 +36,9 @@
             "type"  : "integer",
             "value" : -1,
         },
-        {
-            "name" : "MV_BARCODE_DETECT_ATTR_MODE",
-            "type" : "integer",
-            "value" : 1,
+        {    "name"  : "MV_BARCODE_GENERATE_ATTR_TEXT",
+             "type"  : "integer",
+             "value" : 0,
         },
         {
             "name" : "MV_BARCODE_DETECT_ATTR_TARGET",

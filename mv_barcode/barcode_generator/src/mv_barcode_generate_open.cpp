@@ -197,7 +197,7 @@ BarcodeImageFormat convertImageFormat(mv_barcode_image_format_e format)
 } /* anonymous namespace */
 
 int mv_barcode_generate_source_open(
-        mv_engine_config_h /*engine_cfg*/,
+        mv_engine_config_h engine_cfg,
         const char *message,
         mv_barcode_type_e type,
         mv_barcode_qr_mode_e qr_enc_mode,
@@ -231,6 +231,20 @@ int mv_barcode_generate_source_open(
     unsigned int imageHeight = 0u;
     unsigned int imageChannels = 0u;
 
+    int showText = 0;
+    error = mv_engine_config_get_int_attribute(engine_cfg, "MV_BARCODE_GENERATE_ATTR_TEXT", &showText);
+    if (error != MEDIA_VISION_ERROR_NONE)
+    {
+        LOGW("mv_engine_config_get_int_attribute failed");
+        return error;
+    }
+
+    if (showText == BARCODE_GEN_TEXT_VISIBLE && type == MV_BARCODE_QR)
+    {
+        LOGW("QR code generation with visible text is not supported");
+        return MEDIA_VISION_ERROR_INVALID_OPERATION;
+    }
+
     error = BarcodeGenerator::generateBarcodeToBuffer(
                     &imageBuffer,
                     &imageWidth,
@@ -240,7 +254,8 @@ int mv_barcode_generate_source_open(
                     convertBarcodeType(type),
                     convertEncodingMode(qr_enc_mode),
                     convertECC(qr_ecc),
-                    qr_version);
+                    qr_version,
+                    showText);
 
     if (error != BARCODE_ERROR_NONE)
     {
@@ -283,7 +298,7 @@ int mv_barcode_generate_source_open(
 
 
 int mv_barcode_generate_image_open(
-        mv_engine_config_h /*engine_cfg*/,
+        mv_engine_config_h engine_cfg,
         const char *message,
         int image_width,
         int image_height,
@@ -321,6 +336,20 @@ int mv_barcode_generate_image_open(
         }
     }
 
+    int showText = 0;
+    error = mv_engine_config_get_int_attribute(engine_cfg, "MV_BARCODE_GENERATE_ATTR_TEXT", &showText);
+    if (error != MEDIA_VISION_ERROR_NONE)
+    {
+        LOGW("mv_engine_config_get_int_attribute failed");
+        return error;
+    }
+
+    if (showText == BARCODE_GEN_TEXT_VISIBLE && type == MV_BARCODE_QR)
+    {
+        LOGW("QR code generation with visible text is not supported");
+        return MEDIA_VISION_ERROR_INVALID_OPERATION;
+    }
+
     error = BarcodeGenerator::generateBarcodeToImage(
                           std::string(image_path),
                           convertImageFormat(image_format),
@@ -330,7 +359,8 @@ int mv_barcode_generate_image_open(
                           convertBarcodeType(type),
                           convertEncodingMode(qr_enc_mode),
                           convertECC(qr_ecc),
-                          qr_version);
+                          qr_version,
+                          showText);
 
     if (error != BARCODE_ERROR_NONE)
     {

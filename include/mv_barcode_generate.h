@@ -35,6 +35,30 @@ extern "C" {
  */
 
 /**
+ * @brief Define MV_BARCODE_GENERATE_ATTR_TEXT to set text attribute
+          of the engine configuration
+ *
+ * @since_tizen 2.4
+ * @remarks This attribute is only available for 1D barcode generation
+ *
+ * @see mv_barcode_generate_attr_text_e
+ */
+#define MV_BARCODE_GENERATE_ATTR_TEXT "MV_BARCODE_GENERATE_ATTR_TEXT" /**< Text:
+                                                                    0-invisible,
+                                                                    1-visible */
+
+/**
+ * @brief Enumeration to text attribute
+ *
+ * @since_tizen 2.4
+ */
+typedef enum {
+    MV_BARCODE_GENERATE_ATTR_TEXT_INVISIBLE,   /**< Invisible */
+    MV_BARCODE_GENERATE_ATTR_TEXT_VISIBLE,     /**< Visible */
+} mv_barcode_generate_attr_text_e;
+
+
+/**
  * @brief Generates @ref mv_source_h with barcode image.
  * @details Pay attention that for EAN-8 and EAN-13 barcode types the barcode
  * type may be selected automatically and this selection depends on the input
@@ -42,6 +66,11 @@ extern "C" {
  * required to generate QR code with the input message length.
  *
  * @since_tizen 2.4
+ * @remarks If the text attribute of engine configuration is set to
+ *          MV_BARCODE_GENERATE_ATTR_TEXT_VISIBLE,
+ *          MEDIA_VISION_ERROR_INVALID_OPERATION will be return
+ *          when @a type is MV_BARCODE_QR
+ *
  * @param [in]  engine_cfg      The handle to the configuration of the engine
  * @param [in]  message         The message to be encoded in the barcode
  * @param [in]  type            Type of the barcode to be generated
@@ -62,6 +91,7 @@ extern "C" {
  * @retval #MEDIA_VISION_ERROR_NOT_SUPPORTED Not supported
  * @retval #MEDIA_VISION_ERROR_INVALID_DATA Invalid data
  * @retval #MEDIA_VISION_ERROR_INTERNAL Internal error
+ * @retval #MEDIA_VISION_ERROR_INVALID_OPERATION Invalid operation
  *
  * @pre Create an engine configuration handle by calling
  *      @ref mv_create_engine_config(), otherwise use NULL
@@ -85,6 +115,11 @@ int mv_barcode_generate_source(
  * required to generate QR code with the input message length.
  *
  * @since_tizen 2.4
+ * @remarks If the text attribute of engine configuration is set to
+ *          MV_BARCODE_GENERATE_ATTR_TEXT_VISIBLE,
+ *          MEDIA_VISION_ERROR_INVALID_OPERATION will be return
+ *          when @a type is MV_BARCODE_QR
+ *
  * @remarks The mediastorage privilege http://tizen.org/privilege/mediastorage is needed \n
             if @a image_path is relevant to media storage.\n
             The externalstorage privilege http://tizen.org/privilege/externalstorage is needed \n
@@ -113,6 +148,7 @@ int mv_barcode_generate_source(
  * @retval #MEDIA_VISION_ERROR_INVALID_DATA Invalid data
  * @retval #MEDIA_VISION_ERROR_INVALID_PATH Invalid path
  * @retval #MEDIA_VISION_ERROR_INTERNAL Internal error
+ * @retval #MEDIA_VISION_ERROR_INVALID_OPERATION Invalid operation
  *
  * @pre Create an engine configuration handle by calling
  *      @ref mv_create_engine_config(), otherwise use NULL

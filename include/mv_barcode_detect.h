@@ -35,18 +35,7 @@ extern "C" {
  */
 
 /**
- * @brief Define MV_BARCODE_DETECT_ATTR_MODE to set mode attribute of the engine
- *        configuration.
- *
- * @since_tizen 2.4
- *
- * @see mv_barcode_detect_attr_mode_e
- */
-#define MV_BARCODE_DETECT_ATTR_MODE   "MV_BARCODE_DETECT_ATTR_MODE"    /**< Mode: 0-image, 1-video*/
-
-/**
- * @brief Define MV_BARCODE_DETECT_ATTR_TARGET to set target attribute of the
- *        engine configuration.
+ * @brief Define MV_BARCODE_DETECT_ATTR_TARGET to set target attribute of the engine configuration
  *
  * @since_tizen 2.4
  *
@@ -55,27 +44,16 @@ extern "C" {
 #define MV_BARCODE_DETECT_ATTR_TARGET "MV_BARCODE_DETECT_ATTR_TARGET"  /**< Target: 0-all, 1-1D, 2-2D*/
 
 /**
- * @brief Enumeration to mode attribute.
+ * @brief Enumeration to target attribute
  *
  * @since_tizen 2.4
  */
-typedef enum
-{
-    MV_BARCODE_DETECT_ATTR_MODE_IMAGE,    /**< Still image */
-    MV_BARCODE_DETECT_ATTR_MODE_VIDEO     /**< Continuous video */
-} mv_barcode_detect_attr_mode_e;
-
-/**
- * @brief Enumeration to target attribute.
- *
- * @since_tizen 2.4
- */
-typedef enum
-{
-    MV_BARCODE_DETECT_ATTR_TARGET_ALL,          /**< 1D and 2D */
-    MV_BARCODE_DETECT_ATTR_TARGET_1D_BARCODE,   /**< 1D barcode only */
-    MV_BARCODE_DETECT_ATTR_TARGET_2D_BARCODE,   /**< 2D barcode only */
+typedef enum {
+	MV_BARCODE_DETECT_ATTR_TARGET_ALL,          /**< 1D and 2D */
+	MV_BARCODE_DETECT_ATTR_TARGET_1D_BARCODE,   /**< 1D barcode only */
+	MV_BARCODE_DETECT_ATTR_TARGET_2D_BARCODE,   /**< 2D barcode only */
 } mv_barcode_detect_attr_target_e;
+
 
 /**
  * @brief Called when barcode detection is completed.
