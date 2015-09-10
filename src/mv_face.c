@@ -120,7 +120,7 @@ int mv_face_detect(
         mv_face_detected_cb detected_cb,
         void *user_data)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(source);
     MEDIA_VISION_NULL_ARG_CHECK(detected_cb);
 
@@ -150,7 +150,7 @@ int mv_face_recognize(
         mv_face_recognized_cb recognized_cb,
         void *user_data)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(source);
     MEDIA_VISION_INSTANCE_CHECK(recognition_model);
     MEDIA_VISION_NULL_ARG_CHECK(recognized_cb);
@@ -198,7 +198,7 @@ int mv_face_track(
         bool do_learn,
         void *user_data)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(source);
     MEDIA_VISION_INSTANCE_CHECK(tracking_model);
     MEDIA_VISION_NULL_ARG_CHECK(tracked_cb);
@@ -240,7 +240,7 @@ int mv_face_eye_condition_recognize(
         mv_face_eye_condition_recognized_cb eye_condition_recognized_cb,
         void *user_data)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(source);
     MEDIA_VISION_NULL_ARG_CHECK(eye_condition_recognized_cb);
 
@@ -279,7 +279,7 @@ int mv_face_facial_expression_recognize(
         mv_face_facial_expression_recognized_cb expression_recognized_cb,
         void *user_data)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(source);
     MEDIA_VISION_NULL_ARG_CHECK(expression_recognized_cb);
 
@@ -319,7 +319,7 @@ int mv_face_facial_expression_recognize(
 int mv_face_recognition_model_create(
         mv_face_recognition_model_h *recognition_model)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_NULL_ARG_CHECK(recognition_model);
 
     MEDIA_VISION_FUNCTION_ENTER();
@@ -343,7 +343,7 @@ int mv_face_recognition_model_create(
 int mv_face_recognition_model_destroy(
         mv_face_recognition_model_h recognition_model)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(recognition_model);
 
     MEDIA_VISION_FUNCTION_ENTER();
@@ -368,7 +368,7 @@ int mv_face_recognition_model_clone(
         mv_face_recognition_model_h src,
         mv_face_recognition_model_h *dst)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(src);
     MEDIA_VISION_NULL_ARG_CHECK(dst);
 
@@ -394,7 +394,7 @@ int mv_face_recognition_model_save(
         const char *file_name,
         mv_face_recognition_model_h recognition_model)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(recognition_model);
 
     if (file_name == NULL)
@@ -429,7 +429,7 @@ int mv_face_recognition_model_load(
         const char *file_name,
         mv_face_recognition_model_h *recognition_model)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_NULL_ARG_CHECK(recognition_model);
 
     if (file_name == NULL)
@@ -466,7 +466,7 @@ int mv_face_recognition_model_add(
         const mv_rectangle_s *example_location,
         int face_label)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(source);
     MEDIA_VISION_INSTANCE_CHECK(recognition_model);
 
@@ -504,7 +504,7 @@ int mv_face_recognition_model_reset(
         mv_face_recognition_model_h recognition_model,
         int *face_label)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(recognition_model);
 
     MEDIA_VISION_FUNCTION_ENTER();
@@ -533,7 +533,7 @@ int mv_face_recognition_model_learn(
         mv_engine_config_h engine_cfg,
         mv_face_recognition_model_h recognition_model)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(recognition_model);
 
     MEDIA_VISION_FUNCTION_ENTER();
@@ -559,7 +559,7 @@ int mv_face_recognition_model_query_labels(
         int **labels,
         unsigned int *number_of_labels)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(recognition_model);
     MEDIA_VISION_NULL_ARG_CHECK(labels);
     MEDIA_VISION_NULL_ARG_CHECK(number_of_labels);
@@ -585,7 +585,7 @@ int mv_face_recognition_model_query_labels(
 int mv_face_tracking_model_create(
         mv_face_tracking_model_h *tracking_model)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_NULL_ARG_CHECK(tracking_model);
 
     MEDIA_VISION_FUNCTION_ENTER();
@@ -609,7 +609,7 @@ int mv_face_tracking_model_create(
 int mv_face_tracking_model_destroy(
         mv_face_tracking_model_h tracking_model)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(tracking_model);
 
     MEDIA_VISION_FUNCTION_ENTER();
@@ -636,7 +636,7 @@ int mv_face_tracking_model_prepare(
         mv_source_h source,
         mv_quadrangle_s *location)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(tracking_model);
     MEDIA_VISION_INSTANCE_CHECK(source);
 
@@ -669,7 +669,7 @@ int mv_face_tracking_model_clone(
         mv_face_tracking_model_h src,
         mv_face_tracking_model_h *dst)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(src);
     MEDIA_VISION_NULL_ARG_CHECK(dst);
 
@@ -695,7 +695,7 @@ int mv_face_tracking_model_save(
         const char *file_name,
         mv_face_tracking_model_h tracking_model)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(tracking_model);
 
     if (file_name == NULL)
@@ -730,7 +730,7 @@ int mv_face_tracking_model_load(
         const char *file_name,
         mv_face_tracking_model_h *tracking_model)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_face_check_system_info_feature_supported());
     MEDIA_VISION_NULL_ARG_CHECK(tracking_model);
 
     if (file_name == NULL)

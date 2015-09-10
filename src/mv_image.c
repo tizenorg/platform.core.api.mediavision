@@ -42,7 +42,7 @@ int mv_image_recognize(
         mv_image_recognized_cb recognized_cb,
         void *user_data)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(source);
     MEDIA_VISION_NULL_ARG_CHECK(image_objects);
     int object_num = 0;
@@ -79,7 +79,7 @@ int mv_image_track(
         mv_image_tracked_cb tracked_cb,
         void *user_data)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(source);
     MEDIA_VISION_INSTANCE_CHECK(image_tracking_model);
     MEDIA_VISION_NULL_ARG_CHECK(tracked_cb);
@@ -105,7 +105,7 @@ int mv_image_track(
 int mv_image_object_create(
         mv_image_object_h *image_object)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_NULL_ARG_CHECK(image_object);
     MEDIA_VISION_FUNCTION_ENTER();
 
@@ -128,7 +128,7 @@ int mv_image_object_create(
 int mv_image_object_destroy(
         mv_image_object_h image_object)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(image_object);
     MEDIA_VISION_FUNCTION_ENTER();
 
@@ -154,7 +154,7 @@ int mv_image_object_fill(
         mv_source_h source,
         mv_rectangle_s *location)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(image_object);
     MEDIA_VISION_INSTANCE_CHECK(source);
 
@@ -180,7 +180,7 @@ int mv_image_object_get_recognition_rate(
         mv_image_object_h image_object,
         double *recognition_rate)
 {
-	MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+	MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(image_object);
     MEDIA_VISION_NULL_ARG_CHECK(recognition_rate);
 
@@ -206,7 +206,7 @@ int mv_image_object_set_label(
         mv_image_object_h image_object,
         int label)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(image_object);
 
     MEDIA_VISION_FUNCTION_ENTER();
@@ -231,7 +231,7 @@ int mv_image_object_get_label(
         mv_image_object_h image_object,
         int *label)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(image_object);
     MEDIA_VISION_NULL_ARG_CHECK(label);
 
@@ -257,7 +257,7 @@ int mv_image_object_clone(
         mv_image_object_h src,
         mv_image_object_h *dst)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(src);
     MEDIA_VISION_NULL_ARG_CHECK(dst);
 
@@ -282,7 +282,7 @@ int mv_image_object_clone(
 int mv_image_object_save(
         const char *file_name, mv_image_object_h image_object)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(image_object);
 
     if (file_name == NULL)
@@ -312,7 +312,7 @@ int mv_image_object_save(
 int mv_image_object_load(
         const char *file_name, mv_image_object_h *image_object)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_NULL_ARG_CHECK(image_object);
 
     if (file_name == NULL)
@@ -342,7 +342,7 @@ int mv_image_object_load(
 int mv_image_tracking_model_create(
         mv_image_tracking_model_h *image_tracking_model)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_NULL_ARG_CHECK(image_tracking_model);
 
     MEDIA_VISION_FUNCTION_ENTER();
@@ -367,7 +367,7 @@ int mv_image_tracking_model_set_target(
         mv_image_object_h image_object,
         mv_image_tracking_model_h image_tracking_model)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(image_tracking_model);
     MEDIA_VISION_INSTANCE_CHECK(image_object);
 
@@ -392,7 +392,7 @@ int mv_image_tracking_model_set_target(
 int mv_image_tracking_model_destroy(
         mv_image_tracking_model_h image_tracking_model)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(image_tracking_model);
 
     MEDIA_VISION_FUNCTION_ENTER();
@@ -417,7 +417,7 @@ int mv_image_tracking_model_refresh(
         mv_image_tracking_model_h image_tracking_model,
         mv_engine_config_h engine_cfg)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(image_tracking_model);
 
     MEDIA_VISION_FUNCTION_ENTER();
@@ -446,7 +446,7 @@ int mv_image_tracking_model_clone(
         mv_image_tracking_model_h src,
         mv_image_tracking_model_h *dst)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(src);
     MEDIA_VISION_NULL_ARG_CHECK(dst);
 
@@ -471,7 +471,7 @@ int mv_image_tracking_model_clone(
 int mv_image_tracking_model_save(
         const char *file_name, mv_image_tracking_model_h image_tracking_model)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_INSTANCE_CHECK(image_tracking_model);
 
     if (file_name == NULL)
@@ -501,7 +501,7 @@ int mv_image_tracking_model_save(
 int mv_image_tracking_model_load(
         const char *file_name, mv_image_tracking_model_h *image_tracking_model)
 {
-    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported);
+    MEDIA_VISION_SUPPORT_CHECK(__mv_image_check_system_info_feature_supported());
     MEDIA_VISION_NULL_ARG_CHECK(image_tracking_model);
 
     if (file_name == NULL)

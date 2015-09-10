@@ -20,11 +20,6 @@
 
 bool __mv_check_system_info_feature_supported()
 {
-    // return true is temporary added to allow correct flow for UTC
-    // todo: remove when vision.barcode_detection and vision.barcode_generation
-    // will be added
-    return true;
-
     bool isBarcodeDetectionSupported = false;
     bool isBarcodeGenerationSupported = false;
     bool isFaceRecognitionSupported = false;
@@ -56,11 +51,12 @@ bool __mv_check_system_info_feature_supported()
 
     const int nRetVal4 = system_info_get_platform_bool("http://tizen.org/feature/vision.image_recognition", &isImageRecognitionSupported);
 
-    if (nRetVal2 != SYSTEM_INFO_ERROR_NONE)
+    if (nRetVal4 != SYSTEM_INFO_ERROR_NONE)
     {
         LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
         return false;
     }
+
     (isBarcodeDetectionSupported || isBarcodeGenerationSupported ||
         isFaceRecognitionSupported  || isImageRecognitionSupported) ?
             LOGI("system_info_get_platform_bool returned"
@@ -78,10 +74,6 @@ bool __mv_check_system_info_feature_supported()
 
 bool __mv_barcode_detect_check_system_info_feature_supported()
 {
-    // return true is temporary added to allow correct flow for UTC
-    // todo: remove when vision.barcode_detection feature will be added
-    return true;
-
     bool isBarcodeDetectionSupported = false;
 
     const int nRetVal = system_info_get_platform_bool("http://tizen.org/feature/vision.barcode_detection", &isBarcodeDetectionSupported);
@@ -103,10 +95,6 @@ bool __mv_barcode_detect_check_system_info_feature_supported()
 
 bool __mv_barcode_generate_check_system_info_feature_supported()
 {
-    // return true is temporary added to allow correct flow for UTC
-    // todo: remove when vision.barcode_generation feature will be added
-    return true;
-
     bool isBarcodeGenerationSupported = false;
 
     const int nRetVal = system_info_get_platform_bool("http://tizen.org/feature/vision.barcode_generation", &isBarcodeGenerationSupported);
@@ -128,10 +116,6 @@ bool __mv_barcode_generate_check_system_info_feature_supported()
 
 bool __mv_face_check_system_info_feature_supported()
 {
-	// return true is temporary added to allow correct flow for UTC
-	// todo: remove when vision.face_recognition feature will be added
-	return true;
-
 	bool isFaceRecognitionSupported = false;
 
 	const int nRetVal = system_info_get_platform_bool("http://tizen.org/feature/vision.face_recognition", &isFaceRecognitionSupported);
@@ -152,10 +136,6 @@ bool __mv_face_check_system_info_feature_supported()
 
 bool __mv_image_check_system_info_feature_supported()
 {
-	// return true is temporary added to allow correct flow for UTC
-	// todo: remove when vision.image_recognition feature will be added
-	return true;
-
 	bool isImageRecognitionSupported = false;
 
 	const int nRetVal = system_info_get_platform_bool("http://tizen.org/feature/vision.image_recognition", &isImageRecognitionSupported);
