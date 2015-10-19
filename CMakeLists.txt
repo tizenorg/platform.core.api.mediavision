@@ -57,8 +57,6 @@ else()
     SET(INC_IMAGE "${PROJECT_SOURCE_DIR}/mv_image/image/include")
 endif()
 
-INCLUDE_DIRECTORIES(${INC_DIR} ${INC_COMMON} ${INC_BARCODE_DETECTOR} ${INC_BARCODE_GENERATOR} ${INC_IMAGE})
-
 if(MEDIA_VISION_FACE_LICENSE_PORT)
     add_definitions(-DMEDIA_VISION_FACE_LICENSE_PORT)
     SET(INC_FACE "${PROJECT_SOURCE_DIR}/mv_face/face_lic/include")
@@ -66,7 +64,12 @@ else()
     SET(INC_FACE "${PROJECT_SOURCE_DIR}/mv_face/face/include")
 endif()
 
-INCLUDE_DIRECTORIES(${INC_DIR} ${INC_COMMON} ${INC_BARCODE_DETECTOR} ${INC_BARCODE_GENERATOR} ${INC_FACE})
+INCLUDE_DIRECTORIES(${INC_DIR}
+                    ${INC_COMMON}
+                    ${INC_BARCODE_DETECTOR}
+                    ${INC_BARCODE_GENERATOR}
+                    ${INC_FACE}
+                    ${INC_IMAGE})
 
 SET(dependents "dlog capi-media-tool capi-system-info capi-appfw-application")
 SET(pc_dependents "dlog")

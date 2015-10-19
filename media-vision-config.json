@@ -4,116 +4,116 @@
         {
             "name"  : "MV_FACE_DETECTION_MODEL_FILE_PATH",
             "type"  : "string",
-            "value" : "/usr/share/OpenCV/haarcascades/haarcascade_frontalface_alt2.xml",
+            "value" : "/usr/share/OpenCV/haarcascades/haarcascade_frontalface_alt2.xml"
         },
         {
             "name"  : "MV_FACE_DETECTION_ROI_X",
             "type"  : "integer",
-            "value" : -1,
+            "value" : -1
         },
         {
             "name"  : "MV_FACE_DETECTION_ROI_Y",
             "type"  : "integer",
-            "value" : -1,
+            "value" : -1
         },
         {
             "name"  : "MV_FACE_DETECTION_ROI_WIDTH",
             "type"  : "integer",
-            "value" : -1,
+            "value" : -1
         },
         {
             "name"  : "MV_FACE_DETECTION_ROI_HEIGHT",
             "type"  : "integer",
-            "value" : -1,
+            "value" : -1
         },
         {
             "name"  : "MV_FACE_DETECTION_MIN_SIZE_WIDTH",
             "type"  : "integer",
-            "value" : -1,
+            "value" : -1
         },
         {
             "name"  : "MV_FACE_DETECTION_MIN_SIZE_HEIGHT",
             "type"  : "integer",
-            "value" : -1,
+            "value" : -1
         },
         {    "name"  : "MV_BARCODE_GENERATE_ATTR_TEXT",
              "type"  : "integer",
-             "value" : 0,
+             "value" : 0
         },
         {
             "name" : "MV_BARCODE_DETECT_ATTR_TARGET",
             "type" : "integer",
-            "value" : 0,
+            "value" : 0
         },
         {
             "name"  : "MV_IMAGE_RECOGNITION_OBJECT_SCALE_FACTOR",
             "type"  : "double",
-            "value" : 1.2,
+            "value" : 1.2
         },
         {
             "name"  : "MV_IMAGE_RECOGNITION_OBJECT_MAX_KEYPOINTS_NUM",
             "type"  : "integer",
-            "value" : 1000,
+            "value" : 1000
         },
         {
             "name"  : "MV_IMAGE_RECOGNITION_SCENE_SCALE_FACTOR",
             "type"  : "double",
-            "value" : 1.2,
+            "value" : 1.2
         },
         {
             "name"  : "MV_IMAGE_RECOGNITION_SCENE_MAX_KEYPOINTS_NUM",
             "type"  : "integer",
-            "value" : 5000,
+            "value" : 5000
         },
         {
             "name"  : "MV_IMAGE_RECOGNITION_MIN_MATCH_NUM",
             "type"  : "integer",
-            "value" : 30,
+            "value" : 30
         },
         {
             "name"  : "MV_IMAGE_RECOGNITION_REQ_MATCH_PART",
             "type"  : "double",
-            "value" : 0.05,
+            "value" : 0.05
         },
         {
             "name"  : "MV_IMAGE_RECOGNITION_TOLERANT_MATCH_PART_ERR",
             "type"  : "double",
-            "value" : 0.1,
+            "value" : 0.1
         },
         {
             "name"  : "MV_IMAGE_TRACKING_HISTORY_AMOUNT",
             "type"  : "integer",
-            "value" : 3,
+            "value" : 3
         },
         {
             "name"  : "MV_IMAGE_TRACKING_EXPECTED_OFFSET",
             "type"  : "double",
-            "value" : 0,
+            "value" : 0
         },
         {
             "name"  : "MV_IMAGE_TRACKING_USE_STABLIZATION",
             "type"  : "boolean",
-            "value" : false,
+            "value" : false
         },
         {
             "name"  : "MV_IMAGE_TRACKING_STABLIZATION_TOLERANT_SHIFT",
             "type"  : "double",
-            "value" : 0.006,
+            "value" : 0.006
         },
         {
             "name"  : "MV_IMAGE_TRACKING_STABLIZATION_SPEED",
             "type"  : "double",
-            "value" : 2,
+            "value" : 2
         },
         {
             "name"  : "MV_IMAGE_TRACKING_STABLIZATION_ACCELERATION",
             "type"  : "double",
-            "value" : 0.001,
+            "value" : 0.001
         },
         {
             "name"  : "MV_FACE_RECOGNITION_MODEL_TYPE",
             "type"  : "integer",
-            "value" : 3,
+            "value" : 3
         }
     ]
 }

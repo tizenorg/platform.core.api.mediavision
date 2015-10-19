@@ -18,7 +18,7 @@
 
 #include <mv_private.h>
 
-#include <json/json.h>
+#include <json-glib/json-glib.h>
 
 /**
  * @file   EngineConfig.cpp
@@ -244,79 +244,115 @@ int EngineConfig::cacheDictionaries(bool isLazyCache, std::string configFilePath
         DefBoolDict.clear();
         DefStrDict.clear();
 
-        json_object *jobj = json_object_from_file(configFilePath.c_str());
+        const char *conf_file = configFilePath.c_str();
+        JsonParser *parser;
+        GError *error = NULL;
 
-        enum json_type type = json_object_get_type(jobj);
-        if (json_type_object != type)
+        parser = json_parser_new();
+        json_parser_load_from_file(parser, conf_file, &error);
+        if (error)
         {
-            LOGE("Can't parse engine config file. Incorrect json markup. "
-                    "Supported attributes can't be determined.");
-            json_object_put(jobj);
+            LOGW("Unable to parse file '%s': %s\n", conf_file, error->message);
+            g_error_free(error);
+            g_object_unref(parser);
             return MEDIA_VISION_ERROR_NO_DATA;
         }
 
-        json_object *pAttributesObj = json_object_object_get(jobj, "attributes");
-        type = json_object_get_type(pAttributesObj);
-        if (json_type_array != type)
+        JsonNode *root = json_parser_get_root(parser);
+        if (JSON_NODE_OBJECT != json_node_get_node_type(root))
         {
-            LOGE("Can't parse engine config file. Incorrect json markup. "
-                    "Supported attributes can't be determined.");
-            json_object_put(jobj);
+            LOGW("Can't parse tests configuration file. "
+                 "Incorrect json markup.");
+            g_object_unref(parser);
             return MEDIA_VISION_ERROR_NO_DATA;
         }
 
-        const int attrNum = json_object_array_length(pAttributesObj);
+        JsonObject *jobj = json_node_get_object(root);
 
-        for (int attrInd = 0; attrInd < attrNum; ++attrInd)
+        if (!json_object_has_member(jobj, "attributes"))
         {
-            json_object *pAttrObj =
-                    json_object_array_get_idx(pAttributesObj, attrInd);
-            type = json_object_get_type(pAttrObj);
+            LOGW("Can't parse tests configuration file. "
+                 "No 'attributes' section.");
+            g_object_unref(parser);
+            return MEDIA_VISION_ERROR_NO_DATA;
+        }
 
-            json_object *pAttrNameObj = NULL;
-            json_object *pAttrTypeObj = NULL;
-            json_object *pAttrValueObj = NULL;
+        JsonNode *attr_node =
+                      json_object_get_member(jobj, "attributes");
 
-            if (json_type_object != type ||
-                !json_object_object_get_ex(pAttrObj, "name", &pAttrNameObj) ||
-                !json_object_object_get_ex(pAttrObj, "type", &pAttrTypeObj) ||
-                !json_object_object_get_ex(pAttrObj, "value", &pAttrValueObj))
+        if (JSON_NODE_ARRAY != json_node_get_node_type(attr_node))
+        {
+            LOGW("Can't parse tests configuration file. "
+                 "'attributes' section isn't array.");
+            g_object_unref(parser);
+            return MEDIA_VISION_ERROR_NO_DATA;
+        }
+
+        JsonArray *attr_array = json_node_get_array(attr_node);
+
+        const guint attr_num = json_array_get_length(attr_array);
+
+        guint attrInd = 0;
+        for (; attrInd < attr_num; ++attrInd)
+        {
+            JsonNode *attr_node = json_array_get_element(attr_array, attrInd);
+
+            if (JSON_NODE_OBJECT != json_node_get_node_type(attr_node))
             {
-                LOGW("Attribute %i wasn't parsed from json file.", attrInd);
+                LOGW("Attribute %u wasn't parsed from json file.", attrInd);
                 continue;
             }
 
-            const char *nameStr = json_object_get_string(pAttrNameObj);
-            const char *typeStr = json_object_get_string(pAttrTypeObj);
+            JsonObject *attr_obj = json_node_get_object(attr_node);
 
-            if (0 == strcmp("double", typeStr))
+            if (!json_object_has_member(attr_obj, "name") ||
+                !json_object_has_member(attr_obj, "type") ||
+                !json_object_has_member(attr_obj, "value"))
+            {
+                LOGW("Attribute %u wasn't parsed from json file.", attrInd);
+                continue;
+            }
+
+            const char *nameStr =
+                           (char*)json_object_get_string_member(attr_obj, "name");
+            const char *typeStr =
+                           (char*)json_object_get_string_member(attr_obj, "type");
+
+            if (NULL == nameStr || NULL == typeStr)
+            {
+                LOGW("Attribute %i wasn't parsed from json file. name and/or "
+                     "type of the attribute are parsed as NULL.", attrInd);
+                continue;
+            }
+            else if (0 == strcmp("double", typeStr))
             {
                 DefDblDict[std::string(nameStr)] =
-                        json_object_get_double(pAttrValueObj);
+                        (double)json_object_get_double_member(attr_obj, "value");
             }
             else if (0 == strcmp("integer", typeStr))
             {
                 DefIntDict[std::string(nameStr)] =
-                        json_object_get_int(pAttrValueObj);
+                        (int)json_object_get_int_member(attr_obj, "value");
             }
             else if (0 == strcmp("boolean", typeStr))
             {
                 DefBoolDict[std::string(nameStr)] =
-                        json_object_get_boolean(pAttrValueObj) ? true : false;
+                        json_object_get_boolean_member(attr_obj, "value") ? true : false;
             }
             else if (0 == strcmp("string", typeStr))
             {
                 DefStrDict[std::string(nameStr)] =
-                        json_object_get_string(pAttrValueObj);
+                        (char*)json_object_get_string_member(attr_obj, "value");
             }
             else
             {
-                LOGW("Attribute %i:%s wasn't parsed from json file. Type isn't supported.", attrInd, nameStr);
+                LOGW("Attribute %i:%s wasn't parsed from json file. "
+                     "Type isn't supported.", attrInd, nameStr);
                 continue;
             }
         }
 
-        json_object_put(jobj);
+        g_object_unref(parser);
         isCached = true;
     }
 
