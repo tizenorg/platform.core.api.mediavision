@@ -20,98 +20,92 @@
 
 bool __mv_check_system_info_feature_supported()
 {
-    bool isBarcodeDetectionSupported = false;
-    bool isBarcodeGenerationSupported = false;
-    bool isFaceRecognitionSupported = false;
-    bool isImageRecognitionSupported = false;
+	bool isBarcodeDetectionSupported = false;
+	bool isBarcodeGenerationSupported = false;
+	bool isFaceRecognitionSupported = false;
+	bool isImageRecognitionSupported = false;
 
-    const int nRetVal1 = system_info_get_platform_bool("http://tizen.org/feature/vision.barcode_detection", &isBarcodeDetectionSupported);
+	const int nRetVal1 = system_info_get_platform_bool("http://tizen.org/feature/vision.barcode_detection", &isBarcodeDetectionSupported);
 
-    if (nRetVal1 != SYSTEM_INFO_ERROR_NONE)
-    {
-        LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
-        return false;
-    }
+	if (nRetVal1 != SYSTEM_INFO_ERROR_NONE) {
+		LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
+		return false;
+	}
 
-    const int nRetVal2 = system_info_get_platform_bool("http://tizen.org/feature/vision.barcode_generation", &isBarcodeGenerationSupported);
+	const int nRetVal2 = system_info_get_platform_bool("http://tizen.org/feature/vision.barcode_generation", &isBarcodeGenerationSupported);
 
-    if (nRetVal2 != SYSTEM_INFO_ERROR_NONE)
-    {
-        LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
-        return false;
-    }
+	if (nRetVal2 != SYSTEM_INFO_ERROR_NONE) {
+		LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
+		return false;
+	}
 
-    const int nRetVal3 = system_info_get_platform_bool("http://tizen.org/feature/vision.face_recognition", &isFaceRecognitionSupported);
+	const int nRetVal3 = system_info_get_platform_bool("http://tizen.org/feature/vision.face_recognition", &isFaceRecognitionSupported);
 
-    if (nRetVal3 != SYSTEM_INFO_ERROR_NONE)
-    {
-        LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
-        return false;
-    }
+	if (nRetVal3 != SYSTEM_INFO_ERROR_NONE) {
+		LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
+		return false;
+	}
 
-    const int nRetVal4 = system_info_get_platform_bool("http://tizen.org/feature/vision.image_recognition", &isImageRecognitionSupported);
+	const int nRetVal4 = system_info_get_platform_bool("http://tizen.org/feature/vision.image_recognition", &isImageRecognitionSupported);
 
-    if (nRetVal4 != SYSTEM_INFO_ERROR_NONE)
-    {
-        LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
-        return false;
-    }
+	if (nRetVal4 != SYSTEM_INFO_ERROR_NONE) {
+		LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
+		return false;
+	}
 
-    (isBarcodeDetectionSupported || isBarcodeGenerationSupported ||
-        isFaceRecognitionSupported  || isImageRecognitionSupported) ?
-            LOGI("system_info_get_platform_bool returned"
-                 "Supported one feature among barcode detection, "
-                 "barcode generation, face recognition, "
-                 "and image recognition capability\n") :
-            LOGE("system_info_get_platform_bool returned"
-                 "Unsupported all features of barcode detection, "
-                 "barcode generation, face recognition, "
-                 "and image recognition capability\n") ;
+	(isBarcodeDetectionSupported || isBarcodeGenerationSupported ||
+		isFaceRecognitionSupported  || isImageRecognitionSupported) ?
+			LOGI("system_info_get_platform_bool returned"
+					"Supported one feature among barcode detection, "
+					"barcode generation, face recognition, "
+					"and image recognition capability\n") :
+			LOGE("system_info_get_platform_bool returned"
+					"Unsupported all features of barcode detection, "
+					"barcode generation, face recognition, "
+					"and image recognition capability\n") ;
 
-    return (isBarcodeDetectionSupported || isBarcodeGenerationSupported ||
-            isFaceRecognitionSupported  || isImageRecognitionSupported);
+	return (isBarcodeDetectionSupported || isBarcodeGenerationSupported ||
+			isFaceRecognitionSupported  || isImageRecognitionSupported);
 }
 
 bool __mv_barcode_detect_check_system_info_feature_supported()
 {
-    bool isBarcodeDetectionSupported = false;
+	bool isBarcodeDetectionSupported = false;
 
-    const int nRetVal = system_info_get_platform_bool("http://tizen.org/feature/vision.barcode_detection", &isBarcodeDetectionSupported);
+	const int nRetVal = system_info_get_platform_bool("http://tizen.org/feature/vision.barcode_detection", &isBarcodeDetectionSupported);
 
-    if (nRetVal != SYSTEM_INFO_ERROR_NONE)
-    {
-        LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
-        return false;
-    }
+	if (nRetVal != SYSTEM_INFO_ERROR_NONE) {
+		LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
+		return false;
+	}
 
-    isBarcodeDetectionSupported ?
-            LOGI("system_info_get_platform_bool returned "
-                 "Supported barcode detection feature capability\n") :
-            LOGE("system_info_get_platform_bool returned "
-                 "Unsupported barcode detection feature capability\n");
+	isBarcodeDetectionSupported ?
+			LOGI("system_info_get_platform_bool returned "
+					"Supported barcode detection feature capability\n") :
+			LOGE("system_info_get_platform_bool returned "
+					"Unsupported barcode detection feature capability\n");
 
-    return isBarcodeDetectionSupported;
+	return isBarcodeDetectionSupported;
 }
 
 bool __mv_barcode_generate_check_system_info_feature_supported()
 {
-    bool isBarcodeGenerationSupported = false;
+	bool isBarcodeGenerationSupported = false;
 
-    const int nRetVal = system_info_get_platform_bool("http://tizen.org/feature/vision.barcode_generation", &isBarcodeGenerationSupported);
+	const int nRetVal = system_info_get_platform_bool("http://tizen.org/feature/vision.barcode_generation", &isBarcodeGenerationSupported);
 
-    if (nRetVal != SYSTEM_INFO_ERROR_NONE)
-    {
-        LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
-        return false;
-    }
+	if (nRetVal != SYSTEM_INFO_ERROR_NONE) {
+		LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
+		return false;
+	}
 
-    isBarcodeGenerationSupported ?
-            LOGI("system_info_get_platform_bool returned "
-                 "Supported barcode generation feature capability\n") :
-            LOGE("system_info_get_platform_bool returned "
-                 "Unsupported barcode generation feature capability\n");
+	isBarcodeGenerationSupported ?
+			LOGI("system_info_get_platform_bool returned "
+					"Supported barcode generation feature capability\n") :
+			LOGE("system_info_get_platform_bool returned "
+					"Unsupported barcode generation feature capability\n");
 
-    return isBarcodeGenerationSupported;
+	return isBarcodeGenerationSupported;
 }
 
 bool __mv_face_check_system_info_feature_supported()
