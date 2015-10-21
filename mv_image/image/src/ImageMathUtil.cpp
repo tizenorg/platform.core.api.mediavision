@@ -16,43 +16,40 @@
 
 #include "ImageMathUtil.h"
 
-namespace MediaVision
-{
-namespace Image
-{
-
+namespace MediaVision {
+namespace Image {
 float getDistance(
-        const cv::Point2f& point1,
-        const cv::Point2f& point2)
+		const cv::Point2f& point1,
+		const cv::Point2f& point2)
 {
-    return sqrt(
-        (point1.x - point2.x) * (point1.x - point2.x) +
-        (point1.y - point2.y) * (point1.y - point2.y));
+	return sqrt(
+			(point1.x - point2.x) * (point1.x - point2.x) +
+			(point1.y - point2.y) * (point1.y - point2.y));
 }
 
 float getTriangleArea(
-        const cv::Point2f& point1,
-        const cv::Point2f& point2,
-        const cv::Point2f& point3)
+		const cv::Point2f& point1,
+		const cv::Point2f& point2,
+		const cv::Point2f& point3)
 {
-    float distances[3];
+	float distances[3];
 
-    distances[0] = getDistance(point1, point2);
-    distances[1] = getDistance(point2, point3);
-    distances[2] = getDistance(point3, point1);
+	distances[0] = getDistance(point1, point2);
+	distances[1] = getDistance(point2, point3);
+	distances[2] = getDistance(point3, point1);
 
-    const float semiperimeter = (distances[0] + distances[1] + distances[2]) / 2.0f;
+	const float semiperimeter = (distances[0] + distances[1] + distances[2]) / 2.0f;
 
-    return sqrt(semiperimeter *
-        (semiperimeter - distances[0]) *
-        (semiperimeter - distances[1]) *
-        (semiperimeter - distances[2]));
+	return sqrt(semiperimeter *
+			(semiperimeter - distances[0]) *
+			(semiperimeter - distances[1]) *
+			(semiperimeter - distances[2]));
 }
 
 float getQuadrangleArea(const cv::Point2f points[NumberOfQuadrangleCorners])
 {
-    return getTriangleArea(points[0], points[1], points[2]) +
-           getTriangleArea(points[0], points[3], points[2]);
+	return getTriangleArea(points[0], points[1], points[2]) +
+			getTriangleArea(points[0], points[3], points[2]);
 }
 
 } /* Image */

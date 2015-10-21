@@ -17,11 +17,11 @@
 #include "mv_barcode_detect_lic.h"
 
 int mv_barcode_detect_lic(
-    mv_source_h source,
-    mv_engine_config_h engine_cfg,
-    mv_rectangle_s roi,
-    mv_barcode_detected_cb detect_cb,
-    void *user_data)
+	mv_source_h source,
+	mv_engine_config_h engine_cfg,
+	mv_rectangle_s roi,
+	mv_barcode_detected_cb detect_cb,
+	void *user_data)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }

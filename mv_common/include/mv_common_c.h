@@ -42,7 +42,7 @@ extern "C" {
  * @see mv_destroy_source_c()
  */
 int mv_create_source_c(
-        mv_source_h *source);
+		mv_source_h *source);
 
 /**
  * @brief Destroys the source handle and releases all its resources.
@@ -56,7 +56,7 @@ int mv_create_source_c(
  * @see mv_create_source_c()
  */
 int mv_destroy_source_c(
-        mv_source_h source);
+		mv_source_h source);
 
 /**
  * @brief Fills the media source based on the media packet.
@@ -78,8 +78,8 @@ int mv_destroy_source_c(
  * @see mv_destroy_source_c()
  */
 int mv_source_fill_by_media_packet_c(
-        mv_source_h source,
-        media_packet_h media_packet);
+		mv_source_h source,
+		media_packet_h media_packet);
 
 /**
  * @brief Fills the media source based on the buffer and metadata.
@@ -101,12 +101,12 @@ int mv_source_fill_by_media_packet_c(
  * @see mv_source_clear_c()
  */
 int mv_source_fill_by_buffer_c(
-        mv_source_h source,
-        unsigned char *data_buffer,
-        unsigned int buffer_size,
-        unsigned int image_width,
-        unsigned int image_height,
-        mv_colorspace_e image_colorspace);
+		mv_source_h source,
+		unsigned char *data_buffer,
+		unsigned int buffer_size,
+		unsigned int image_width,
+		unsigned int image_height,
+		mv_colorspace_e image_colorspace);
 
 /**
  * @brief Clears the buffer of the media source.
@@ -120,7 +120,7 @@ int mv_source_fill_by_buffer_c(
  * @see mv_source_fill_by_buffer_c()
  */
 int mv_source_clear_c(
-        mv_source_h source);
+		mv_source_h source);
 
 /**
  * @brief Gets buffer of the media source.
@@ -142,9 +142,9 @@ int mv_source_clear_c(
  * @see mv_source_get_colorspace_c()
  */
 int mv_source_get_buffer_c(
-        mv_source_h source,
-        unsigned char **data_buffer,
-        unsigned int *buffer_size);
+		mv_source_h source,
+		unsigned char **data_buffer,
+		unsigned int *buffer_size);
 
 /**
  * @brief Gets height of the media source.
@@ -161,8 +161,8 @@ int mv_source_get_buffer_c(
  * @see mv_source_get_buffer_c()
  */
 int mv_source_get_height_c(
-        mv_source_h source,
-        unsigned int *image_height);
+		mv_source_h source,
+		unsigned int *image_height);
 
 /**
  * @brief Gets width of the media source.
@@ -179,8 +179,8 @@ int mv_source_get_height_c(
  * @see mv_source_get_buffer_c()
  */
 int mv_source_get_width_c(
-        mv_source_h source,
-        unsigned int *image_width);
+		mv_source_h source,
+		unsigned int *image_width);
 
 /**
  * @brief Gets colorspace of the media source.
@@ -197,8 +197,8 @@ int mv_source_get_width_c(
  * @see mv_source_get_buffer_c()
  */
 int mv_source_get_colorspace_c(
-        mv_source_h source,
-        mv_colorspace_e *image_colorspace);
+		mv_source_h source,
+		mv_colorspace_e *image_colorspace);
 
 /**
  * @brief Creates the handle to the configuration of engine.
@@ -222,7 +222,7 @@ int mv_source_get_colorspace_c(
  * @see mv_engine_config_get_string_attribute_c()
  */
 int mv_create_engine_config_c(
-        mv_engine_config_h *engine_cfg);
+		mv_engine_config_h *engine_cfg);
 
 /**
  * @brief Destroys the engine configuration handle and releases all its
@@ -239,7 +239,7 @@ int mv_create_engine_config_c(
  * @see mv_create_engine_config_c()
  */
 int mv_destroy_engine_config_c(
-        mv_engine_config_h engine_cfg);
+		mv_engine_config_h engine_cfg);
 
 /**
  * @brief Sets the double attribute to the configuration.
@@ -261,9 +261,9 @@ int mv_destroy_engine_config_c(
  * @see mv_engine_config_set_string_attribute_c()
  */
 int mv_engine_config_set_double_attribute_c(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        double value);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		double value);
 
 /**
  * @brief Sets the integer attribute to the configuration.
@@ -285,9 +285,9 @@ int mv_engine_config_set_double_attribute_c(
  * @see mv_engine_config_set_string_attribute_c()
  */
 int mv_engine_config_set_int_attribute_c(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        int value);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		int value);
 
 /**
  * @brief Sets the boolean attribute to the configuration.
@@ -309,9 +309,9 @@ int mv_engine_config_set_int_attribute_c(
  * @see mv_engine_config_set_string_attribute_c()
  */
 int mv_engine_config_set_bool_attribute_c(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        bool attribute);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		bool attribute);
 
 /**
  * @brief Sets the string attribute to the configuration.
@@ -333,9 +333,9 @@ int mv_engine_config_set_bool_attribute_c(
  * @see mv_engine_config_set_bool_attribute_c()
  */
 int mv_engine_config_set_string_attribute_c(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        const char *value);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		const char *value);
 
 /**
  * @brief Gets the double attribute from the configuration dictionary.
@@ -359,9 +359,9 @@ int mv_engine_config_set_string_attribute_c(
  * @see mv_engine_config_get_string_attribute_c()
  */
 int mv_engine_config_get_double_attribute_c(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        double *value);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		double *value);
 
 /**
  * @brief Gets the integer attribute from the configuration dictionary.
@@ -385,9 +385,9 @@ int mv_engine_config_get_double_attribute_c(
  * @see mv_engine_config_get_string_attribute_c()
  */
 int mv_engine_config_get_int_attribute_c(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        int *value);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		int *value);
 
 /**
  * @brief Gets the boolean attribute from the configuration dictionary.
@@ -411,9 +411,9 @@ int mv_engine_config_get_int_attribute_c(
  * @see mv_engine_config_get_string_attribute_c()
  */
 int mv_engine_config_get_bool_attribute_c(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        bool *value);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		bool *value);
 
 /**
  * @brief Gets the string attribute from the configuration dictionary.
@@ -439,9 +439,9 @@ int mv_engine_config_get_bool_attribute_c(
  * @see mv_engine_config_get_bool_attribute_c()
  */
 int mv_engine_config_get_string_attribute_c(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        char **value);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		char **value);
 
 /**
  * @brief Traverses the list of supported attribute names and types.
@@ -482,8 +482,8 @@ int mv_engine_config_get_string_attribute_c(
  * @see mv_engine_config_get_string_attribute_c()
  */
 int mv_engine_config_foreach_supported_attribute_c(
-        mv_supported_attribute_cb callback,
-        void *user_data);
+		mv_supported_attribute_cb callback,
+		void *user_data);
 
 #ifdef __cplusplus
 }

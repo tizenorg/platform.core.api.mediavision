@@ -16,36 +16,33 @@
 
 #include "ImageConfig.h"
 
-namespace MediaVision
-{
-namespace Image
-{
-
+namespace MediaVision {
+namespace Image {
 FeaturesExtractingParams::FeaturesExtractingParams(
-        double scaleFactor,
-        int maximumFeaturesNumber) :
-                mScaleFactor(scaleFactor),
-                mMaximumFeaturesNumber(maximumFeaturesNumber)
+							double scaleFactor,
+							int maximumFeaturesNumber) :
+	mScaleFactor(scaleFactor),
+	mMaximumFeaturesNumber(maximumFeaturesNumber)
 {
-    ; /* NULL */
+	; /* NULL */
 }
 
 FeaturesExtractingParams::FeaturesExtractingParams() :
-        mScaleFactor(1.2),
-        mMaximumFeaturesNumber(800)
+	mScaleFactor(1.2),
+	mMaximumFeaturesNumber(800)
 {
-    ; /* NULL */
+	; /* NULL */
 }
 
 RecognitionParams::RecognitionParams(
-        int minMatchesNumber,
-        double requiredMatchesPart,
-        double allowableMatchesPartError) :
-                mMinMatchesNumber(minMatchesNumber),
-                mRequiredMatchesPart(requiredMatchesPart),
-                mAllowableMatchesPartError(allowableMatchesPartError)
+					int minMatchesNumber,
+					double requiredMatchesPart,
+					double allowableMatchesPartError) :
+	mMinMatchesNumber(minMatchesNumber),
+	mRequiredMatchesPart(requiredMatchesPart),
+	mAllowableMatchesPartError(allowableMatchesPartError)
 {
-    ; /* NULL */
+	; /* NULL */
 }
 
 RecognitionParams::RecognitionParams() :
@@ -53,51 +50,51 @@ RecognitionParams::RecognitionParams() :
         mRequiredMatchesPart(1.0),
         mAllowableMatchesPartError(0.0)
 {
-    ; /* NULL */
+	; /* NULL */
 }
 
 StabilizationParams::StabilizationParams(
-        int historyAmount,
-        double allowableShift,
-        double stabilizationSpeed,
-        double stabilizationAcceleration) :
-                mHistoryAmount(historyAmount),
-                mAllowableShift(allowableShift),
-                mStabilizationSpeed(stabilizationSpeed),
-                mStabilizationAcceleration(stabilizationAcceleration)
+					int historyAmount,
+					double allowableShift,
+					double stabilizationSpeed,
+					double stabilizationAcceleration) :
+	mHistoryAmount(historyAmount),
+	mAllowableShift(allowableShift),
+	mStabilizationSpeed(stabilizationSpeed),
+	mStabilizationAcceleration(stabilizationAcceleration)
 {
-    ; /* NULL */
+	; /* NULL */
 }
 
 StabilizationParams::StabilizationParams() :
-        mHistoryAmount(1),
-        mAllowableShift(0.0),
-        mStabilizationSpeed(0.0),
-        mStabilizationAcceleration(1.0)
+	mHistoryAmount(1),
+	mAllowableShift(0.0),
+	mStabilizationSpeed(0.0),
+	mStabilizationAcceleration(1.0)
 {
-    ; /* NULL */
+	; /* NULL */
 }
 
 TrackingParams::TrackingParams(
-        FeaturesExtractingParams framesFeaturesExtractingParams,
-        RecognitionParams recognitionParams,
-        StabilizationParams stabilizationParams,
-        double expectedOffset) :
-                mFramesFeaturesExtractingParams(framesFeaturesExtractingParams),
-                mRecognitionParams(recognitionParams),
-                mStabilizationParams(stabilizationParams),
-                mExpectedOffset(expectedOffset)
+				FeaturesExtractingParams framesFeaturesExtractingParams,
+				RecognitionParams recognitionParams,
+				StabilizationParams stabilizationParams,
+				double expectedOffset) :
+	mFramesFeaturesExtractingParams(framesFeaturesExtractingParams),
+	mRecognitionParams(recognitionParams),
+	mStabilizationParams(stabilizationParams),
+	mExpectedOffset(expectedOffset)
 {
-    ; /* NULL */
+	; /* NULL */
 }
 
 TrackingParams::TrackingParams() :
-        mFramesFeaturesExtractingParams(),
-        mRecognitionParams(),
-        mStabilizationParams(),
-        mExpectedOffset(0.0)
+	mFramesFeaturesExtractingParams(),
+	mRecognitionParams(),
+	mStabilizationParams(),
+	mExpectedOffset(0.0)
 {
-    ; /* NULL */
+	; /* NULL */
 }
 
 } /* Image */

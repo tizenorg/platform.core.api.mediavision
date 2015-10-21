@@ -25,23 +25,19 @@
  * @file FaceUtil.h
  * @brief This file contains the useful functionality for Face module.
  */
-namespace MediaVision
-{
-namespace Face
-{
-
+namespace MediaVision {
+namespace Face {
 /**
  * @brief Enumeration of supported learning algorithms.
  *
  * @since_tizen 3.0
  */
-enum FaceRecognitionModelType
-{
-    MEDIA_VISION_FACE_MODEL_TYPE_UNKNOWN = 0,     /**< Unknown algorithm type */
-    MEDIA_VISION_FACE_MODEL_TYPE_EIGENFACES = 1,  /**< Eigenfaces algorithm */
-    MEDIA_VISION_FACE_MODEL_TYPE_FISHERFACES = 2, /**< Fisherfaces algorithm */
-    MEDIA_VISION_FACE_MODEL_TYPE_LBPH = 3         /**< Local Binary Patterns
-                                                       Histograms algorithm */
+enum FaceRecognitionModelType {
+	MEDIA_VISION_FACE_MODEL_TYPE_UNKNOWN = 0,     /**< Unknown algorithm type */
+	MEDIA_VISION_FACE_MODEL_TYPE_EIGENFACES = 1,  /**< Eigenfaces algorithm */
+	MEDIA_VISION_FACE_MODEL_TYPE_FISHERFACES = 2, /**< Fisherfaces algorithm */
+	MEDIA_VISION_FACE_MODEL_TYPE_LBPH = 3         /**< Local Binary Patterns
+														Histograms algorithm */
 };
 
 /**
@@ -49,14 +45,13 @@ enum FaceRecognitionModelType
  *
  * @since_tizen 3.0
  */
-struct RecognitionParams
-{
-    RecognitionParams(FaceRecognitionModelType algType);
+struct RecognitionParams {
+	RecognitionParams(FaceRecognitionModelType algType);
 
-    RecognitionParams();
+	RecognitionParams();
 
-    FaceRecognitionModelType mRecognitionAlgType;
-                                 /**< The type of the learning algorithm. */
+	FaceRecognitionModelType mRecognitionAlgType;  /**< The type of
+														the learning algorithm */
 };
 
 /**

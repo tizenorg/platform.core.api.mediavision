@@ -26,75 +26,65 @@
  * @brief This file contains functionality for image object tracking.
  */
 
-namespace MediaVision
-{
-namespace Image
-{
-
+namespace MediaVision {
+namespace Image {
 class ImageRecognizer;
 class ImageTrackingModel;
-
 /**
  * @class    ImageTracker
  * @brief    This class contains functionality for image object tracking.
  *
  * @since_tizen 3.0
  */
-class ImageTracker
-{
+class ImageTracker {
 private:
+	struct RecognitionInfo {
+		cv::Mat mFrame;
 
-    struct RecognitionInfo
-    {
-        cv::Mat mFrame;
+		RecognitionParams mRecognitionParams;
 
-        RecognitionParams mRecognitionParams;
+		FeaturesExtractingParams mSceneFeaturesExtractingParams;
 
-        FeaturesExtractingParams mSceneFeaturesExtractingParams;
+		ImageTrackingModel *mpTarget;
+	};
 
-        ImageTrackingModel *mpTarget;
-    };
-
-    static void *recognitionThreadFunc(void *recognitionInfo);
+	static void *recognitionThreadFunc(void *recognitionInfo);
 
 public:
+	/**
+	 * @brief   @ref ImageTracker constructor based on tracking algorithm
+	 *          parameters.
+	 *
+	 * @since_tizen 3.0
+	 * @param [in] trackingParams   Parameters for image objects tracking
+	 */
+	ImageTracker(const TrackingParams& trackingParams);
 
-    /**
-     * @brief   @ref ImageTracker constructor based on tracking algorithm
-     *          parameters.
-     *
-     * @since_tizen 3.0
-     * @param [in] trackingParams   Parameters for image objects tracking
-     */
-    ImageTracker(const TrackingParams& trackingParams);
-
-    /**
-     * @brief Tracks the @a target for the video stream consisting of frames.
-     *
-     * @since_tizen 3.0
-     * @remarks Call this function alternately for each frame
-     * @param [in]      frame    Current frame of the video stream
-     * @param [in,out]  target   @ref ImageTrackingModel, which will be tracked
-     */
-    void track(const cv::Mat& frame, ImageTrackingModel& target);
-
-private:
-
-    void trackDetectedObject(
-            const cv::Mat& frame,
-            ImageTrackingModel& target);
-
-    void trackUndetectedObject(
-            const cv::Mat& frame,
-            ImageTrackingModel& target);
-
-    cv::Rect computeExpectedArea(
-            const ImageTrackingModel& target,
-            const cv::Size& frameSize);
+	/**
+	 * @brief Tracks the @a target for the video stream consisting of frames.
+	 *
+	 * @since_tizen 3.0
+	 * @remarks Call this function alternately for each frame
+	 * @param [in]      frame    Current frame of the video stream
+	 * @param [in,out]  target   @ref ImageTrackingModel, which will be tracked
+	 */
+	void track(const cv::Mat& frame, ImageTrackingModel& target);
 
 private:
+	void trackDetectedObject(
+			const cv::Mat& frame,
+			ImageTrackingModel& target);
 
-    TrackingParams m_trackingParams;
+	void trackUndetectedObject(
+			const cv::Mat& frame,
+			ImageTrackingModel& target);
+
+	cv::Rect computeExpectedArea(
+			const ImageTrackingModel& target,
+			const cv::Size& frameSize);
+
+private:
+	TrackingParams m_trackingParams;
 };
 
 } /* Image */

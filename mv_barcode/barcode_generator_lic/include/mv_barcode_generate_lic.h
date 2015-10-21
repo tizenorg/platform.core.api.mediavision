@@ -55,13 +55,13 @@ extern "C" {
  * @see mv_barcode_generate_image_lic()
  */
 int mv_barcode_generate_source_lic(
-        mv_engine_config_h engine_cfg,
-        const char *message,
-        mv_barcode_type_e type,
-        mv_barcode_qr_mode_e qr_enc_mode,
-        mv_barcode_qr_ecc_e qr_ecc,
-        int qr_version,
-        mv_source_h image);
+		mv_engine_config_h engine_cfg,
+		const char *message,
+		mv_barcode_type_e type,
+		mv_barcode_qr_mode_e qr_enc_mode,
+		mv_barcode_qr_ecc_e qr_ecc,
+		int qr_version,
+		mv_source_h image);
 
 /**
  * @brief Generates image file with barcode.
@@ -89,16 +89,16 @@ int mv_barcode_generate_source_lic(
  * @see mv_barcode_generate_source_lic()
  */
 int mv_barcode_generate_image_lic(
-        mv_engine_config_h engine_cfg,
-        const char *message,
-        int image_width,
-        int image_height,
-        mv_barcode_type_e type,
-        mv_barcode_qr_mode_e qr_enc_mode,
-        mv_barcode_qr_ecc_e qr_ecc,
-        int qr_version,
-        const char *image_path,
-        mv_barcode_image_format_e image_format);
+		mv_engine_config_h engine_cfg,
+		const char *message,
+		int image_width,
+		int image_height,
+		mv_barcode_type_e type,
+		mv_barcode_qr_mode_e qr_enc_mode,
+		mv_barcode_qr_ecc_e qr_ecc,
+		int qr_version,
+		const char *image_path,
+		mv_barcode_image_format_e image_format);
 
 #ifdef __cplusplus
 }

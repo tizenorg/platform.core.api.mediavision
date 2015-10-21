@@ -28,11 +28,8 @@
  *        eye condition recognition functionality.
  */
 
-namespace MediaVision
-{
-namespace Face
-{
-
+namespace MediaVision {
+namespace Face {
 /**
  * @class FaceEyeCondition
  * @brief The FaceEyeCondition implements the face
@@ -40,34 +37,31 @@ namespace Face
  *
  * @since_tizen 3.0
  */
-class FaceEyeCondition
-{
+class FaceEyeCondition {
 public:
-
-    /**
-     * @brief Recognizes eye condition on the image with face location.
-     *
-     * @since_tizen 3.0
-     * @param [in] grayImage        The image  in gray scale with face where
-     *                              eye condition will be recognized
-     * @param [in] faceLocation     The rectangle with face location
-     * @param [out] eyeCondition    The eye condition which was recognized
-     * @return @c 0 on success, otherwise a negative error value
-     */
-    static int recognizeEyeCondition(
-                   const cv::Mat& grayImage,
-                   mv_rectangle_s faceLocation,
-                   mv_face_eye_condition_e *eyeCondition);
+	/**
+	 * @brief Recognizes eye condition on the image with face location.
+	 *
+	 * @since_tizen 3.0
+	 * @param [in] grayImage        The image  in gray scale with face where
+	 *                              eye condition will be recognized
+	 * @param [in] faceLocation     The rectangle with face location
+	 * @param [out] eyeCondition    The eye condition which was recognized
+	 * @return @c 0 on success, otherwise a negative error value
+	 */
+	static int recognizeEyeCondition(
+					const cv::Mat& grayImage,
+					mv_rectangle_s faceLocation,
+					mv_face_eye_condition_e *eyeCondition);
 
 private:
+	static void splitEyes(
+					/*[in]*/ const cv::Mat& grayImage,
+					/*[in]*/ mv_rectangle_s faceLocation,
+					/*[out]*/ cv::Mat& leftEye,
+					/*[out]*/ cv::Mat& rightEye);
 
-    static void splitEyes(
-                    /*[in]*/ const cv::Mat& grayImage,
-                    /*[in]*/ mv_rectangle_s faceLocation,
-                    /*[out]*/ cv::Mat& leftEye,
-                    /*[out]*/ cv::Mat& rightEye);
-
-    static int isEyeOpen(/*[in]*/const cv::Mat& eye);
+	static int isEyeOpen(/*[in]*/const cv::Mat& eye);
 };
 
 } /* Face */

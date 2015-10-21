@@ -24,15 +24,12 @@
  * @brief This file contains math utility for Image Module.
  */
 
-namespace MediaVision
-{
-namespace Image
-{
-
+namespace MediaVision {
+namespace Image {
 const size_t MinimumNumberOfFeatures = 4u; /* Minimum number of features
-                                              when perspective transform
-                                              parameters calculation
-                                              have sense */
+											when perspective transform
+											parameters calculation
+											have sense */
 
 const size_t NumberOfQuadrangleCorners = 4u; /* Number of quadrangle corneres */
 
@@ -45,8 +42,8 @@ const size_t NumberOfQuadrangleCorners = 4u; /* Number of quadrangle corneres */
  * @return distance between two points
  */
 float getDistance(
-        const cv::Point2f& point1,
-        const cv::Point2f& point2);
+		const cv::Point2f& point1,
+		const cv::Point2f& point2);
 
 /**
  * @brief   Calculates area of triangle.
@@ -58,9 +55,9 @@ float getDistance(
  * @return area of triangle
  */
 float getTriangleArea(
-        const cv::Point2f& point1,
-        const cv::Point2f& point2,
-        const cv::Point2f& point3);
+		const cv::Point2f& point1,
+		const cv::Point2f& point2,
+		const cv::Point2f& point3);
 
 /**
  * @brief   Calculates area of quadrangle.
@@ -70,7 +67,7 @@ float getTriangleArea(
  * @return area of quadrangle
  */
 float getQuadrangleArea(
-        const cv::Point2f points[NumberOfQuadrangleCorners]);
+		const cv::Point2f points[NumberOfQuadrangleCorners]);
 
 } /* Image */
 } /* MediaVision */

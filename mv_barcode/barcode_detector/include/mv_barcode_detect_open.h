@@ -53,12 +53,11 @@ extern "C" {
  * @see mv_barcode_detected_cb()
  */
 int mv_barcode_detect_open(
-        mv_source_h source,
-        mv_engine_config_h engine_cfg,
-        mv_rectangle_s roi,
-        mv_barcode_detected_cb detect_cb,
-        void *user_data);
-
+		mv_source_h source,
+		mv_engine_config_h engine_cfg,
+		mv_rectangle_s roi,
+		mv_barcode_detected_cb detect_cb,
+		void *user_data);
 
 #ifdef __cplusplus
 }

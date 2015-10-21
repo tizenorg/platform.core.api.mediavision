@@ -19,15 +19,12 @@
 
 #include "mv_common.h"
 
-namespace zbar
-{
-    class Image;
+namespace zbar {
+class Image;
 }
 
-namespace MediaVision
-{
-namespace Barcode
-{
+namespace MediaVision {
+namespace Barcode {
 
 /**
  * @brief    This function converts media vision image handle to zbar image handle.

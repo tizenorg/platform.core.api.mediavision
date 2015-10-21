@@ -20,104 +20,100 @@
 
 #include <cstring>
 
-namespace MediaVision
-{
-namespace Common
-{
-
-MediaSource::MediaSource() : m_pBuffer (NULL), m_bufferSize (0), m_width (0),
-        m_height (0), m_colorspace (MEDIA_VISION_COLORSPACE_INVALID)
+namespace MediaVision {
+namespace Common {
+MediaSource::MediaSource() :
+	m_pBuffer(NULL),
+	m_bufferSize(0),
+	m_width(0),
+	m_height(0),
+	m_colorspace(MEDIA_VISION_COLORSPACE_INVALID)
 {
 }
 
 MediaSource::~MediaSource()
 {
-    clear();
+	clear();
 }
 
 void MediaSource::clear(void)
 {
-    if (m_pBuffer != NULL)
-    {
-        LOGD("Delete internal buffer for media source %p", this);
-        delete[] m_pBuffer;
-    }
-    LOGD("Set defaults for media source %p : buffer = NULL; "
-            "bufferSize = 0; width = 0; height = 0; "
-            "colorspace = MEDIA_VISION_COLORSPACE_INVALID", this);
-    m_pBuffer = NULL;
-    m_bufferSize = 0;
-    m_width = 0;
-    m_height = 0;
-    m_colorspace = MEDIA_VISION_COLORSPACE_INVALID;
+	if (m_pBuffer != NULL) {
+		LOGD("Delete internal buffer for media source %p", this);
+		delete[] m_pBuffer;
+	}
+	LOGD("Set defaults for media source %p : buffer = NULL; "
+		"bufferSize = 0; width = 0; height = 0; "
+		"colorspace = MEDIA_VISION_COLORSPACE_INVALID", this);
+	m_pBuffer = NULL;
+	m_bufferSize = 0;
+	m_width = 0;
+	m_height = 0;
+	m_colorspace = MEDIA_VISION_COLORSPACE_INVALID;
 }
 
 bool MediaSource::fill(const unsigned char *buffer, unsigned int bufferSize,
         unsigned int width, unsigned int height, mv_colorspace_e colorspace)
 {
-    if (bufferSize == 0 || buffer == NULL)
-    {
-        return false;
-    }
+	if (bufferSize == 0 || buffer == NULL) {
+		return false;
+	}
 
-    LOGD("Call clear() first for media source %p", this);
-    clear();
+	LOGD("Call clear() first for media source %p", this);
+	clear();
 
-    try
-    {
-        LOGD("Allocate memory for buffer in media source %p", this);
-        m_pBuffer = new unsigned char[bufferSize];
-    }
-    catch(...)
-    {
-        LOGE("Memory allocating for buffer in media source %p failed!", this);
-        m_pBuffer = NULL;
-        return false;
-    }
+	try {
+		LOGD("Allocate memory for buffer in media source %p", this);
+		m_pBuffer = new unsigned char[bufferSize];
+	} catch(...) {
+		LOGE("Memory allocating for buffer in media source %p failed!", this);
+		m_pBuffer = NULL;
+		return false;
+	}
 
-    LOGD("Copy data from external buffer (%p) to the internal buffer (%p) of "
-            "media source %p", buffer, m_pBuffer, this);
-    std::memcpy(m_pBuffer, buffer, bufferSize);
+	LOGD("Copy data from external buffer (%p) to the internal buffer (%p) of "
+		"media source %p", buffer, m_pBuffer, this);
+	std::memcpy(m_pBuffer, buffer, bufferSize);
 
-    LOGD("Assign new size of the internal buffer of media source %p. "
-            "New size is %ui.", this, bufferSize);
-    m_bufferSize = bufferSize;
+	LOGD("Assign new size of the internal buffer of media source %p. "
+		"New size is %ui.", this, bufferSize);
+	m_bufferSize = bufferSize;
 
-    LOGD("Assign new size (%ui x %ui) of the internal buffer image for "
-            "the media source %p", width, height, this);
-    m_width = width;
-    m_height = height;
+	LOGD("Assign new size (%ui x %ui) of the internal buffer image for "
+		"the media source %p", width, height, this);
+	m_width = width;
+	m_height = height;
 
-    LOGD("Assign new colorspace (%i) of the internal buffer image for "
-                "the media source %p", colorspace, this);
-    m_colorspace = colorspace;
+	LOGD("Assign new colorspace (%i) of the internal buffer image for "
+		"the media source %p", colorspace, this);
+	m_colorspace = colorspace;
 
-    return true;
+	return true;
 }
 
 unsigned char *MediaSource::getBuffer(void) const
 {
-    return m_pBuffer;
+	return m_pBuffer;
 }
 
 unsigned int MediaSource::getBufferSize(void) const
 {
-    return m_bufferSize;
+	return m_bufferSize;
 }
 
 unsigned int MediaSource::getWidth(void) const
 {
-    return m_width;
+	return m_width;
 }
 
 unsigned int MediaSource::getHeight(void) const
 {
-    return m_height;
+	return m_height;
 }
 
 mv_colorspace_e MediaSource::getColorspace(void) const
 {
-    return m_colorspace;
+	return m_colorspace;
 }
 
 } /* Common */

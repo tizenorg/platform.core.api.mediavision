@@ -22,64 +22,60 @@
 #include <stddef.h>
 #include <zbar.h>
 
-namespace MediaVision
-{
-namespace Barcode
-{
-
+namespace MediaVision {
+namespace Barcode {
 /**
  * @class    Barcode
  * @brief    Handle to barcode object.
  */
-class Barcode
-{
+class Barcode {
 public:
-    /**
-     * @brief   Barcode constructor.
-     *
-     * @since_tizen 2.4
-     * @remarks create copy of bar_obj
-     * @param   [in] barObj zbar barcode handle
-     *
-     */
-    Barcode(const zbar::Symbol& barObj);
+	/**
+	 * @brief   Barcode constructor.
+	 *
+	 * @since_tizen 2.4
+	 * @remarks create copy of bar_obj
+	 * @param   [in] barObj zbar barcode handle
+	 *
+	 */
+	Barcode(const zbar::Symbol& barObj);
 
-    /**
-     * @brief  Barcode destructor.
-     *
-     * @since_tizen 2.4
-     */
-    ~Barcode();
+	/**
+	 * @brief  Barcode destructor.
+	 *
+	 * @since_tizen 2.4
+	 */
+	~Barcode();
 
-    /**
-     * @brief  Gets encoded message from barcode object.
-     *
-     * @since_tizen 2.4
-     * @return Encoded message
-     */
-    std::string getMessage(void) const;
+	/**
+	 * @brief  Gets encoded message from barcode object.
+	 *
+	 * @since_tizen 2.4
+	 * @return Encoded message
+	 */
+	std::string getMessage(void) const;
 
-    /**
-     * @brief Gets the type of the barcode.
-     *
-     * @since_tizen 2.4
-     * @return Enumeration value corresponding to the barcode type
-     */
-    mv_barcode_type_e getType(void) const;
+	/**
+	 * @brief Gets the type of the barcode.
+	 *
+	 * @since_tizen 2.4
+	 * @return Enumeration value corresponding to the barcode type
+	 */
+	mv_barcode_type_e getType(void) const;
 
-    /**
-     * @brief  Calculates location of barcode handle from zbar.
-     *         location polygon.
-     *
-     * @since_tizen 2.4
-     * @param  [out] location    Quadrangle that contains barcode on image
-     * @return @c MEDIA_VISION_ERROR_NONE on success,
-     *         otherwise a negative error value
-     */
-    int calculateLocation(mv_quadrangle_s& location) const;
+	/**
+	 * @brief  Calculates location of barcode handle from zbar.
+	 *         location polygon.
+	 *
+	 * @since_tizen 2.4
+	 * @param  [out] location    Quadrangle that contains barcode on image
+	 * @return @c MEDIA_VISION_ERROR_NONE on success,
+	 *         otherwise a negative error value
+	 */
+	int calculateLocation(mv_quadrangle_s& location) const;
 
 private:
-    const zbar::Symbol *m_pBarcodeObj; ///< Pointer to zbar barcode handle
+	const zbar::Symbol *m_pBarcodeObj; ///< Pointer to zbar barcode handle
 };
 
 } /* Barcode */

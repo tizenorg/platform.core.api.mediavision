@@ -28,277 +28,256 @@
 #include <vector>
 #include <unistd.h>
 
-namespace MediaVision
-{
-namespace Barcode
-{
+namespace MediaVision {
+namespace Barcode {
 
-namespace
-{
-
+namespace {
 int getFormatEncodingInfo(
-        BarcodeImageFormat imageFormat,
-        std::vector<std::string>& extensions,
-        std::vector<int>& compressionParams)
+		BarcodeImageFormat imageFormat,
+		std::vector<std::string>& extensions,
+		std::vector<int>& compressionParams)
 {
-    static const int PNGCompressionLevel = 3;
+	static const int PNGCompressionLevel = 3;
 
-    compressionParams.clear();
-    extensions.clear();
+	compressionParams.clear();
+	extensions.clear();
 
-    switch (imageFormat)
-    {
-        case BARCODE_IMAGE_PNG:
-            compressionParams.push_back(CV_IMWRITE_PNG_COMPRESSION);
-            compressionParams.push_back(PNGCompressionLevel);
-            extensions.push_back(".png");
-            break;
-        case BARCODE_IMAGE_JPG:
-            extensions.push_back(".jpg");
-            extensions.push_back(".jpeg");
-            extensions.push_back(".jpe");
-            break;
-        case BARCODE_IMAGE_BMP:
-            extensions.push_back(".bmp");
-            extensions.push_back(".dib");
-            break;
-        default:
-            return BARCODE_ERROR_INVALID_OPTION;
-    }
-    return BARCODE_ERROR_NONE;
+	switch (imageFormat) {
+	case BARCODE_IMAGE_PNG:
+		compressionParams.push_back(CV_IMWRITE_PNG_COMPRESSION);
+		compressionParams.push_back(PNGCompressionLevel);
+		extensions.push_back(".png");
+		break;
+	case BARCODE_IMAGE_JPG:
+		extensions.push_back(".jpg");
+		extensions.push_back(".jpeg");
+		extensions.push_back(".jpe");
+		break;
+	case BARCODE_IMAGE_BMP:
+		extensions.push_back(".bmp");
+		extensions.push_back(".dib");
+		break;
+	default:
+		return BARCODE_ERROR_INVALID_OPTION;
+	}
+	return BARCODE_ERROR_NONE;
 }
 
 int createBarcode(
-        const std::string& message,
-        BarcodeType type,
-        BarcodeQREncodingMode encodingMode,
-        BarcodeQRErrorCorrectionLevel correctionLevel,
-        int qrVersion,
-        int showText,
-        zint_symbol *symbol)
+		const std::string& message,
+		BarcodeType type,
+		BarcodeQREncodingMode encodingMode,
+		BarcodeQRErrorCorrectionLevel correctionLevel,
+		int qrVersion,
+		int showText,
+		zint_symbol *symbol)
 {
-    // set input values
-    symbol->symbology = type;
-    symbol->input_mode = encodingMode;
-    symbol->option_1 = correctionLevel;
-    symbol->option_2 = qrVersion;
-    symbol->scale = 1;
-    symbol->show_hrt = showText;
+	/* set input values */
+	symbol->symbology = type;
+	symbol->input_mode = encodingMode;
+	symbol->option_1 = correctionLevel;
+	symbol->option_2 = qrVersion;
+	symbol->scale = 1;
+	symbol->show_hrt = showText;
 
-    // set default values
-    std::strncpy(symbol->fgcolour, "000000", 10);
-    std::strncpy(symbol->bgcolour, "ffffff", 10);
-    symbol->border_width = 1;
-    symbol->height = 50;
+	/* set default values */
+	std::strncpy(symbol->fgcolour, "000000", 10);
+	std::strncpy(symbol->bgcolour, "ffffff", 10);
+	symbol->border_width = 1;
+	symbol->height = 50;
 
-    if (type == BARCODE_QR) {
-        symbol->whitespace_width = 0;
-    } else {
-        symbol->whitespace_width = 10;
-    }
+	if (type == BARCODE_QR) {
+		symbol->whitespace_width = 0;
+	} else {
+		symbol->whitespace_width = 10;
+	}
 
-    // create barcode
-    const int rotationAngle = 0;
-    int error = ZBarcode_Encode_and_Buffer(
-                    symbol,
-                    (unsigned char*)(message.c_str()),
-                    message.length(),
-                    rotationAngle);
+	/* create barcode */
+	const int rotationAngle = 0;
+	int error = ZBarcode_Encode_and_Buffer(
+					symbol,
+					(unsigned char*)(message.c_str()),
+					message.length(),
+					rotationAngle);
 
-    return error;
+	return error;
 }
 
 int writeBufferToImageFile(
-        zint_symbol *symbol,
-        const std::string& imageFileName,
-        BarcodeImageFormat imageFormat,
-        const int imageWidth,
-        const int imageHeight)
+		zint_symbol *symbol,
+		const std::string& imageFileName,
+		BarcodeImageFormat imageFormat,
+		const int imageWidth,
+		const int imageHeight)
 {
-    if (imageWidth <= 0 || imageHeight <= 0)
-    {
-        LOGE("Barcode image size is invalid: %i x %i. Terminate write to "
-                "the image operation", imageWidth, imageHeight);
-        return BARCODE_ERROR_INVALID_DATA;
-    }
+	if (imageWidth <= 0 || imageHeight <= 0) {
+		LOGE("Barcode image size is invalid: %i x %i. Terminate write to "
+			"the image operation", imageWidth, imageHeight);
+		return BARCODE_ERROR_INVALID_DATA;
+	}
 
-     /* find directory */
-    std::string prefix_imageFileName = imageFileName.substr(0, imageFileName.find_last_of('/'));
-    LOGD("prefix_path: %s", prefix_imageFileName.c_str());
+	/* find directory */
+	std::string prefix_imageFileName = imageFileName.substr(0, imageFileName.find_last_of('/'));
+	LOGD("prefix_path: %s", prefix_imageFileName.c_str());
 
-    /* check the directory is available */
-    if (access(prefix_imageFileName.c_str(),F_OK))
-    {
-        LOGE("Can't save barcode image to the path. The path[%s] doesn't existed.", prefix_imageFileName.c_str());
-        return BARCODE_ERROR_INVALID_PATH;
-    }
+	/* check the directory is available */
+	if (access(prefix_imageFileName.c_str(), F_OK)) {
+		LOGE("Can't save barcode image to the path. The path[%s] doesn't existed.", prefix_imageFileName.c_str());
+		return BARCODE_ERROR_INVALID_PATH;
+	}
 
-    // check current extension
-    std::vector<std::string> expectedExtensions;
-    std::vector<int> compressionParams;
+	/* check current extension */
+	std::vector<std::string> expectedExtensions;
+	std::vector<int> compressionParams;
 
-    int error = getFormatEncodingInfo(imageFormat,
-            expectedExtensions, compressionParams);
+	int error = getFormatEncodingInfo(imageFormat,
+				expectedExtensions, compressionParams);
 
-    if (BARCODE_ERROR_NONE != error || expectedExtensions.empty())
-    {
-        LOGE("Image format is incorrectly specified or not supported");
-        return error;
-    }
+	if (BARCODE_ERROR_NONE != error || expectedExtensions.empty()) {
+		LOGE("Image format is incorrectly specified or not supported");
+		return error;
+	}
 
-    bool rightExtensionFlag = false;
+	bool rightExtensionFlag = false;
 
-    std::string resultFilePath(imageFileName);
+	std::string resultFilePath(imageFileName);
 
-    for (size_t extNum = 0; extNum < expectedExtensions.size(); ++extNum)
-    {
-        if (resultFilePath.size() >= expectedExtensions[extNum].size())
-        {
-            std::string givenExtension = resultFilePath.substr(
-                    resultFilePath.length() - expectedExtensions[extNum].size(),
-                    expectedExtensions[extNum].size());
+	for (size_t extNum = 0; extNum < expectedExtensions.size(); ++extNum) {
+		if (resultFilePath.size() >= expectedExtensions[extNum].size()) {
+			std::string givenExtension = resultFilePath.substr(
+				resultFilePath.length() - expectedExtensions[extNum].size(),
+				expectedExtensions[extNum].size());
 
-            std::transform(
-                    givenExtension.begin(), givenExtension.end(),
-                    givenExtension.begin(), ::tolower);
+			std::transform(
+				givenExtension.begin(), givenExtension.end(),
+				givenExtension.begin(), ::tolower);
 
-            if (givenExtension == expectedExtensions[extNum])
-            {
-                rightExtensionFlag = true;
-                break;
-            }
-        }
-    }
+			if (givenExtension == expectedExtensions[extNum]) {
+				rightExtensionFlag = true;
+				break;
+			}
+		}
+	}
 
-    if (!rightExtensionFlag)
-    {
-        resultFilePath += expectedExtensions[0];
-    }
+	if (!rightExtensionFlag) {
+		resultFilePath += expectedExtensions[0];
+	}
 
-    cv::Mat image(symbol->bitmap_height, symbol->bitmap_width, CV_8UC3, symbol->bitmap);
-    cv::resize(image, image, cv::Size(imageWidth, imageHeight), 0, 0, cv::INTER_AREA);
+	cv::Mat image(symbol->bitmap_height, symbol->bitmap_width, CV_8UC3, symbol->bitmap);
+	cv::resize(image, image, cv::Size(imageWidth, imageHeight), 0, 0, cv::INTER_AREA);
 
-    error = cv::imwrite(resultFilePath, image, compressionParams) ?
-           BARCODE_ERROR_NONE : BARCODE_ERROR_INVALID_DATA;
+	error = cv::imwrite(resultFilePath, image, compressionParams) ?
+			BARCODE_ERROR_NONE : BARCODE_ERROR_INVALID_DATA;
 
-    if (BARCODE_ERROR_NONE != error)
-    {
-        LOGE("Write barcode image to file %s operation failed.",
-                resultFilePath.c_str());
-        return error;
-    }
+	if (BARCODE_ERROR_NONE != error) {
+		LOGE("Write barcode image to file %s operation failed.",
+		resultFilePath.c_str());
+		return error;
+	}
 
-    return error;
+	return error;
 }
 
 } /* anonymous namespace */
 
 int BarcodeGenerator::generateBarcodeToImage(
-        const std::string& imageFileName,
-        BarcodeImageFormat imageFormat,
-        const int imageWidth,
-        const int imageHeight,
-        const std::string& message,
-        BarcodeType type,
-        BarcodeQREncodingMode encodingMode,
-        BarcodeQRErrorCorrectionLevel correctionLevel,
-        int qrVersion,
-        int showText)
+		const std::string& imageFileName,
+		BarcodeImageFormat imageFormat,
+		const int imageWidth,
+		const int imageHeight,
+		const std::string& message,
+		BarcodeType type,
+		BarcodeQREncodingMode encodingMode,
+		BarcodeQRErrorCorrectionLevel correctionLevel,
+		int qrVersion,
+		int showText)
 {
-    zint_symbol *symbol = ZBarcode_Create();
+	zint_symbol *symbol = ZBarcode_Create();
 
-    if(symbol == NULL)
-    {
-        LOGE("ZBarcode creation failed");
+	if(symbol == NULL) {
+		LOGE("ZBarcode creation failed");
+		return BARCODE_ERROR_ENCODING_PROBLEM;
+	}
 
-        return BARCODE_ERROR_ENCODING_PROBLEM;
-    }
+	int error = createBarcode(
+					message,
+					type,
+					encodingMode,
+					correctionLevel,
+					qrVersion,
+					showText,
+					symbol);
 
-    int error = createBarcode(
-                    message,
-                    type,
-                    encodingMode,
-                    correctionLevel,
-                    qrVersion,
-                    showText,
-                    symbol);
+	if (error != BARCODE_ERROR_NONE) {
+		LOGE("Barcode creation failed, clean memory");
+		ZBarcode_Delete(symbol);
+		return error;
+	}
 
-    if (error != BARCODE_ERROR_NONE)
-    {
-        LOGE("Barcode creation failed, clean memory");
-        ZBarcode_Delete(symbol);
-        return error;
-    }
+	error = writeBufferToImageFile(
+				symbol,
+				imageFileName,
+				imageFormat,
+				imageWidth,
+				imageHeight);
+	if (error != BARCODE_ERROR_NONE) {
+		LOGE("Barcode [%s] file write fail, clean memory", imageFileName.c_str());
+	} else {
+		LOGI("Barcode image [%s] is successfully generated, clean memory", imageFileName.c_str());
+	}
 
-    error = writeBufferToImageFile(
-                symbol,
-                imageFileName,
-                imageFormat,
-                imageWidth,
-                imageHeight);
-    if (error != BARCODE_ERROR_NONE)
-    {
-        LOGE("Barcode [%s] file write fail, clean memory", imageFileName.c_str());
-    }
-    else
-    {
-        LOGI("Barcode image [%s] is successfully generated, clean memory", imageFileName.c_str());
-    }
+	ZBarcode_Delete(symbol);
 
-    ZBarcode_Delete(symbol);
-
-    return error;
+	return error;
 }
 
 int BarcodeGenerator::generateBarcodeToBuffer(
-        unsigned char **imageBuffer,
-        unsigned int *imageWidth,
-        unsigned int *imageHeight,
-        unsigned int *imageChannels,
-        const std::string& message,
-        BarcodeType type,
-        BarcodeQREncodingMode encodingMode,
-        BarcodeQRErrorCorrectionLevel correctionLevel,
-        int qrVersion,
-        int showText)
+		unsigned char **imageBuffer,
+		unsigned int *imageWidth,
+		unsigned int *imageHeight,
+		unsigned int *imageChannels,
+		const std::string& message,
+		BarcodeType type,
+		BarcodeQREncodingMode encodingMode,
+		BarcodeQRErrorCorrectionLevel correctionLevel,
+		int qrVersion,
+		int showText)
 {
-    zint_symbol *symbol = ZBarcode_Create();
+	zint_symbol *symbol = ZBarcode_Create();
 
-    if(symbol == NULL)
-    {
-        LOGE("ZBarcode creation failed");
+	if(symbol == NULL) {
+		LOGE("ZBarcode creation failed");
 
-        return BARCODE_ERROR_ENCODING_PROBLEM;
-    }
+		return BARCODE_ERROR_ENCODING_PROBLEM;
+	}
 
-    int error = createBarcode(
-                    message,
-                    type,
-                    encodingMode,
-                    correctionLevel,
-                    qrVersion,
-                    showText,
-                    symbol);
+	int error = createBarcode(
+					message,
+					type,
+					encodingMode,
+					correctionLevel,
+					qrVersion,
+					showText,
+					symbol);
 
-    if (error != BARCODE_ERROR_NONE)
-    {
-        LOGE("Barcode creation failed, clean memory");
-        ZBarcode_Delete(symbol);
-        return error;
-    }
+	if (error != BARCODE_ERROR_NONE) {
+		LOGE("Barcode creation failed, clean memory");
+		ZBarcode_Delete(symbol);
+		return error;
+	}
 
-    // fill output buffer
-    *imageWidth = symbol->bitmap_width;
-    *imageHeight = symbol->bitmap_height;
-    *imageChannels = 3;
-    const unsigned int imageBufferSize = (*imageWidth) * (*imageHeight) * (*imageChannels);
-    *imageBuffer = new unsigned char [imageBufferSize];
-    memmove(*imageBuffer, symbol->bitmap, imageBufferSize);
+	/* fill output buffer */
+	*imageWidth = symbol->bitmap_width;
+	*imageHeight = symbol->bitmap_height;
+	*imageChannels = 3;
+	const unsigned int imageBufferSize = (*imageWidth) * (*imageHeight) * (*imageChannels);
+	*imageBuffer = new unsigned char[imageBufferSize];
+	memmove(*imageBuffer, symbol->bitmap, imageBufferSize);
 
-    LOGI("Barcode buffer has been successfully generated, clean memory");
-    ZBarcode_Delete(symbol);
+	LOGI("Barcode buffer has been successfully generated, clean memory");
+	ZBarcode_Delete(symbol);
 
-    return BARCODE_ERROR_NONE;
+	return BARCODE_ERROR_NONE;
 }
 
 } /* Barcode */

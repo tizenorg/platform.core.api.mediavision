@@ -19,293 +19,263 @@
 
 #include "mv_private.h"
 
-namespace MediaVision
-{
-namespace Image
-{
-
+namespace MediaVision {
+namespace Image {
 ImageRecognizer::ImageRecognizer(
-        const cv::Mat& sceneImage,
-        const FeaturesExtractingParams& params) :
-                m_scene(sceneImage, params)
+	const cv::Mat& sceneImage,
+	const FeaturesExtractingParams& params) :
+	m_scene(sceneImage, params)
 {
-    ; /* NULL */
+	; /* NULL */
 }
 
 ImageRecognizer::ImageRecognizer(const ImageObject& scene) :
-        m_scene(scene)
+	m_scene(scene)
 {
-    ; /* NULL */
+	; /* NULL */
 }
 
 ImageRecognizer::~ImageRecognizer()
 {
-    ; /* NULL */
+	; /* NULL */
 }
 
 bool ImageRecognizer::recognize(
-        const ImageObject& target,
-        const RecognitionParams& params,
-        std::vector<cv::Point2f>& contour) const
+		const ImageObject& target,
+		const RecognitionParams& params,
+		std::vector<cv::Point2f>& contour) const
 {
-    cv::Mat homophraphyMatrix;
+	cv::Mat homophraphyMatrix;
 
-    contour.clear();
+	contour.clear();
 
-    if (MinimumNumberOfFeatures > target.m_objectKeypoints.size())
-    {
-        LOGW("[%s] Image object can't be recognized (Recognition rate is too small).", __FUNCTION__);
-        return false;
-    }
-    if (MinimumNumberOfFeatures > m_scene.m_objectKeypoints.size())
-    {
-        LOGW("[%s] Scene image can't be analyzed (Too few features for recognition).", __FUNCTION__);
-        return false;
-    }
+	if (MinimumNumberOfFeatures > target.m_objectKeypoints.size()) {
+		LOGW("[%s] Image object can't be recognized (Recognition rate is too small).", __FUNCTION__);
+		return false;
+	}
 
-    if(!findHomophraphyMatrix(target, params, homophraphyMatrix))
-    {
-        LOGE("[%s] Can't match the features.", __FUNCTION__);
-        return false;
-    }
+	if (MinimumNumberOfFeatures > m_scene.m_objectKeypoints.size()) {
+		LOGW("[%s] Scene image can't be analyzed (Too few features for recognition).", __FUNCTION__);
+		return false;
+	}
 
-    cv::perspectiveTransform(target.m_boundingContour, contour, homophraphyMatrix);
+	if(!findHomophraphyMatrix(target, params, homophraphyMatrix)) {
+		LOGE("[%s] Can't match the features.", __FUNCTION__);
+		return false;
+	}
 
-    if (target.m_boundingContour.size() == NumberOfQuadrangleCorners)
-    {
-        if (!isPossibleQuadrangleCorners(contour.data()))
-        {
-            LOGI("[%s] Image object isn't recognized.", __FUNCTION__);
-            contour.clear();
-            return false;
-        }
-    }
+	cv::perspectiveTransform(target.m_boundingContour, contour, homophraphyMatrix);
 
-    LOGI("[%s] Image object is recognized.", __FUNCTION__);
-    return true;
+	if (target.m_boundingContour.size() == NumberOfQuadrangleCorners) {
+		if (!isPossibleQuadrangleCorners(contour.data())) {
+			LOGI("[%s] Image object isn't recognized.", __FUNCTION__);
+			contour.clear();
+			return false;
+		}
+	}
+
+	LOGI("[%s] Image object is recognized.", __FUNCTION__);
+	return true;
 }
 
 bool ImageRecognizer::findHomophraphyMatrix(
-        const ImageObject& target,
-        const RecognitionParams& params,
-        cv::Mat& homophraphyMatrix) const
+		const ImageObject& target,
+		const RecognitionParams& params,
+		cv::Mat& homophraphyMatrix) const
 {
-    std::vector<cv::DMatch> matches;
+	std::vector<cv::DMatch> matches;
 
-    m_matcher.match(target.m_objectDescriptors, m_scene.m_objectDescriptors, matches);
+	m_matcher.match(target.m_objectDescriptors, m_scene.m_objectDescriptors, matches);
 
-    size_t matchesNumber = matches.size();
+	size_t matchesNumber = matches.size();
 
-    if (MinimumNumberOfFeatures > matchesNumber)
-    {
-        LOGE("[%s] Can't match the features.", __FUNCTION__);
-        return false;
-    }
+	if (MinimumNumberOfFeatures > matchesNumber) {
+		LOGE("[%s] Can't match the features.", __FUNCTION__);
+		return false;
+	}
 
-    size_t requiredMatchesNumber =
-            params.mRequiredMatchesPart * matchesNumber;
+	size_t requiredMatchesNumber =
+			params.mRequiredMatchesPart * matchesNumber;
 
-    size_t allowableMatchesNumberError =
-            params.mAllowableMatchesPartError * requiredMatchesNumber;
+	size_t allowableMatchesNumberError =
+			params.mAllowableMatchesPartError * requiredMatchesNumber;
 
-    if (matchesNumber - allowableMatchesNumberError >
-        (size_t)params.mMinMatchesNumber &&
-        requiredMatchesNumber + allowableMatchesNumberError <
-        matchesNumber)
-    {
-        if (requiredMatchesNumber - allowableMatchesNumberError <
-            (size_t)params.mMinMatchesNumber)
-        {
-            if (requiredMatchesNumber + allowableMatchesNumberError >
-                (size_t)params.mMinMatchesNumber)
-            {
-                requiredMatchesNumber = ((size_t)params.mMinMatchesNumber +
-                        requiredMatchesNumber + allowableMatchesNumberError) / 2;
+	if ((matchesNumber - allowableMatchesNumberError) >
+		(size_t)params.mMinMatchesNumber &&
+		(requiredMatchesNumber + allowableMatchesNumberError) <
+		matchesNumber) {
+		if ((requiredMatchesNumber - allowableMatchesNumberError) <
+			(size_t)params.mMinMatchesNumber) {
+			if ((requiredMatchesNumber + allowableMatchesNumberError) >
+				(size_t)params.mMinMatchesNumber) {
+				requiredMatchesNumber = ((size_t)params.mMinMatchesNumber +
+						requiredMatchesNumber + allowableMatchesNumberError) / 2;
 
-                allowableMatchesNumberError = requiredMatchesNumber-
-                        (size_t)params.mMinMatchesNumber +
-                        allowableMatchesNumberError;
-            }
-            else
-            {
-                const size_t minimalAllowableMatchesNumberError = 2u;
+				allowableMatchesNumberError = requiredMatchesNumber-
+						(size_t)params.mMinMatchesNumber +
+						allowableMatchesNumberError;
+			} else {
+				const size_t minimalAllowableMatchesNumberError = 2u;
 
-                requiredMatchesNumber = params.mMinMatchesNumber +
-                        minimalAllowableMatchesNumberError;
+				requiredMatchesNumber = params.mMinMatchesNumber +
+						minimalAllowableMatchesNumberError;
 
-                allowableMatchesNumberError = minimalAllowableMatchesNumberError;
-            }
-        }
+				allowableMatchesNumberError = minimalAllowableMatchesNumberError;
+			}
+		}
 
-        const size_t filterAmount = matchesSelection(matches,
-                                                  requiredMatchesNumber,
-                                                  allowableMatchesNumberError);
+		const size_t filterAmount = matchesSelection(matches,
+													requiredMatchesNumber,
+													allowableMatchesNumberError);
 
-        if (filterAmount >= MinimumNumberOfFeatures)
-        {
-            matches.resize(filterAmount);
-        }
-        else
-        {
-            LOGW("[%s] Wrong filtration of feature matches.", __FUNCTION__);
-        }
+		if (filterAmount >= MinimumNumberOfFeatures) {
+			matches.resize(filterAmount);
+		} else {
+			LOGW("[%s] Wrong filtration of feature matches.", __FUNCTION__);
+		}
 
-        matchesNumber = matches.size();
-    }
+		 matchesNumber = matches.size();
+	}
 
-    std::vector<cv::Point2f> objectPoints(matchesNumber);
-    std::vector<cv::Point2f> scenePoints(matchesNumber);
+	std::vector<cv::Point2f> objectPoints(matchesNumber);
+	std::vector<cv::Point2f> scenePoints(matchesNumber);
 
-    for (size_t matchIdx = 0; matchIdx < matchesNumber; ++matchIdx)
-    {
-        objectPoints[matchIdx] =
-                target.m_objectKeypoints[matches[matchIdx].queryIdx].pt;
+	for (size_t matchIdx = 0; matchIdx < matchesNumber; ++matchIdx) {
+		objectPoints[matchIdx] =
+				target.m_objectKeypoints[matches[matchIdx].queryIdx].pt;
 
-        scenePoints[matchIdx] =
-                m_scene.m_objectKeypoints[matches[matchIdx].trainIdx].pt;
-    }
+		scenePoints[matchIdx] =
+				m_scene.m_objectKeypoints[matches[matchIdx].trainIdx].pt;
+	}
 
-    homophraphyMatrix = cv::findHomography(objectPoints, scenePoints, CV_RANSAC);
+	homophraphyMatrix = cv::findHomography(objectPoints, scenePoints, CV_RANSAC);
 
-    return true;
+	return true;
 }
 
 size_t ImageRecognizer::matchesSelection(
-        std::vector<cv::DMatch>& examples,
-        unsigned int filterAmount, unsigned int allowableError) const
+		std::vector<cv::DMatch>& examples,
+		unsigned int filterAmount, unsigned int allowableError) const
 {
-    size_t sizeOfExamples = examples.size();
+	size_t sizeOfExamples = examples.size();
 
-    if ((filterAmount + allowableError) > sizeOfExamples)
-    {
-        return examples.size();
-    }
+	if ((filterAmount + allowableError) > sizeOfExamples) {
+		return examples.size();
+	}
 
-    int startLeftLimit = 0;
-    int startRightLimit = sizeOfExamples - 1;
+	int startLeftLimit = 0;
+	int startRightLimit = sizeOfExamples - 1;
 
-    int leftLimit = startLeftLimit;
-    int rightLimit = startRightLimit;
+	int leftLimit = startLeftLimit;
+	int rightLimit = startRightLimit;
 
-    int requiredNumber = filterAmount;
+	int requiredNumber = filterAmount;
 
-    float supportElement = 0.f;
+	float supportElement = 0.f;
 
-    while (true)
-    {
-        if (leftLimit >= rightLimit)
-        {
-            if (leftLimit < (requiredNumber - (int)allowableError))
-            {
-                leftLimit = requiredNumber + (int)allowableError;
-            }
+	while (true) {
+		if (leftLimit >= rightLimit) {
+			if (leftLimit < (requiredNumber - (int)allowableError)) {
+				leftLimit = requiredNumber + (int)allowableError;
+			}
 
-            break;
-        }
+			break;
+		}
 
-        supportElement = computeLinearSupportElement(examples, requiredNumber,
-                leftLimit, rightLimit);
+		supportElement = computeLinearSupportElement(examples, requiredNumber,
+				leftLimit, rightLimit);
 
-        // Iteration similar quicksort
-        while (true)
-        {
-            // Search the leftmost element which have bigger confidence than support element
-            while (examples[leftLimit].distance <= supportElement &&
-                leftLimit < startRightLimit)
-            {
-                ++leftLimit;
-            }
+		/* Iteration similar quicksort */
+		while (true) {
+			/* Search the leftmost element
+			 *which have bigger confidence than support element
+			 */
+			while (examples[leftLimit].distance <= supportElement &&
+				leftLimit < startRightLimit) {
+				++leftLimit;
+			}
 
-            // Search the rightmost element which have smaller confidence than support element
-            while (examples[rightLimit].distance >= supportElement &&
-                rightLimit >= startLeftLimit)
-            {
-                --rightLimit;
-            }
+			/* Search the rightmost element
+			 *which have smaller confidence than support element
+			 */
+			while (examples[rightLimit].distance >= supportElement &&
+				rightLimit >= startLeftLimit) {
+				--rightLimit;
+			}
 
-            if (leftLimit >= rightLimit)
-            {
-                break;
-            }
+			if (leftLimit >= rightLimit) {
+				break;
+			}
 
-            // Swap
-            std::swap(examples[leftLimit], examples[rightLimit]);
-        }
-        if (abs(filterAmount - leftLimit) <= (int)allowableError)
-        {
-            break;
-        }
-        if ((int)filterAmount > leftLimit)
-        {
-            requiredNumber -= leftLimit - startLeftLimit;
+			/* Swap */
+			std::swap(examples[leftLimit], examples[rightLimit]);
+		}
+		if (abs(filterAmount - leftLimit) <= (int)allowableError) {
+			break;
+		}
+		if ((int)filterAmount > leftLimit) {
+			requiredNumber -= leftLimit - startLeftLimit;
 
-            rightLimit = startRightLimit;
-            startLeftLimit = leftLimit;
-        }
-        else
-        {
-            leftLimit = startLeftLimit;
-            startRightLimit = rightLimit;
-        }
-    }
+			rightLimit = startRightLimit;
+			startLeftLimit = leftLimit;
+		} else {
+			leftLimit = startLeftLimit;
+			startRightLimit = rightLimit;
+		}
+	}
 
-    return (size_t)leftLimit;
+	return (size_t)leftLimit;
 }
 
 float ImageRecognizer::computeLinearSupportElement(const std::vector<cv::DMatch>& examples,
-        int requiredNumber, int leftLimit, int rightLimit) const
+		int requiredNumber, int leftLimit, int rightLimit) const
 {
-    int sizeOfExamples = rightLimit - leftLimit + 1;
+	int sizeOfExamples = rightLimit - leftLimit + 1;
 
-    if (sizeOfExamples <= 1)
-    {
-        return examples[leftLimit].distance;
-    }
+	if (sizeOfExamples <= 1) {
+		return examples[leftLimit].distance;
+	}
 
-    float minValue = examples[leftLimit].distance;
-    float maxValue = examples[leftLimit].distance;
+	float minValue = examples[leftLimit].distance;
+	float maxValue = examples[leftLimit].distance;
 
-    // Finding the maximum and minimum values
-    for (int i = leftLimit + 1; i <= rightLimit; ++i)
-    {
-        if (minValue > examples[i].distance)
-        {
-            minValue = examples[i].distance;
-        }
-        else if (maxValue < examples[i].distance)
-        {
-            maxValue = examples[i].distance;
-        }
-    }
+	/* Finding the maximum and minimum values */
+	for (int i = leftLimit + 1; i <= rightLimit; ++i) {
+		if (minValue > examples[i].distance) {
+			minValue = examples[i].distance;
+		} else if (maxValue < examples[i].distance) {
+			maxValue = examples[i].distance;
+		}
+	}
 
-    // Linear approximation. f(x) = k*x + b
-    // f(sizeOfExamples) = maxValue; f(1) = minValue;
-    const float b = (maxValue - minValue * sizeOfExamples) / (1 - sizeOfExamples);
-    const float k = minValue - b;
+	/* Linear approximation. f(x) = k*x + b
+	 * f(sizeOfExamples) = maxValue; f(1) = minValue;
+	 */
+	const float b = (maxValue - minValue * sizeOfExamples) / (1 - sizeOfExamples);
+	const float k = minValue - b;
 
-    // Calculation of the support element
-    return k * requiredNumber + b;
+	/* Calculation of the support element */
+	return k * requiredNumber + b;
 }
 
 bool ImageRecognizer::isPossibleQuadrangleCorners(
-        const cv::Point2f corners[NumberOfQuadrangleCorners])
+		const cv::Point2f corners[NumberOfQuadrangleCorners])
 {
-    static const float Epsilon = cv::TermCriteria::EPS;
-    static const float MinSizeOfDetectedArea = 30.f;
+	static const float Epsilon = cv::TermCriteria::EPS;
+	static const float MinSizeOfDetectedArea = 30.f;
 
-    const float firstSemiArea = getTriangleArea(corners[0], corners[2], corners[1]) +
-            getTriangleArea(corners[0], corners[2], corners[3]);
+	const float firstSemiArea = getTriangleArea(corners[0], corners[2], corners[1]) +
+			getTriangleArea(corners[0], corners[2], corners[3]);
 
-    const float secondSemiArea = getTriangleArea(corners[1], corners[3], corners[2]) +
-            getTriangleArea(corners[1], corners[3], corners[0]);
+	const float secondSemiArea = getTriangleArea(corners[1], corners[3], corners[2]) +
+			getTriangleArea(corners[1], corners[3], corners[0]);
 
-    if (Epsilon < fabs(firstSemiArea - secondSemiArea) ||
-        MinSizeOfDetectedArea > (firstSemiArea + secondSemiArea))
-    {
-        return false;
-    }
+	if (Epsilon < fabs(firstSemiArea - secondSemiArea) ||
+		MinSizeOfDetectedArea > (firstSemiArea + secondSemiArea)) {
+		return false;
+	}
 
-    return true;
+	return true;
 }
 
 } /* Image */

@@ -22,83 +22,74 @@
 
 #include <opencv/cv.h>
 
-namespace MediaVision
-{
-namespace Face
-{
-
+namespace MediaVision {
+namespace Face {
 static const int MinDetectionWidth = 30;
 static const int MinDetectionHeight = 30;
 
 FaceRecognizerConfig::FaceRecognizerConfig() :
-        mHaarcascadeFilepath(
-                "/usr/share/OpenCV/haarcascades/haarcascade_smile.xml")
+	mHaarcascadeFilepath(
+				"/usr/share/OpenCV/haarcascades/haarcascade_smile.xml")
 {
-    ; /* NULL */
+	; /* NULL */
 }
 
 int FaceExpressionRecognizer::recognizeFaceExpression(
-                   const cv::Mat& grayImage,
-                   const mv_rectangle_s& faceLocation,
-                   mv_face_facial_expression_e *faceExpression,
-                   const FaceRecognizerConfig& config)
+					const cv::Mat& grayImage,
+					const mv_rectangle_s& faceLocation,
+					mv_face_facial_expression_e *faceExpression,
+					const FaceRecognizerConfig& config)
 {
-    if (NULL == faceExpression)
-    {
-        return MEDIA_VISION_ERROR_INVALID_PARAMETER;
-    }
+	if (NULL == faceExpression) {
+		return MEDIA_VISION_ERROR_INVALID_PARAMETER;
+	}
 
-    const int smileRectHeight = cvRound((float)faceLocation.height / 2);
+	const int smileRectHeight = cvRound((float)faceLocation.height / 2);
 
-    const cv::Rect roi(
-                  faceLocation.point.x,
-                  faceLocation.point.y + faceLocation.height - smileRectHeight,
-                  faceLocation.width,
-                  smileRectHeight);
+	const cv::Rect roi(
+					faceLocation.point.x,
+					faceLocation.point.y + faceLocation.height - smileRectHeight,
+					faceLocation.width,
+					smileRectHeight);
 
-    if (roi.width < MinDetectionWidth ||
-        roi.height < MinDetectionHeight)
-    {
-        (*faceExpression) = MV_FACE_UNKNOWN;
-        return MEDIA_VISION_ERROR_NONE;
-    }
+	if (roi.width < MinDetectionWidth ||
+		roi.height < MinDetectionHeight) {
+		(*faceExpression) = MV_FACE_UNKNOWN;
+		return MEDIA_VISION_ERROR_NONE;
+	}
 
-    if (0 > roi.x ||
-        0 > roi.y ||
-        roi.x + roi.width > grayImage.cols ||
-        roi.y + roi.height > grayImage.rows)
-    {
-        return MEDIA_VISION_ERROR_INVALID_OPERATION;
-    }
+	if (0 > roi.x ||
+		0 > roi.y ||
+		roi.x + roi.width > grayImage.cols ||
+		roi.y + roi.height > grayImage.rows) {
+		return MEDIA_VISION_ERROR_INVALID_OPERATION;
+	}
 
-    const cv::Mat mouthImg(grayImage, roi);
+	const cv::Mat mouthImg(grayImage, roi);
 
-    std::vector<cv::Rect> areas;
+	std::vector<cv::Rect> areas;
 
-    cv::CascadeClassifier smileClassifier;
-    smileClassifier.load(config.mHaarcascadeFilepath);
-    smileClassifier.detectMultiScale(
-                            mouthImg,
-                            areas,
-                            1.1,
-                            80,
-                            cv::CASCADE_FIND_BIGGEST_OBJECT |
-                            cv::CASCADE_DO_CANNY_PRUNING    |
-                            cv::CASCADE_SCALE_IMAGE,
-                            cv::Size(MinDetectionWidth, MinDetectionHeight));
+	cv::CascadeClassifier smileClassifier;
+	smileClassifier.load(config.mHaarcascadeFilepath);
+	smileClassifier.detectMultiScale(
+							mouthImg,
+							areas,
+							1.1,
+							80,
+							cv::CASCADE_FIND_BIGGEST_OBJECT |
+							cv::CASCADE_DO_CANNY_PRUNING    |
+							cv::CASCADE_SCALE_IMAGE,
+							cv::Size(MinDetectionWidth, MinDetectionHeight));
 
-    (*faceExpression) = MV_FACE_UNKNOWN;
-    const size_t smilesFoundSize = areas.size();
-    if (smilesFoundSize == 0)
-    {
-        (*faceExpression) = MV_FACE_NEUTRAL;
-    }
-    else if (smilesFoundSize == 1)
-    {
-        (*faceExpression) = MV_FACE_SMILE;
-    }
+	(*faceExpression) = MV_FACE_UNKNOWN;
+	const size_t smilesFoundSize = areas.size();
+	if (smilesFoundSize == 0) {
+		(*faceExpression) = MV_FACE_NEUTRAL;
+	} else if (smilesFoundSize == 1) {
+		(*faceExpression) = MV_FACE_SMILE;
+	}
 
-    return MEDIA_VISION_ERROR_NONE;
+	return MEDIA_VISION_ERROR_NONE;
 }
 
 } /* Face */

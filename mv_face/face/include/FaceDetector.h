@@ -27,11 +27,8 @@
  *        detection functionality.
  */
 
-namespace MediaVision
-{
-namespace Face
-{
-
+namespace MediaVision {
+namespace Face {
 /**
  * @class   FaceDetector
  * @brief   The Face Detector container.
@@ -39,71 +36,68 @@ namespace Face
  *
  * @since_tizen 3.0
  */
-class FaceDetector
-{
+class FaceDetector {
 public:
+	/**
+	 * @brief   Creates a FaceDetector.
+	 *
+	 * @since_tizen 3.0
+	 */
+	FaceDetector();
 
-    /**
-     * @brief   Creates a FaceDetector.
-     *
-     * @since_tizen 3.0
-     */
-    FaceDetector();
+	/**
+	 * @brief   Destroys the FaceDetector and releases all its resources.
+	 *
+	 * @since_tizen 3.0
+	 */
+	virtual ~FaceDetector();
 
-    /**
-     * @brief   Destroys the FaceDetector and releases all its resources.
-     *
-     * @since_tizen 3.0
-     */
-    virtual ~FaceDetector();
+	/**
+	 * @brief Performs face detection functionality.
+	 * @details Use this function to launch face detection algorithm which
+	 *          used the haarcascade set by setHaarcascadeFilepath().
+	 *
+	 * @since_tizen 3.0
+	 * @param [in]  image           The image where faces will be detected
+	 * @param [in]  roi             Region of image where faces will be detected
+	 * @param [in]  minSize         Minimum size of faces which will be detected
+	 * @param [out] faceLocations   The result locations of detected faces.
+	 * @return true if detect process is completely finished. Otherwise return false.
+	 *
+	 * @pre Set a face haarcascade by calling setHaarcascadeFilepath()
+	 *
+	 * @see setHaarcascadeFilepath()
+	 */
+	bool detectFaces(
+			const cv::Mat& image,
+			const cv::Rect& roi,
+			const cv::Size& minSize,
+			std::vector<cv::Rect>& faceLocations);
 
-    /**
-     * @brief Performs face detection functionality.
-     * @details Use this function to launch face detection algorithm which
-     *          used the haarcascade set by setHaarcascadeFilepath().
-     *
-     * @since_tizen 3.0
-     * @param [in]  image           The image where faces will be detected
-     * @param [in]  roi             Region of image where faces will be detected
-     * @param [in]  minSize         Minimum size of faces which will be detected
-     * @param [out] faceLocations   The result locations of detected faces.
-     * @return true if detect process is completely finished. Otherwise return false.
-     *
-     * @pre Set a face haarcascade by calling setHaarcascadeFilepath()
-     *
-     * @see setHaarcascadeFilepath()
-     */
-    bool detectFaces(
-            const cv::Mat& image,
-            const cv::Rect& roi,
-            const cv::Size& minSize,
-            std::vector<cv::Rect>& faceLocations);
-
-    /**
-     * @brief Loads haar cascade classifier for detection process.
-     * @details This method is mandatory for normally detecting process.
-     *
-     * @since_tizen 3.0
-     * @param [in] haarcascadeFilepath The path to the file, which contains haar
-     *                                 cascade classifier information for
-     *                                 detection process.
-     * @return true if cascade is loaded from file and ready for detecting
-     *         process. Otherwise is false.
-     */
-    bool loadHaarcascade(const std::string& haarcascadeFilepath);
+	/**
+	 * @brief Loads haar cascade classifier for detection process.
+	 * @details This method is mandatory for normally detecting process.
+	 *
+	 * @since_tizen 3.0
+	 * @param [in] haarcascadeFilepath The path to the file, which contains haar
+	 *                                 cascade classifier information for
+	 *                                 detection process.
+	 * @return true if cascade is loaded from file and ready for detecting
+	 *         process. Otherwise is false.
+	 */
+	bool loadHaarcascade(const std::string& haarcascadeFilepath);
 
 private:
+	cv::CascadeClassifier m_faceCascade; /**< Cascade classifier of the face
+												detecting process. */
 
-    cv::CascadeClassifier m_faceCascade; /**< Cascade classifier of the face
-                                              detecting process. */
+	std::string m_haarcascadeFilepath;   /**< Path to the file, which contains
+												cascade classifier information. */
 
-    std::string m_haarcascadeFilepath;   /**< Path to the file, which contains
-                                              cascade classifier information. */
-
-    bool m_faceCascadeIsLoaded; /**< Flag to determine the state of the
-                                     m_faceCascade class. true if cascade is loaded
-                                     from file and is ready to detecting process.
-                                     Otherwise is false. */
+	bool m_faceCascadeIsLoaded; /**< Flag to determine the state of the
+										m_faceCascade class. true if cascade is loaded
+										from file and is ready to detecting process.
+										Otherwise is false. */
 };
 
 } /* Face */

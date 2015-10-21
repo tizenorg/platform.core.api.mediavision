@@ -22,26 +22,22 @@
  * @brief This file contains the Barcode options.
  */
 
-namespace MediaVision
-{
-namespace Barcode
-{
-
+namespace MediaVision {
+namespace Barcode {
 /**
  * @brief The Barcode type enumeration.
  *
  * @since_tizen 2.4
  */
-enum BarcodeType
-{
-    BARCODE_QR = 58,
-    BARCODE_UPCA = 34,
-    BARCODE_UPCE = 37,
-    BARCODE_EAN8 = 13,
-    BARCODE_EAN13 = BARCODE_EAN8,
-    BARCODE_CODE39 = 8,
-    BARCODE_CODE128 = 20,
-    BARCODE_INTERLEAVE_2_5 = 3
+enum BarcodeType {
+	BARCODE_QR = 58,
+	BARCODE_UPCA = 34,
+	BARCODE_UPCE = 37,
+	BARCODE_EAN8 = 13,
+	BARCODE_EAN13 = BARCODE_EAN8,
+	BARCODE_CODE39 = 8,
+	BARCODE_CODE128 = 20,
+	BARCODE_INTERLEAVE_2_5 = 3
 };
 
 /**
@@ -50,15 +46,13 @@ enum BarcodeType
  * @since_tizen 2.4
  * @remarks This is unavailable for 1D barcodes.
  */
-enum BarcodeQRErrorCorrectionLevel
-{
-    BARCODE_QR_ECC_UNAVAILABLE = 0,
-    BARCODE_QR_ECC_LOW = 1,
-    BARCODE_QR_ECC_MEDIUM = 2,
-    BARCODE_QR_ECC_QUARTILE = 3,
-    BARCODE_QR_ECC_HIGH = 4
+enum BarcodeQRErrorCorrectionLevel {
+	BARCODE_QR_ECC_UNAVAILABLE = 0,
+	BARCODE_QR_ECC_LOW = 1,
+	BARCODE_QR_ECC_MEDIUM = 2,
+	BARCODE_QR_ECC_QUARTILE = 3,
+	BARCODE_QR_ECC_HIGH = 4
 };
-
 
 /**
  * @brief The Barcode encoding mode enumeration.
@@ -66,14 +60,13 @@ enum BarcodeQRErrorCorrectionLevel
  * @since_tizen 2.4
  * @remarks This is unavailable for 1D barcodes.
  */
-enum BarcodeQREncodingMode
-{
-    BARCODE_QR_MODE_NUMERIC = 1,
-    BARCODE_QR_MODE_ALPHANUMERIC = 1,
-    BARCODE_QR_MODE_BYTE = 0,
-    BARCODE_QR_MODE_UTF8 = 1,
-    BARCODE_QR_MODE_KANJI = 3,
-    BARCODE_QR_MODE_UNAVAILABLE
+enum BarcodeQREncodingMode {
+	BARCODE_QR_MODE_NUMERIC = 1,
+	BARCODE_QR_MODE_ALPHANUMERIC = 1,
+	BARCODE_QR_MODE_BYTE = 0,
+	BARCODE_QR_MODE_UTF8 = 1,
+	BARCODE_QR_MODE_KANJI = 3,
+	BARCODE_QR_MODE_UNAVAILABLE
 };
 
 /**
@@ -81,11 +74,10 @@ enum BarcodeQREncodingMode
  *
  * @since_tizen 2.4
  */
-enum BarcodeImageFormat
-{
-    BARCODE_IMAGE_JPG,
-    BARCODE_IMAGE_PNG,
-    BARCODE_IMAGE_BMP
+enum BarcodeImageFormat {
+	BARCODE_IMAGE_JPG,
+	BARCODE_IMAGE_PNG,
+	BARCODE_IMAGE_BMP
 };
 
 /**
@@ -93,8 +85,7 @@ enum BarcodeImageFormat
  *
  * @since_tizen 2.4
  */
-enum BarcodeGenTextOpt
-{
+enum BarcodeGenTextOpt {
 	BARCODE_GEN_TEXT_INVISIBLE,
 	BARCODE_GEN_TEXT_VISIBLE
 };
@@ -104,18 +95,17 @@ enum BarcodeGenTextOpt
  *
  * @since_tizen 2.4
  */
-enum BarcodeError
-{
-    BARCODE_ERROR_NONE = 0,
-    BARCODE_WARNING_INVALID_OPTION = 2,
-    BARCODE_ERROR_TOO_LONG = 5,
-    BARCODE_ERROR_INVALID_DATA = 6,
-    BARCODE_ERROR_INVALID_CHECK = 7,
-    BARCODE_ERROR_INVALID_OPTION = 8,
-    BARCODE_ERROR_ENCODING_PROBLEM = 9,
-    BARCODE_ERROR_FILE_ACCESS = 10,
-    BARCODE_ERROR_MEMORY = 11,
-    BARCODE_ERROR_INVALID_PATH =12,
+enum BarcodeError {
+	BARCODE_ERROR_NONE = 0,
+	BARCODE_WARNING_INVALID_OPTION = 2,
+	BARCODE_ERROR_TOO_LONG = 5,
+	BARCODE_ERROR_INVALID_DATA = 6,
+	BARCODE_ERROR_INVALID_CHECK = 7,
+	BARCODE_ERROR_INVALID_OPTION = 8,
+	BARCODE_ERROR_ENCODING_PROBLEM = 9,
+	BARCODE_ERROR_FILE_ACCESS = 10,
+	BARCODE_ERROR_MEMORY = 11,
+	BARCODE_ERROR_INVALID_PATH = 12,
 };
 
 } /* Barcode */

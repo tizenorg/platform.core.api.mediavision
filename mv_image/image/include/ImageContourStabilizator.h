@@ -27,11 +27,8 @@
  *        during tracking.
  */
 
-namespace MediaVision
-{
-namespace Image
-{
-
+namespace MediaVision {
+namespace Image {
 /**
  * @class    ImageContourStabilizator
  * @brief    This class contains functionality for image contour stabilization
@@ -39,61 +36,57 @@ namespace Image
  *
  * @since_tizen 3.0
  */
-class ImageContourStabilizator
-{
+class ImageContourStabilizator {
 public:
+	/**
+	 * @brief   @ref ImageContourStabilizator default constructor.
+	 *
+	 * @since_tizen 3.0
+	 */
+	ImageContourStabilizator();
 
-    /**
-     * @brief   @ref ImageContourStabilizator default constructor.
-     *
-     * @since_tizen 3.0
-     */
-    ImageContourStabilizator();
+	/**
+	 * @brief Stabilizes @a contour.
+	 *
+	 * @since_tizen 3.0
+	 * @remarks Call this function alternately for each contour from sequence
+	 * @param [in,out] contour   @ref contour, which will be stabilized
+	 * @param [in]     params    configuration parameters
+	 * @return true if contour is stabilized, otherwise return false
+	 */
+	bool stabilize(
+				std::vector<cv::Point2f>& contour,
+				const StabilizationParams& params);
 
-    /**
-     * @brief Stabilizes @a contour.
-     *
-     * @since_tizen 3.0
-     * @remarks Call this function alternately for each contour from sequence
-     * @param [in,out] contour   @ref contour, which will be stabilized
-     * @param [in]     params    configuration parameters
-     * @return true if contour is stabilized, otherwise return false
-     */
-    bool stabilize(
-            std::vector<cv::Point2f>& contour,
-            const StabilizationParams& params);
-
-    /**
-     * @brief Resets stabilization process.
-     *
-     * @since_tizen 3.0
-     * @remarks Call it before starting track on the new sequence of contours.
-     */
-    void reset(void);
-
-private:
-
-    std::vector<cv::Point2f> computeStabilizedQuadrangleContour(void);
+	/**
+	 * @brief Resets stabilization process.
+	 *
+	 * @since_tizen 3.0
+	 * @remarks Call it before starting track on the new sequence of contours.
+	 */
+	void reset(void);
 
 private:
+	std::vector<cv::Point2f> computeStabilizedQuadrangleContour(void);
 
-    static const size_t MovingHistoryAmount = 3u;
+private:
+	static const size_t MovingHistoryAmount = 3u;
 
-    std::vector<float> m_speeds;
+	std::vector<float> m_speeds;
 
-    std::vector<size_t> m_currentCornersSpeed;
+	std::vector<size_t> m_currentCornersSpeed;
 
-    std::deque<std::vector<cv::Point2f> > m_movingHistory;
+	std::deque<std::vector<cv::Point2f> > m_movingHistory;
 
-    std::vector<cv::Point2f> m_lastStabilizedContour;
+	std::vector<cv::Point2f> m_lastStabilizedContour;
 
-    size_t m_currentHistoryAmount;
+	size_t m_currentHistoryAmount;
 
-    int m_tempContourIndex;
+	int m_tempContourIndex;
 
-    std::vector<float> m_priorities;
+	std::vector<float> m_priorities;
 
-    bool m_isPrepared;
+	bool m_isPrepared;
 };
 
 } /* Image */

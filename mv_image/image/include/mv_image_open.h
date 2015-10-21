@@ -77,12 +77,12 @@ extern "C" {
  * @see mv_engine_config_h
  */
 int mv_image_recognize_open(
-        mv_source_h source,
-        const mv_image_object_h *image_objects,
-        int number_of_objects,
-        mv_engine_config_h engine_cfg,
-        mv_image_recognized_cb recognized_cb,
-        void *user_data);
+		mv_source_h source,
+		const mv_image_object_h *image_objects,
+		int number_of_objects,
+		mv_engine_config_h engine_cfg,
+		mv_image_recognized_cb recognized_cb,
+		void *user_data);
 
 /*************************/
 /* Image object tracking */
@@ -140,11 +140,11 @@ int mv_image_recognize_open(
  * @see mv_image_tracking_model_destroy_open()
  */
 int mv_image_track_open(
-        mv_source_h source,
-        mv_image_tracking_model_h image_tracking_model,
-        mv_engine_config_h engine_cfg,
-        mv_image_tracked_cb tracked_cb,
-        void *user_data);
+		mv_source_h source,
+		mv_image_tracking_model_h image_tracking_model,
+		mv_engine_config_h engine_cfg,
+		mv_image_tracked_cb tracked_cb,
+		void *user_data);
 
 /**************************/
 /* Image object behaviour */
@@ -165,7 +165,7 @@ int mv_image_track_open(
  * @see mv_image_object_destroy_open()
  */
 int mv_image_object_create_open(
-        mv_image_object_h *image_object);
+		mv_image_object_h *image_object);
 
 /**
  * @brief Destroys the image object.
@@ -179,7 +179,7 @@ int mv_image_object_create_open(
  * @see mv_image_object_create_open()
  */
 int mv_image_object_destroy_open(
-        mv_image_object_h image_object);
+		mv_image_object_h image_object);
 
 /**
  * @brief Fills the image object.
@@ -219,10 +219,10 @@ int mv_image_object_destroy_open(
  * @see mv_engine_config_h
  */
 int mv_image_object_fill_open(
-        mv_image_object_h image_object,
-        mv_engine_config_h engine_cfg,
-        mv_source_h source,
-        mv_rectangle_s *location);
+		mv_image_object_h image_object,
+		mv_engine_config_h engine_cfg,
+		mv_source_h source,
+		mv_rectangle_s *location);
 
 /**
  * @brief Gets a value that determines how well an image object can be recognized.
@@ -255,8 +255,8 @@ int mv_image_object_fill_open(
  * @see mv_engine_config_h
  */
 int mv_image_object_get_recognition_rate_open(
-        mv_image_object_h image_object,
-        double *recognition_rate);
+		mv_image_object_h image_object,
+		double *recognition_rate);
 
 /**
  * @brief Sets a label for the image object.
@@ -281,8 +281,8 @@ int mv_image_object_get_recognition_rate_open(
  * @see mv_image_object_destroy_open()
  */
 int mv_image_object_set_label_open(
-        mv_image_object_h image_object,
-        int label);
+		mv_image_object_h image_object,
+		int label);
 
 /**
  * @brief Gets a label of image object.
@@ -309,8 +309,8 @@ int mv_image_object_set_label_open(
  * @see mv_image_object_destroy_open()
  */
 int mv_image_object_get_label_open(
-        mv_image_object_h image_object,
-        int *label);
+		mv_image_object_h image_object,
+		int *label);
 
 /**
  * @brief Clones the image object.
@@ -330,8 +330,8 @@ int mv_image_object_get_label_open(
  * @see mv_image_object_destroy_open()
  */
 int mv_image_object_clone_open(
-        mv_image_object_h src,
-        mv_image_object_h *dst);
+		mv_image_object_h src,
+		mv_image_object_h *dst);
 
 /**
  * @brief Saves the image object.
@@ -351,7 +351,7 @@ int mv_image_object_clone_open(
  * @see mv_image_object_destroy_open()
  */
 int mv_image_object_save_open(
-        const char *file_name, mv_image_object_h image_object);
+		const char *file_name, mv_image_object_h image_object);
 
 /**
  * @brief Loads an image object from the file.
@@ -377,7 +377,7 @@ int mv_image_object_save_open(
  * @see mv_image_object_destroy_open()
  */
 int mv_image_object_load_open(
-        const char *file_name, mv_image_object_h *image_object);
+		const char *file_name, mv_image_object_h *image_object);
 
 /**********************************/
 /* Image tracking model behaviour */
@@ -398,7 +398,7 @@ int mv_image_object_load_open(
  * @see mv_image_tracking_model_destroy_open()
  */
 int mv_image_tracking_model_create_open(
-        mv_image_tracking_model_h *image_tracking_model);
+		mv_image_tracking_model_h *image_tracking_model);
 
 /**
  * @brief Sets target of image tracking model.
@@ -431,8 +431,8 @@ int mv_image_tracking_model_create_open(
  * @see mv_image_tracking_model_destroy_open()
  */
 int mv_image_tracking_model_set_target_open(
-        mv_image_object_h image_object,
-        mv_image_tracking_model_h image_tracking_model);
+		mv_image_object_h image_object,
+		mv_image_tracking_model_h image_tracking_model);
 
 /**
  * @brief Destroys the image tracking model.
@@ -449,7 +449,7 @@ int mv_image_tracking_model_set_target_open(
  * @see mv_image_tracking_model_create_open()
  */
 int mv_image_tracking_model_destroy_open(
-        mv_image_tracking_model_h image_tracking_model);
+		mv_image_tracking_model_h image_tracking_model);
 
 /**
  * @brief Refreshes the state of image tracking model.
@@ -480,8 +480,8 @@ int mv_image_tracking_model_destroy_open(
  * @see mv_image_tracking_model_destroy_open()
  */
 int mv_image_tracking_model_refresh_open(
-        mv_image_tracking_model_h image_tracking_model,
-        mv_engine_config_h engine_cfg);
+		mv_image_tracking_model_h image_tracking_model,
+		mv_engine_config_h engine_cfg);
 
 /**
  * @brief Clones the image tracking model.
@@ -499,8 +499,8 @@ int mv_image_tracking_model_refresh_open(
  * @see mv_image_tracking_model_destroy_open()
  */
 int mv_image_tracking_model_clone_open(
-        mv_image_tracking_model_h src,
-        mv_image_tracking_model_h *dst);
+		mv_image_tracking_model_h src,
+		mv_image_tracking_model_h *dst);
 
 /**
  * @brief Saves the image tracking model.
@@ -526,7 +526,7 @@ int mv_image_tracking_model_clone_open(
  * @see mv_image_tracking_model_destroy_open()
  */
 int mv_image_tracking_model_save_open(
-        const char *file_name, mv_image_tracking_model_h image_tracking_model);
+		const char *file_name, mv_image_tracking_model_h image_tracking_model);
 
 /**
  * @brief Loads an image tracking model from the file.
@@ -552,7 +552,7 @@ int mv_image_tracking_model_save_open(
  * @see mv_image_tracking_model_destroy_open()
  */
 int mv_image_tracking_model_load_open(
-        const char *file_name, mv_image_tracking_model_h *image_tracking_model);
+		const char *file_name, mv_image_tracking_model_h *image_tracking_model);
 
 #ifdef __cplusplus
 }

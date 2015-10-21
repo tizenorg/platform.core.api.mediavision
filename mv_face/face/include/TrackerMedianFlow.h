@@ -59,95 +59,91 @@ by authors to outperform MIL). During the implementation period the code at
 <http://www.aonsquared.co.uk/node/5>, the courtesy of the author Arthur Amarra, was used for the
 reference purpose.
  */
-class TrackerMedianFlow : public virtual Algorithm
-{
+class TrackerMedianFlow : public virtual Algorithm {
 public:
+	struct Params {
+		/**
+		 * @brief TrackerMedianFlow algorithm parameters constructor
+		 */
+		Params();
+		void read(const FileNode& fn);
+		void write(FileStorage& fs) const;
 
-    struct Params
-    {
-        /**
-         * @brief TrackerMedianFlow algorithm parameters constructor
-         */
-        Params();
-        void read(const FileNode& fn);
-        void write(FileStorage& fs) const;
+		int mPointsInGrid; /**< Square root of number of keypoints used.
+								Increase it to trade accurateness for speed.
+								Default value is sensible and recommended */
 
-        int mPointsInGrid; /**< Square root of number of keypoints used.
-                                Increase it to trade accurateness for speed.
-                                Default value is sensible and recommended */
+		Size mWindowSize;  /**< Size of the search window at each pyramid level
+								for Lucas-Kanade optical flow search used for
+								tracking */
 
-        Size mWindowSize; /**< Size of the search window at each pyramid level
-                               for Lucas-Kanade optical flow search used for
-                               tracking */
+		int mPyrMaxLevel;  /**< Number of pyramid levels for Lucas-Kanade optical
+								flow search used for tracking */
+	};
 
-        int mPyrMaxLevel; /**< Number of pyramid levels for Lucas-Kanade optical
-                               flow search used for tracking */
-    };
+	TrackerMedianFlow(Params paramsIn = Params());
 
-    TrackerMedianFlow(Params paramsIn = Params());
+	bool copyTo(TrackerMedianFlow& copy) const;
 
-    bool copyTo(TrackerMedianFlow& copy) const;
+	bool init(const Mat& image, const Rect_<float>& boundingBox);
+	bool update(const Mat& image, Rect_<float>& boundingBox);
 
-    bool init(const Mat& image, const Rect_<float>& boundingBox);
-    bool update(const Mat& image, Rect_<float>& boundingBox);
+	bool isInited() const;
 
-    bool isInited() const;
+	float getLastConfidence() const;
+	Rect_<float> getLastBoundingBox() const;
 
-    float getLastConfidence() const;
-    Rect_<float> getLastBoundingBox() const;
-
-    void read(FileStorage& fn);
-    void write(FileStorage& fs) const;
+	void read(FileStorage& fn);
+	void write(FileStorage& fs) const;
 
 private:
+	bool isInit;
 
-    bool isInit;
+	bool medianFlowImpl(Mat oldImage, Mat newImage, Rect_<float>& oldBox);
 
-    bool medianFlowImpl(Mat oldImage, Mat newImage, Rect_<float>& oldBox);
+	Rect_<float> vote(
+			const std::vector<Point2f>& oldPoints,
+			const std::vector<Point2f>& newPoints,
+			const Rect_<float>& oldRect,
+			Point2f& mD);
 
-    Rect_<float> vote(
-            const std::vector<Point2f>& oldPoints,
-            const std::vector<Point2f>& newPoints,
-            const Rect_<float>& oldRect,
-            Point2f& mD);
+	template<typename T>
+	T getMedian(
+			std::vector<T>& values, int size = -1);
 
-    template<typename T>
-    T getMedian(
-            std::vector<T>& values, int size = -1);
+	void check_FB(
+			std::vector<Mat> newPyramid,
+			const std::vector<Point2f>& oldPoints,
+			const std::vector<Point2f>& newPoints,
+			std::vector<bool>& status);
 
-    void check_FB(
-            std::vector<Mat> newPyramid,
-            const std::vector<Point2f>& oldPoints,
-            const std::vector<Point2f>& newPoints,
-            std::vector<bool>& status);
+	void check_NCC(
+			const Mat& oldImage,
+			const Mat& newImage,
+			const std::vector<Point2f>& oldPoints,
+			const std::vector<Point2f>& newPoints,
+			std::vector<bool>& status);
 
-    void check_NCC(
-            const Mat& oldImage,
-            const Mat& newImage,
-            const std::vector<Point2f>& oldPoints,
-            const std::vector<Point2f>& newPoints,
-            std::vector<bool>& status);
+	inline float l2distance(Point2f p1, Point2f p2);
 
-    inline float l2distance(Point2f p1, Point2f p2);
+	Params params;               /**< Parameters used during tracking, see
+										@ref TrackerMedianFlow::Params */
 
-    Params params;               /**< Parameters used during tracking, see
-                                      @ref TrackerMedianFlow::Params */
+	TermCriteria termcrit;       /**< Terminating criteria for OpenCV
+										Lucas–Kanade optical flow algorithm used
+										during tracking */
 
-    TermCriteria termcrit;       /**< Terminating criteria for OpenCV
-                                      Lucas–Kanade optical flow algorithm used
-                                      during tracking */
+	Rect_<float> m_boundingBox;  /**< Tracking object bounding box */
 
-    Rect_<float> m_boundingBox;  /**< Tracking object bounding box */
+	float m_confidence;          /**< Confidence that face was tracked correctly
+										at the last tracking iteration */
 
-    float m_confidence;          /**< Confidence that face was tracked correctly
-                                      at the last tracking iteration */
+	Mat m_image;                 /**< Last image for which tracking was
+										performed */
 
-    Mat m_image;                 /**< Last image for which tracking was
-                                      performed */
-
-    std::vector<Mat> m_pyramid;  /**< The pyramid had been calculated for
-                                      the previous frame (or when
-                                      initialize the model) */
+	std::vector<Mat> m_pyramid;  /**< The pyramid had been calculated for
+										the previous frame or when
+										initialize the model */
 };
 
 } /* namespace cv */

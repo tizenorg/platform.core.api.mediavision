@@ -62,10 +62,10 @@ extern "C" {
  * @see mv_face_detected_cb
  */
 int mv_face_detect_lic(
-        mv_source_h source,
-        mv_engine_config_h engine_cfg,
-        mv_face_detected_cb detected_cb,
-        void *user_data);
+		mv_source_h source,
+		mv_engine_config_h engine_cfg,
+		mv_face_detected_cb detected_cb,
+		void *user_data);
 
 
 /********************/
@@ -120,12 +120,12 @@ int mv_face_detect_lic(
  * @see mv_face_recognized_cb
  */
 int mv_face_recognize_lic(
-        mv_source_h source,
-        mv_face_recognition_model_h recognition_model,
-        mv_engine_config_h engine_cfg,
-        mv_rectangle_s *face_location,
-        mv_face_recognized_cb recognized_cb,
-        void *user_data);
+		mv_source_h source,
+		mv_face_recognition_model_h recognition_model,
+		mv_engine_config_h engine_cfg,
+		mv_rectangle_s *face_location,
+		mv_face_recognized_cb recognized_cb,
+		void *user_data);
 
 
 /*****************/
@@ -181,12 +181,12 @@ int mv_face_recognize_lic(
  * @see mv_face_tracked_cb
  */
 int mv_face_track_lic(
-        mv_source_h source,
-        mv_face_tracking_model_h tracking_model,
-        mv_engine_config_h engine_cfg,
-        mv_face_tracked_cb tracked_cb,
-        bool do_learn,
-        void *user_data);
+		mv_source_h source,
+		mv_face_tracking_model_h tracking_model,
+		mv_engine_config_h engine_cfg,
+		mv_face_tracked_cb tracked_cb,
+		bool do_learn,
+		void *user_data);
 
 
 /********************************/
@@ -222,11 +222,11 @@ int mv_face_track_lic(
  * @see mv_face_eye_condition_recognized_cb
  */
 int mv_face_eye_condition_recognize_lic(
-        mv_source_h source,
-        mv_engine_config_h engine_cfg,
-        mv_rectangle_s face_location,
-        mv_face_eye_condition_recognized_cb eye_condition_recognized_cb,
-        void *user_data);
+		mv_source_h source,
+		mv_engine_config_h engine_cfg,
+		mv_rectangle_s face_location,
+		mv_face_eye_condition_recognized_cb eye_condition_recognized_cb,
+		void *user_data);
 
 
 /************************************/
@@ -261,11 +261,11 @@ int mv_face_eye_condition_recognize_lic(
  * @see mv_face_facial_expression_recognized_cb
  */
 int mv_face_facial_expression_recognize_lic(
-        mv_source_h source,
-        mv_engine_config_h engine_cfg,
-        mv_rectangle_s face_location,
-        mv_face_facial_expression_recognized_cb expression_recognized_cb,
-        void *user_data);
+		mv_source_h source,
+		mv_engine_config_h engine_cfg,
+		mv_rectangle_s face_location,
+		mv_face_facial_expression_recognized_cb expression_recognized_cb,
+		void *user_data);
 
 /*******************************/
 /* Recognition model behavior */
@@ -307,7 +307,7 @@ int mv_face_facial_expression_recognize_lic(
  * @see mv_face_recognition_model_destroy_lic()
  */
 int mv_face_recognition_model_create_lic(
-        mv_face_recognition_model_h *recognition_model);
+		mv_face_recognition_model_h *recognition_model);
 
 /**
  * @brief Destroys the face recognition model handle and releases all its
@@ -326,7 +326,7 @@ int mv_face_recognition_model_create_lic(
  * @see mv_face_recognition_model_create_lic()
  */
 int mv_face_recognition_model_destroy_lic(
-        mv_face_recognition_model_h recognition_model);
+		mv_face_recognition_model_h recognition_model);
 
 /**
  * @brief Creates a copy of existed recognition model handle and clones all its
@@ -350,8 +350,8 @@ int mv_face_recognition_model_destroy_lic(
  * @see mv_face_recognition_model_create_lic()
  */
 int mv_face_recognition_model_clone_lic(
-        mv_face_recognition_model_h src,
-        mv_face_recognition_model_h *dst);
+		mv_face_recognition_model_h src,
+		mv_face_recognition_model_h *dst);
 
 /**
  * @brief Saves recognition model to the file.
@@ -381,8 +381,8 @@ int mv_face_recognition_model_clone_lic(
  * @see mv_face_recognition_model_create_lic()
  */
 int mv_face_recognition_model_save_lic(
-        const char *file_name,
-        mv_face_recognition_model_h recognition_model);
+		const char *file_name,
+		mv_face_recognition_model_h recognition_model);
 
 /**
  * @brief Loads recognition model from file.
@@ -413,8 +413,8 @@ int mv_face_recognition_model_save_lic(
  * @see mv_face_recognition_model_create_lic()
  */
 int mv_face_recognition_model_load_lic(
-        const char *file_name,
-        mv_face_recognition_model_h *recognition_model);
+		const char *file_name,
+		mv_face_recognition_model_h *recognition_model);
 
 /**
  * @brief Adds face image example to be used for face recognition model learning
@@ -455,10 +455,10 @@ int mv_face_recognition_model_load_lic(
  * @see mv_face_recognition_model_learn_lic()
  */
 int mv_face_recognition_model_add_lic(
-        const mv_source_h source,
-        mv_face_recognition_model_h recognition_model,
-        const mv_rectangle_s *example_location,
-        int face_label);
+		const mv_source_h source,
+		mv_face_recognition_model_h recognition_model,
+		const mv_rectangle_s *example_location,
+		int face_label);
 
 /**
  * @brief Remove from @a recognition_model all collected with
@@ -493,8 +493,8 @@ int mv_face_recognition_model_add_lic(
  * @see mv_face_recognition_model_learn_lic()
  */
 int mv_face_recognition_model_reset_lic(
-        mv_face_recognition_model_h recognition_model,
-        const int *face_label);
+		mv_face_recognition_model_h recognition_model,
+		const int *face_label);
 
 /**
  * @brief Learns face recognition model.
@@ -549,8 +549,8 @@ int mv_face_recognition_model_reset_lic(
  * @see mv_face_recognize_lic()
  */
 int mv_face_recognition_model_learn_lic(
-        mv_engine_config_h engine_cfg,
-        mv_face_recognition_model_h recognition_model);
+		mv_engine_config_h engine_cfg,
+		mv_face_recognition_model_h recognition_model);
 
 /**
  * @brief Queries labels list and number of labels had been learned by the model.
@@ -580,9 +580,9 @@ int mv_face_recognition_model_learn_lic(
  * @see mv_face_recognition_model_learn_lic()
  */
 int mv_face_recognition_model_query_labels_lic(
-        mv_face_recognition_model_h recognition_model,
-        int **labels,
-        unsigned int *number_of_labels);
+		mv_face_recognition_model_h recognition_model,
+		int **labels,
+		unsigned int *number_of_labels);
 
 /***************************/
 /* Tracking model behavior */
@@ -622,7 +622,7 @@ int mv_face_recognition_model_query_labels_lic(
  * @see mv_face_tracking_model_load_lic()
  */
 int mv_face_tracking_model_create_lic(
-        mv_face_tracking_model_h *tracking_model);
+		mv_face_tracking_model_h *tracking_model);
 
 /**
  * @brief Calls this function to destroy the face tracking model handle and
@@ -641,7 +641,7 @@ int mv_face_tracking_model_create_lic(
  * @see mv_face_tracking_model_create_lic()
  */
 int mv_face_tracking_model_destroy_lic(
-        mv_face_tracking_model_h tracking_model);
+		mv_face_tracking_model_h tracking_model);
 
 /**
  * @brief Calls this function to initialize tracking model by the location of the
@@ -686,10 +686,10 @@ int mv_face_tracking_model_destroy_lic(
  * @see mv_face_track_lic()
  */
 int mv_face_tracking_model_prepare_lic(
-        mv_face_tracking_model_h tracking_model,
-        mv_engine_config_h engine_cfg,
-        mv_source_h source,
-        mv_quadrangle_s *location);
+		mv_face_tracking_model_h tracking_model,
+		mv_engine_config_h engine_cfg,
+		mv_source_h source,
+		mv_quadrangle_s *location);
 
 /**
  * @brief Calls this function to make a copy of existed tracking model handle and
@@ -712,8 +712,8 @@ int mv_face_tracking_model_prepare_lic(
  * @see mv_face_tracking_model_create_lic()
  */
 int mv_face_tracking_model_clone_lic(
-        mv_face_tracking_model_h src,
-        mv_face_tracking_model_h *dst);
+		mv_face_tracking_model_h src,
+		mv_face_tracking_model_h *dst);
 
 /**
  * @brief Calls this method to save tracking model to the file.
@@ -739,8 +739,8 @@ int mv_face_tracking_model_clone_lic(
  * @see mv_face_tracking_model_create_lic()
  */
 int mv_face_tracking_model_save_lic(
-        const char *file_name,
-        mv_face_tracking_model_h tracking_model);
+		const char *file_name,
+		mv_face_tracking_model_h tracking_model);
 
 /**
  * @brief Calls this method to load a tracking model from file.
@@ -768,8 +768,8 @@ int mv_face_tracking_model_save_lic(
  * @see mv_face_tracking_model_create_lic()
  */
 int mv_face_tracking_model_load_lic(
-        const char *file_name,
-        mv_face_tracking_model_h *tracking_model);
+		const char *file_name,
+		mv_face_tracking_model_h *tracking_model);
 
 #ifdef __cplusplus
 }

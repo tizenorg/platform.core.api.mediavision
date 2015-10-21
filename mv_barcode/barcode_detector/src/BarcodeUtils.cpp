@@ -21,92 +21,84 @@
 
 #include <zbar.h>
 
-namespace MediaVision
-{
-namespace Barcode
-{
-
+namespace MediaVision {
+namespace Barcode {
 int convertSourceMV2Zbar(mv_source_h mvSource, zbar::Image& zbarSource)
 {
-    int err = MEDIA_VISION_ERROR_NONE;
-    unsigned char *buffer = NULL;
-    unsigned int height = 0;
-    unsigned int width = 0;
-    unsigned int size = 0;
-    mv_colorspace_e colorspace = MEDIA_VISION_COLORSPACE_INVALID;
+	int err = MEDIA_VISION_ERROR_NONE;
+	unsigned char *buffer = NULL;
+	unsigned int height = 0;
+	unsigned int width = 0;
+	unsigned int size = 0;
+	mv_colorspace_e colorspace = MEDIA_VISION_COLORSPACE_INVALID;
 
-    err = mv_source_get_colorspace_c(mvSource, &colorspace);
-    if (err != MEDIA_VISION_ERROR_NONE)
-    {
-        LOGW("Can't determine mv_source_h colorspace to convert to ZBar colorspace. Conversion failed");
-        return err;
-    }
+	err = mv_source_get_colorspace_c(mvSource, &colorspace);
+	if (err != MEDIA_VISION_ERROR_NONE) {
+		LOGW("Can't determine mv_source_h colorspace to convert to ZBar colorspace. Conversion failed");
+		return err;
+	}
 
-    switch(colorspace)
-    {
-        case MEDIA_VISION_COLORSPACE_Y800:
-            zbarSource.set_format("Y800");
-            break;
-        case MEDIA_VISION_COLORSPACE_I420:
-            zbarSource.set_format("I420");
-            break;
-        case MEDIA_VISION_COLORSPACE_NV12:
-            zbarSource.set_format("NV12");
-            break;
-        case MEDIA_VISION_COLORSPACE_YV12:
-            zbarSource.set_format("YV12");
-            break;
-        case MEDIA_VISION_COLORSPACE_NV21:
-            zbarSource.set_format("NV21");
-            break;
-        case MEDIA_VISION_COLORSPACE_YUYV:
-            zbarSource.set_format("YUYV");
-            break;
-        case MEDIA_VISION_COLORSPACE_UYVY:
-            zbarSource.set_format("UYVY");
-            break;
-        case MEDIA_VISION_COLORSPACE_422P:
-            zbarSource.set_format("422P");
-            break;
-        case MEDIA_VISION_COLORSPACE_RGB565:
-            zbarSource.set_format("RGBP");
-            break;
-        case MEDIA_VISION_COLORSPACE_RGB888:
-            zbarSource.set_format("RGB3");
-            break;
-        case MEDIA_VISION_COLORSPACE_RGBA:
-            zbarSource.set_format("RGB4");
-            break;
-        default:
-            LOGE("Media vision colorspace is not supported by ZBar symbol");
-            return MEDIA_VISION_ERROR_NOT_SUPPORTED_FORMAT;
-    }
+	switch(colorspace) {
+	case MEDIA_VISION_COLORSPACE_Y800:
+		zbarSource.set_format("Y800");
+		break;
+	case MEDIA_VISION_COLORSPACE_I420:
+		zbarSource.set_format("I420");
+		break;
+	case MEDIA_VISION_COLORSPACE_NV12:
+		zbarSource.set_format("NV12");
+		break;
+	case MEDIA_VISION_COLORSPACE_YV12:
+		zbarSource.set_format("YV12");
+		break;
+	case MEDIA_VISION_COLORSPACE_NV21:
+		zbarSource.set_format("NV21");
+		break;
+	case MEDIA_VISION_COLORSPACE_YUYV:
+		zbarSource.set_format("YUYV");
+		break;
+	case MEDIA_VISION_COLORSPACE_UYVY:
+		zbarSource.set_format("UYVY");
+		break;
+	case MEDIA_VISION_COLORSPACE_422P:
+		zbarSource.set_format("422P");
+		break;
+	case MEDIA_VISION_COLORSPACE_RGB565:
+		zbarSource.set_format("RGBP");
+		break;
+	case MEDIA_VISION_COLORSPACE_RGB888:
+		zbarSource.set_format("RGB3");
+		break;
+	case MEDIA_VISION_COLORSPACE_RGBA:
+		zbarSource.set_format("RGB4");
+		break;
+	default:
+		LOGE("Media vision colorspace is not supported by ZBar symbol");
+		return MEDIA_VISION_ERROR_NOT_SUPPORTED_FORMAT;
+	}
 
-    err = mv_source_get_buffer_c(mvSource, &buffer, &size);
-    if (err != MEDIA_VISION_ERROR_NONE)
-    {
-        LOGW("Can't get mv_source_h buffer to convert to ZBar image. Conversion failed");
-        return err;
-    }
+	err = mv_source_get_buffer_c(mvSource, &buffer, &size);
+	if (err != MEDIA_VISION_ERROR_NONE) {
+		LOGW("Can't get mv_source_h buffer to convert to ZBar image. Conversion failed");
+		return err;
+	}
 
-    err = mv_source_get_height_c(mvSource, &height);
-    if (err != MEDIA_VISION_ERROR_NONE)
-    {
-        LOGW("Can't get mv_source_h height for conversion. Conversion failed");
-        return err;
-    }
+	err = mv_source_get_height_c(mvSource, &height);
+	if (err != MEDIA_VISION_ERROR_NONE) {
+		LOGW("Can't get mv_source_h height for conversion. Conversion failed");
+		return err;
+	}
 
-    err = mv_source_get_width_c(mvSource, &width);
-    if (err != MEDIA_VISION_ERROR_NONE)
-    {
-        LOGW("Can't get mv_source_h width for conversion. Conversion failed");
-        return err;
-    }
+	err = mv_source_get_width_c(mvSource, &width);
+	if (err != MEDIA_VISION_ERROR_NONE) {
+		LOGW("Can't get mv_source_h width for conversion. Conversion failed");
+		return err;
+	}
 
-    zbarSource.set_size(width, height);
-    zbarSource.set_data(buffer, size);
+	zbarSource.set_size(width, height);
+	zbarSource.set_data(buffer, size);
 
-    return err;
+	return err;
 }
 
 } /* Barcode */

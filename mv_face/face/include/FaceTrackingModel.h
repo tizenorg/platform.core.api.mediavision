@@ -25,33 +25,29 @@
  *        provides face tracking model interface.
  */
 
-namespace MediaVision
-{
-namespace Face
-{
-
+namespace MediaVision {
+namespace Face {
 /**
  * @brief Structure where results of
  *        @ref MediaVision::Face::FaceTrackingModel::track() call are stored.
  *
  * @since_tizen 3.0
  */
-struct FaceTrackingResults
-{
-    /**
-     * @brief Default constructor for the @ref FaceTrackingResults
-     *
-     * @since_tizen 3.0
-     */
-    FaceTrackingResults();
+struct FaceTrackingResults {
+	/**
+	 * @brief Default constructor for the @ref FaceTrackingResults
+	 *
+	 * @since_tizen 3.0
+	 */
+	FaceTrackingResults();
 
-    bool mIsTracked;                  /**< The flag indication success of the
-                                           tracking */
-    cv::Rect_<float> mFaceLocation;   /**< Location of the face at the current
-                                           track iteration where face position
-                                           is predicted */
-    float mConfidence;                /**< Tracking confidence level
-                                           (0.0 .. 1.0) */
+	bool mIsTracked;                  /**< The flag indication success of the
+											tracking */
+	cv::Rect_<float> mFaceLocation;   /**< Location of the face at the current
+											track iteration where face position
+											is predicted */
+	float mConfidence;                /**< Tracking confidence level
+											(0.0 .. 1.0) */
 };
 
 /**
@@ -60,113 +56,110 @@ struct FaceTrackingResults
  *
  * @since_tizen 3.0
  */
-class FaceTrackingModel
-{
+class FaceTrackingModel {
 public:
-    /**
-     * @brief    Creates a FaceTrackingModel class instance.
-     *
-     * @since_tizen 3.0
-     */
-    FaceTrackingModel();
+	/**
+	 * @brief    Creates a FaceTrackingModel class instance.
+	 *
+	 * @since_tizen 3.0
+	 */
+	FaceTrackingModel();
 
-    /**
-     * @brief    Creates a FaceTrackingModel class instance based on existed
-     *           instance.
-     *
-     * @since_tizen 3.0
-     * @param [in] origin    The FaceTrackingModel object that will be used
-     *                       for creation of new one
-     */
-    FaceTrackingModel(const FaceTrackingModel& origin);
+	/**
+	 * @brief    Creates a FaceTrackingModel class instance based on existed
+	 *           instance.
+	 *
+	 * @since_tizen 3.0
+	 * @param [in] origin    The FaceTrackingModel object that will be used
+	 *                       for creation of new one
+	 */
+	FaceTrackingModel(const FaceTrackingModel& origin);
 
-    /**
-     * @brief @ref FaceTrackingModel copy assignment operator.
-     * @details Fills the information based on the @a copy
-     *
-     * @since_tizen 3.0
-     * @param [in] copy      @ref FaceTrackingModel object which will be
-     *                       copied
-     */
-    FaceTrackingModel& operator=(const FaceTrackingModel& copy);
+	/**
+	 * @brief @ref FaceTrackingModel copy assignment operator.
+	 * @details Fills the information based on the @a copy
+	 *
+	 * @since_tizen 3.0
+	 * @param [in] copy      @ref FaceTrackingModel object which will be
+	 *                       copied
+	 */
+	FaceTrackingModel& operator=(const FaceTrackingModel& copy);
 
-    /**
-     * @brief    Destroys the FaceTrackingModel class instance including all
-     *           its resources.
-     *
-     * @since_tizen 3.0
-     */
-    ~FaceTrackingModel();
+	/**
+	 * @brief    Destroys the FaceTrackingModel class instance including all
+	 *           its resources.
+	 *
+	 * @since_tizen 3.0
+	 */
+	~FaceTrackingModel();
 
-    /**
-     * @brief Serializes FaceTrackingModel object to the file.
-     *
-     * @since_tizen 3.0
-     * @param [in] fileName    The name to the file to which serialized
-     *                         FaceTrackingModel object will be saved
-     * @return @c 0 on success, otherwise a negative error value
-     *
-     * @see FaceTrackingModel::load()
-     */
-    int save(const std::string& fileName);
+	/**
+	 * @brief Serializes FaceTrackingModel object to the file.
+	 *
+	 * @since_tizen 3.0
+	 * @param [in] fileName    The name to the file to which serialized
+	 *                         FaceTrackingModel object will be saved
+	 * @return @c 0 on success, otherwise a negative error value
+	 *
+	 * @see FaceTrackingModel::load()
+	 */
+	int save(const std::string& fileName);
 
-    /**
-     * @brief Deserializes FaceTrackingModel object from the file.
-     *
-     * @since_tizen 3.0
-     * @param [in] fileName    The name of the file from which serialized
-     *                         FaceTrackingModel object will be deserialized
-     * @return @c 0 on success, otherwise a negative error value
-     *
-     * @see FaceTrackingModel::save()
-     */
-    int load(const std::string& fileName);
+	/**
+	 * @brief Deserializes FaceTrackingModel object from the file.
+	 *
+	 * @since_tizen 3.0
+	 * @param [in] fileName    The name of the file from which serialized
+	 *                         FaceTrackingModel object will be deserialized
+	 * @return @c 0 on success, otherwise a negative error value
+	 *
+	 * @see FaceTrackingModel::save()
+	 */
+	int load(const std::string& fileName);
 
-    /**
-     * @brief Prepares FaceTrackingModel object to the next tracking session.
-     *
-     * @since_tizen 3.0
-     * @param [in] image          First frame of the video or image sequence for
-     *                            which tracking will be started
-     * @return @c 0 on success, otherwise a negative error value
-     *
-     * @see FaceTrackingModel::save()
-     */
-    int prepare(const cv::Mat& image);
+	/**
+	 * @brief Prepares FaceTrackingModel object to the next tracking session.
+	 *
+	 * @since_tizen 3.0
+	 * @param [in] image          First frame of the video or image sequence for
+	 *                            which tracking will be started
+	 * @return @c 0 on success, otherwise a negative error value
+	 *
+	 * @see FaceTrackingModel::save()
+	 */
+	int prepare(const cv::Mat& image);
 
-    /**
-     * @brief Prepares FaceTrackingModel object to the next tracking session.
-     *
-     * @since_tizen 3.0
-     * @param [in] image          First frame of the video or image sequence for
-     *                            which tracking will be started
-     * @param [in] boundingBox    Rectangular location of the face on the @a
-     *                            image
-     * @return @c 0 on success, otherwise a negative error value
-     *
-     * @see FaceTrackingModel::save()
-     */
-    int prepare(const cv::Mat& image, const cv::Rect_<float>& boundingBox);
+	/**
+	 * @brief Prepares FaceTrackingModel object to the next tracking session.
+	 *
+	 * @since_tizen 3.0
+	 * @param [in] image          First frame of the video or image sequence for
+	 *                            which tracking will be started
+	 * @param [in] boundingBox    Rectangular location of the face on the @a
+	 *                            image
+	 * @return @c 0 on success, otherwise a negative error value
+	 *
+	 * @see FaceTrackingModel::save()
+	 */
+	int prepare(const cv::Mat& image, const cv::Rect_<float>& boundingBox);
 
-    /**
-     * @brief Performs one tracking iteration for the video frame or image
-     *        from the continuous sequence of images.
-     *
-     * @since_tizen 3.0
-     * @param [in]  image
-     * @param [out] boundingBox
-     */
-    int track(const cv::Mat& image, FaceTrackingResults& results);
+	/**
+	 * @brief Performs one tracking iteration for the video frame or image
+	 *        from the continuous sequence of images.
+	 *
+	 * @since_tizen 3.0
+	 * @param [in]  image
+	 * @param [out] boundingBox
+	 */
+	int track(const cv::Mat& image, FaceTrackingResults& results);
 
 private:
+	bool m_canTrack;                          /**< The flag showing possibility
+													of the tracking model to
+													perform track */
 
-    bool m_canTrack;                          /**< The flag showing possibility
-                                                   of the tracking model to
-                                                   perform track */
-
-    cv::Ptr<cv::TrackerMedianFlow> m_tracker; /**< Underlying OpenCV tracking
-                                                   model */
-
+	cv::Ptr<cv::TrackerMedianFlow> m_tracker; /**< Underlying OpenCV tracking
+													model */
 };
 
 } /* Face */
