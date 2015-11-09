@@ -150,7 +150,7 @@ extern "C" {
 /**
  * @brief Defines MV_IMAGE_TRACKING_EXPECTED_OFFSET to set the expected tracking
  *        offset attribute of the engine configuration.
- * @detials Relative offset value, for which the object offset is
+ * @details Relative offset value, for which the object offset is
  *          expected (relative to the object size in the current frame).
  *          Value is a double and the defalut is 0
  *
@@ -162,7 +162,7 @@ extern "C" {
 
 /**
  * @brief Defines MV_IMAGE_TRACKING_USE_STABLIZATION to enable the contour
- *        stabilization during tracking process.
+ *        stabilization during tracking process. Default value is true.
  *
  * @since_tizen 3.0
  * @see mv_engine_config_set_bool_attribute()
@@ -172,11 +172,14 @@ extern "C" {
 
 /**
  * @brief Defines MV_IMAGE_TRACKING_STABLIZATION_TOLERANT_SHIFT to set the
- *        tolerant shift for the tracking stabilization attribute of the engine
- *        configuration.
- * @details Relative value of maximum shift per one frame which will be ignored by
- *             stabilization (relative to the object size in the current frame).
- *            Value is a double and the defalut is 0.006
+ *        relative tolerant shift for the tracking stabilization attribute of
+ *        the engine configuration.
+ * @details It is component of tolerant shift which will be ignored by
+ *          stabilization process. (this value is relative to the object size in
+ *          the current frame). Tolerant shift will be computed like R * S + C,
+ *          where R - value set to MV_IMAGE_TRACKING_STABLIZATION_TOLERANT_SHIFT,
+ *          S - area of object location on frame, C - constant value equal 1.3.
+ *          Value is a double
  *
  * @since_tizen 3.0
  * @see mv_engine_config_set_double_attribute()
@@ -189,7 +192,7 @@ extern "C" {
  *        speed of the tracking stabilization attribute of the engine
  *        configuration.
  * @details Start speed will be used for image stabilization. Value is a double
- *          and the defalut is 2
+ *          and the defalut is 0.3
  * @since_tizen 3.0
  * @see mv_engine_config_set_double_attribute()
  * @see mv_engine_config_get_double_attribute()
@@ -202,7 +205,7 @@ extern "C" {
  *        configuration.
  * @details Acceleration will be used for image stabilization (relative to
  *          the distance from current location to stabilized location).
- *          Value is double from 0 to 1 and the defalut is 0.001
+ *          Value is double from 0 to 1 and the defalut is 0.1
  *
  * @since_tizen 3.0
  * @see mv_engine_config_set_double_attribute()
@@ -222,7 +225,7 @@ extern "C" {
  * @since_tizen 3.0
  * @remarks Values @a source, @a engine_cfg, @a image_objects, and @a number_of_objects
  *          are the same as values of input parameters of @ref mv_image_recognize().
- * @remarks @locations are valid only inside callback.
+ * @remarks @a locations are valid only inside callback.
  * @param [in] source              The handle to the source image on which the
  *                                 recognition was carried out
  * @param [in] engine_cfg          The handle to the configuration of engine
@@ -326,7 +329,7 @@ int mv_image_recognize(
  *          but @a location will be NULL.
  * @remarks Handles @a image_tracking_model, @a source and @a engine_cfg the
  *          same as input parameters of @ref mv_image_track().
- * @remarks @location pointer is valid only inside callback
+ * @remarks @a location pointer is valid only inside callback
  * @param [in] source                 The handle to the source image on which
  *                                    the tracking was carried out
  * @param [in] image_tracking_model   The handle to the image tracking model

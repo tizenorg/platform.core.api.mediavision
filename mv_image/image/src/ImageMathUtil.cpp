@@ -40,16 +40,102 @@ float getTriangleArea(
 
 	const float semiperimeter = (distances[0] + distances[1] + distances[2]) / 2.0f;
 
-	return sqrt(semiperimeter *
+	const float res2x = semiperimeter *
 			(semiperimeter - distances[0]) *
 			(semiperimeter - distances[1]) *
-			(semiperimeter - distances[2]));
+			(semiperimeter - distances[2]);
+
+	if (res2x < 0.f)
+		return 0.f;
+
+	return sqrt(res2x);
 }
 
 float getQuadrangleArea(const cv::Point2f points[NumberOfQuadrangleCorners])
 {
 	return getTriangleArea(points[0], points[1], points[2]) +
 			getTriangleArea(points[0], points[3], points[2]);
+}
+
+bool checkAccessory(
+		const cv::Point2f& point,
+		const std::vector<cv::Point2f>& region)
+{
+	if (region.size() < 3)
+		return false;
+
+	bool insideFlag = false;
+	const size_t numberOfContourPoints = region.size();
+
+	for (size_t i = 0u, j = numberOfContourPoints - 1; i < numberOfContourPoints; j = i++) {
+		if (((region[i].y > point.y) != (region[j].y > point.y)) &&
+			((float) point.x < (float)
+			(region[j].x - region[i].x) * (point.y - region[i].y) /
+			(region[j].y - region[i].y) + region[i].x)) {
+			insideFlag = !insideFlag;
+			}
+	}
+
+	return insideFlag;
+}
+
+void catRect(cv::Rect& rectange, const cv::Size& maxSize)
+{
+	if (rectange.width < 0) {
+		rectange.x += rectange.width;
+		rectange.width *= -1;
+	}
+
+	if (rectange.height < 0) {
+		rectange.y += rectange.height;
+		rectange.height *= -1;
+	}
+
+	if (rectange.x > maxSize.width || rectange.y > maxSize.height) {
+		rectange.x = 0;
+		rectange.y = 0;
+		rectange.width = 0;
+		rectange.height = 0;
+		return;
+	}
+
+	if (rectange.x < 0) {
+		rectange.width += rectange.x;
+		rectange.x = 0;
+	}
+
+	if (rectange.y < 0) {
+		rectange.height += rectange.y;
+		rectange.y = 0;
+	}
+
+	if (rectange.x + rectange.width > maxSize.width)
+		rectange.width = maxSize.width - rectange.x;
+
+	if (rectange.y + rectange.height > maxSize.height)
+		rectange.height = maxSize.height - rectange.y;
+}
+
+std::vector<cv::Point2f> contourResize(
+		const std::vector<cv::Point2f>& roi,
+		float scalingCoefficient)
+{
+	const size_t numberOfContourPoints = roi.size();
+	cv::Point2f centre(0, 0);
+	for (size_t i = 0; i < numberOfContourPoints; ++i) {
+		centre.x += roi[i].x;
+		centre.y += roi[i].y;
+	}
+	centre.x /= numberOfContourPoints;
+	centre.y /= numberOfContourPoints;
+
+	std::vector<cv::Point2f> result(numberOfContourPoints);
+	for (size_t i = 0; i < numberOfContourPoints; ++i) {
+		result[i].x = (roi[i].x - centre.x) * scalingCoefficient + centre.x;
+		result[i].y = (roi[i].y - centre.y) * scalingCoefficient + centre.y;
+	}
+
+	return result;
 }
 
 } /* Image */

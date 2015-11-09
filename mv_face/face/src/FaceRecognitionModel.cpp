@@ -16,10 +16,10 @@
 
 #include "FaceRecognitionModel.h"
 
-#include <app_common.h>
-
 #include "mv_private.h"
 #include "mv_common.h"
+
+#include <app_common.h>
 
 #include <map>
 
@@ -29,6 +29,10 @@
 namespace MediaVision {
 namespace Face {
 namespace {
+
+unsigned int DefaultUnisizeWidth = 200;
+unsigned int DefaultUnisizeHeight = 200;
+
 int CopyOpenCVAlgorithmParameters(const cv::Ptr<cv::FaceRecognizer>& srcAlg,
 		cv::Ptr<cv::FaceRecognizer>& dstAlg)
 {
@@ -116,8 +120,8 @@ FaceRecognitionModelConfig::FaceRecognitionModelConfig() :
 		mNeighbors(8),
 		mGridX(8),
 		mGridY(8),
-		mImgWidth(150),
-		mImgHeight(150)
+		mImgWidth(DefaultUnisizeWidth),
+		mImgHeight(DefaultUnisizeHeight)
 {
 	; /* NULL */
 }
@@ -189,18 +193,20 @@ FaceRecognitionModel::~FaceRecognitionModel()
 int FaceRecognitionModel::save(const std::string& fileName)
 {
 	if (!m_recognizer.empty()) {
-		/* find directory */
-		std::string prefix_path = std::string(app_get_data_path());
-		LOGD("prefix_path: %s", prefix_path.c_str());
 
 		std::string filePath;
-		filePath += prefix_path;
-		filePath += fileName;
+		char *cPath = app_get_data_path();
+		if (NULL == cPath)
+			filePath = fileName;
+		else
+			filePath = std::string(cPath) + fileName;
+
+		std::string prefixPath = filePath.substr(0, filePath.find_last_of('/'));
+		LOGD("prefixPath: %s", prefixPath.c_str());
 
 		/* check the directory is available */
-		std::string prefix_path_check = filePath.substr(0, filePath.find_last_of('/'));
-		if (access(prefix_path_check.c_str(), F_OK)) {
-			LOGE("Can't save recognition model. Path[%s] doesn't existed.", prefix_path_check.c_str());
+		if (access(prefixPath.c_str(), F_OK)) {
+			LOGE("Can't save recognition model. Path[%s] doesn't existed.", prefixPath.c_str());
 
 			return MEDIA_VISION_ERROR_INVALID_PATH;
 		}
@@ -214,9 +220,13 @@ int FaceRecognitionModel::save(const std::string& fileName)
 		switch (m_learnAlgorithmConfig.mModelType) {
 		case MEDIA_VISION_FACE_MODEL_TYPE_EIGENFACES:
 			storage << "algorithm" << "Eigenfaces";
+			storage << "resizeW" << m_learnAlgorithmConfig.mImgWidth;
+			storage << "resizeH" << m_learnAlgorithmConfig.mImgHeight;
 			break;
 		case MEDIA_VISION_FACE_MODEL_TYPE_FISHERFACES:
 			storage << "algorithm" << "Fisherfaces";
+			storage << "resizeW" << m_learnAlgorithmConfig.mImgWidth;
+			storage << "resizeH" << m_learnAlgorithmConfig.mImgHeight;
 			break;
 		case MEDIA_VISION_FACE_MODEL_TYPE_LBPH:
 			storage << "algorithm" << "LBPH";
@@ -240,16 +250,15 @@ int FaceRecognitionModel::save(const std::string& fileName)
 
 int FaceRecognitionModel::load(const std::string& fileName)
 {
-	/* find directory */
-	std::string prefix_path = std::string(app_get_data_path());
-	LOGD("prefix_path: %s", prefix_path.c_str());
-
 	std::string filePath;
-	filePath += prefix_path;
-	filePath += fileName;
+	char *cPath = app_get_data_path();
+	if (NULL == cPath)
+		filePath = fileName;
+	else
+		filePath = std::string(cPath) + fileName;
 
 	if (access(filePath.c_str(), F_OK)) {
-		LOGE("Can't load face recognition model. File[%s] doesn't exist.", filePath.c_str());
+		LOGE("Can't load face recognition model. File[%s] doesn't existed.", filePath.c_str());
 
 		return MEDIA_VISION_ERROR_INVALID_PATH;
 	}
@@ -274,6 +283,8 @@ int FaceRecognitionModel::load(const std::string& fileName)
 
 	if (algName == "Eigenfaces") {
 		tempRecognizer = cv::createEigenFaceRecognizer();
+		storage["resizeW"] >> tempConfig.mImgWidth;
+		storage["resizeH"] >> tempConfig.mImgHeight;
 		tempRecognizer->load(storage);
 		tempConfig.mModelType =
 				MEDIA_VISION_FACE_MODEL_TYPE_EIGENFACES;
@@ -282,6 +293,8 @@ int FaceRecognitionModel::load(const std::string& fileName)
 		ParseOpenCVLabels(tempRecognizer, tempLearnedLabels);
 	} else if (algName == "Fisherfaces") {
 		tempRecognizer = cv::createFisherFaceRecognizer();
+		storage["resizeW"] >> tempConfig.mImgWidth;
+		storage["resizeH"] >> tempConfig.mImgHeight;
 		tempRecognizer->load(storage);
 		tempConfig.mModelType =
 				MEDIA_VISION_FACE_MODEL_TYPE_FISHERFACES;
@@ -404,7 +417,7 @@ int FaceRecognitionModel::learn(const FaceRecognitionModelConfig& config)
 				cv::resize(it->second[sampleInd],
 				resizedSample,
 				cv::Size(config.mImgWidth, config.mImgHeight),
-				1.0, 1.0, cv::INTER_CUBIC);
+				0.0, 0.0, cv::INTER_CUBIC);
 				samples.push_back(resizedSample);
 			}
 		}
@@ -451,11 +464,32 @@ int FaceRecognitionModel::recognize(const cv::Mat& image, FaceRecognitionResults
 {
 	if (!m_recognizer.empty() && m_canRecognize) {
 		double absConf = 0.0;
-		m_recognizer->predict(image, results.mFaceLabel, absConf);
-		/* Normalize the absolute value of the confidence */
-		absConf = exp(7.5 - (0.05 * absConf));
-		results.mConfidence = absConf / (1 + absConf);
-		results.mIsRecognized = true;
+		if ((MEDIA_VISION_FACE_MODEL_TYPE_EIGENFACES == m_learnAlgorithmConfig.mModelType ||
+			 MEDIA_VISION_FACE_MODEL_TYPE_FISHERFACES == m_learnAlgorithmConfig.mModelType) &&
+			(image.cols != m_learnAlgorithmConfig.mImgWidth ||
+			 image.rows != m_learnAlgorithmConfig.mImgHeight)) {
+			cv::Mat predictionImg(
+						m_learnAlgorithmConfig.mImgWidth,
+						m_learnAlgorithmConfig.mImgHeight,
+						CV_8UC1);
+			cv::resize(image, predictionImg, predictionImg.size());
+			m_recognizer->predict(predictionImg, results.mFaceLabel, absConf);
+
+			if (-1 != results.mFaceLabel) {
+				results.mConfidence = 1.0;
+				results.mIsRecognized = true;
+			} else {
+				results.mConfidence = 0.0;
+				results.mIsRecognized = false;
+			}
+		} else {
+			m_recognizer->predict(image, results.mFaceLabel, absConf);
+			/* Normalize the absolute value of the confidence */
+			absConf = exp(7.5 - (0.05 * absConf));
+			results.mConfidence = absConf / (1 + absConf);
+			results.mIsRecognized = true;
+		}
+
 		results.mFaceLocation = cv::Rect(0, 0, image.cols, image.rows);
 	} else {
 		LOGE("Attempt to recognize faces with untrained model");

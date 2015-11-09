@@ -39,6 +39,20 @@ namespace Image {
 class ImageContourStabilizator {
 public:
 	/**
+	 * @brief Enumeration for stabilization return value
+	 *
+	 * @since_tizen 3.0
+	 */
+	enum StabilizationError {
+		Successfully,           /**< Contour is stabilized. */
+		TooShortMovingHistory,  /**< Too short moving history, it's normal
+													behavior, you can continue to call
+													stabilization in order to accumulate it. */
+		InvalidSettings,        /**< Invalid settings. */
+		UnsupportedContourType  /**< Unsupported contour type. */
+	};
+
+	/**
 	 * @brief   @ref ImageContourStabilizator default constructor.
 	 *
 	 * @since_tizen 3.0
@@ -52,11 +66,15 @@ public:
 	 * @remarks Call this function alternately for each contour from sequence
 	 * @param [in,out] contour   @ref contour, which will be stabilized
 	 * @param [in]     params    configuration parameters
-	 * @return true if contour is stabilized, otherwise return false
+	 * @return Successfully if contour is stabilized, otherwise return error
+	 * @retval #Successfully           Contour is stabilized
+	 * @retval #TooShortMovingHistory  Too short moving history
+	 * @retval #InvalidSettings        Invalid settings
+	 * @retval #UnsupportedContourType Unsupported contour type
 	 */
-	bool stabilize(
-				std::vector<cv::Point2f>& contour,
-				const StabilizationParams& params);
+	StabilizationError stabilize(
+			std::vector<cv::Point2f>& contour,
+			const StabilizationParams& params);
 
 	/**
 	 * @brief Resets stabilization process.
@@ -67,10 +85,14 @@ public:
 	void reset(void);
 
 private:
+	bool updateSettings(const StabilizationParams& params);
+
 	std::vector<cv::Point2f> computeStabilizedQuadrangleContour(void);
 
 private:
-	static const size_t MovingHistoryAmount = 3u;
+	float m_tolerantShift;
+
+	float m_tolerantShiftExtra;
 
 	std::vector<float> m_speeds;
 
@@ -79,6 +101,8 @@ private:
 	std::deque<std::vector<cv::Point2f> > m_movingHistory;
 
 	std::vector<cv::Point2f> m_lastStabilizedContour;
+
+	size_t m_historyAmount;
 
 	size_t m_currentHistoryAmount;
 

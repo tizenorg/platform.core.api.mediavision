@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-#ifndef __MATHUTIL_H__
-#define __MATHUTIL_H__
+#ifndef __IMAGEMATHUTIL_H__
+#define __IMAGEMATHUTIL_H__
 
 #include <opencv/cv.h>
 
 /**
- * @file  MathUtil.h
+ * @file  ImageMathUtil.h
  * @brief This file contains math utility for Image Module.
  */
 
@@ -69,7 +69,41 @@ float getTriangleArea(
 float getQuadrangleArea(
 		const cv::Point2f points[NumberOfQuadrangleCorners]);
 
+/**
+ * @brief   Checks point on the accessory region.
+ *
+ * @since_tizen 3.0
+ * @param [in] point   Point which will be checked on the accessory region
+ * @param [in] region  Contour of region
+ * @return true if point is inside the region, otherwise return false
+ */
+bool checkAccessory(
+		const cv::Point2f& point,
+		const std::vector<cv::Point2f>& region);
+
+/**
+ * @brief   Cuts a rectangle according to the maximum size.
+ * @details From the rectangle will remain only the part which is inside the
+ *          rectangle from {0,0} to @a maxSize
+ *
+ * @since_tizen 3.0
+ * @param [in] rectange   Rectangle which will be cut
+ * @param [in] maxSize    Maximum values of needed rectangle
+ */
+void catRect(cv::Rect& rectange, const cv::Size& maxSize);
+
+/**
+ * @brief   Resizes a region.
+ *
+ * @since_tizen 3.0
+ * @param [in] roi                  Contour of region which will be resized
+ * @param [in] scalingCoefficient   Scaling coefficient
+ */
+std::vector<cv::Point2f> contourResize(
+		const std::vector<cv::Point2f>& roi,
+		float scalingCoefficient);
+
 } /* Image */
 } /* MediaVision */
 
-#endif /* __MATHUTIL_H__ */
+#endif /* __IMAGEMATHUTIL_H__ */

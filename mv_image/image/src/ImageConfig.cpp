@@ -18,18 +18,9 @@
 
 namespace MediaVision {
 namespace Image {
-FeaturesExtractingParams::FeaturesExtractingParams(
-							double scaleFactor,
-							int maximumFeaturesNumber) :
-	mScaleFactor(scaleFactor),
-	mMaximumFeaturesNumber(maximumFeaturesNumber)
-{
-	; /* NULL */
-}
-
 FeaturesExtractingParams::FeaturesExtractingParams() :
-	mScaleFactor(1.2),
-	mMaximumFeaturesNumber(800)
+	mKeypointType(KT_INVALID),
+	mDescriptorType(DT_INVALID)
 {
 	; /* NULL */
 }
@@ -37,10 +28,10 @@ FeaturesExtractingParams::FeaturesExtractingParams() :
 RecognitionParams::RecognitionParams(
 					int minMatchesNumber,
 					double requiredMatchesPart,
-					double allowableMatchesPartError) :
+					double tolerantMatchesPartError) :
 	mMinMatchesNumber(minMatchesNumber),
 	mRequiredMatchesPart(requiredMatchesPart),
-	mAllowableMatchesPartError(allowableMatchesPartError)
+	mTolerantMatchesPartError(tolerantMatchesPartError)
 {
 	; /* NULL */
 }
@@ -48,18 +39,22 @@ RecognitionParams::RecognitionParams(
 RecognitionParams::RecognitionParams() :
         mMinMatchesNumber(0),
         mRequiredMatchesPart(1.0),
-        mAllowableMatchesPartError(0.0)
+        mTolerantMatchesPartError(0.0)
 {
 	; /* NULL */
 }
 
 StabilizationParams::StabilizationParams(
+					bool isEnabled,
 					int historyAmount,
-					double allowableShift,
+					double tolerantShift,
+					double tolerantShiftExtra,
 					double stabilizationSpeed,
 					double stabilizationAcceleration) :
+	mIsEnabled(isEnabled),
 	mHistoryAmount(historyAmount),
-	mAllowableShift(allowableShift),
+	mTolerantShift(tolerantShift),
+	mTolerantShiftExtra(tolerantShiftExtra),
 	mStabilizationSpeed(stabilizationSpeed),
 	mStabilizationAcceleration(stabilizationAcceleration)
 {
@@ -67,8 +62,10 @@ StabilizationParams::StabilizationParams(
 }
 
 StabilizationParams::StabilizationParams() :
+	mIsEnabled(false),
 	mHistoryAmount(1),
-	mAllowableShift(0.0),
+	mTolerantShift(0.0),
+	mTolerantShiftExtra(0.0),
 	mStabilizationSpeed(0.0),
 	mStabilizationAcceleration(1.0)
 {

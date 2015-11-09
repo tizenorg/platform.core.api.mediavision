@@ -93,22 +93,22 @@
         {
             "name"  : "MV_IMAGE_TRACKING_USE_STABLIZATION",
             "type"  : "boolean",
-            "value" : false
+            "value" : true
         },
         {
             "name"  : "MV_IMAGE_TRACKING_STABLIZATION_TOLERANT_SHIFT",
             "type"  : "double",
-            "value" : 0.006
+            "value" : 0.00006
         },
         {
             "name"  : "MV_IMAGE_TRACKING_STABLIZATION_SPEED",
             "type"  : "double",
-            "value" : 2
+            "value" : 0.3
         },
         {
             "name"  : "MV_IMAGE_TRACKING_STABLIZATION_ACCELERATION",
             "type"  : "double",
-            "value" : 0.001
+            "value" : 0.1
         },
         {
             "name"  : "MV_FACE_RECOGNITION_MODEL_TYPE",
