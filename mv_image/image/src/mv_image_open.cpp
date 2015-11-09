@@ -19,32 +19,106 @@
 #include "mv_private.h"
 #include "mv_common_c.h"
 
-#include "ImageObject.h"
-#include "ImageRecognizer.h"
-#include "ImageTrackingModel.h"
-#include "ImageTracker.h"
+#include "ImageConfig.h"
+#include "Features/FeatureExtractor.h"
+#include "Features/ORBExtractorFactory.h"
+#include "Recognition/ImageObject.h"
+#include "Recognition/ImageRecognizer.h"
+#include "Tracking/ImageTrackingModel.h"
 
 #include <opencv/cv.h>
 
 namespace {
-const MediaVision::Image::FeaturesExtractingParams
-		defaultObjectFeaturesExtractingParams(1.2, 1000);
+class DefaultConfiguration {
+public:
+	static const DefaultConfiguration& getInstance();
 
-const MediaVision::Image::FeaturesExtractingParams
-		defaultSceneFeaturesExtractingParams(1.2, 5000);
+	MediaVision::Image::FeaturesExtractingParams getObjectFeaturesExtractingParams() const;
 
-const MediaVision::Image::RecognitionParams
-		defaultRecognitionParams(15, 0.33, 0.1);
+	MediaVision::Image::FeaturesExtractingParams getSceneFeaturesExtractingParams() const;
 
-const MediaVision::Image::StabilizationParams
-		defaultStabilizationParams(3, 0.006, 2, 0.001);
+	MediaVision::Image::RecognitionParams getRecognitionParams() const;
 
-const MediaVision::Image::TrackingParams
-		defaultTrackingParams(
-				defaultSceneFeaturesExtractingParams,
-				defaultRecognitionParams,
-				defaultStabilizationParams,
-				0.0);
+	MediaVision::Image::StabilizationParams getStabilizationParams() const;
+
+	MediaVision::Image::TrackingParams getTrackingParams() const;
+
+private:
+	DefaultConfiguration();
+
+private:
+	static DefaultConfiguration instance;
+
+	MediaVision::Image::FeaturesExtractingParams m_objectFeaturesExtractingParams;
+
+	MediaVision::Image::FeaturesExtractingParams m_sceneFeaturesExtractingParams;
+
+	MediaVision::Image::RecognitionParams m_recognitionParams;
+
+	MediaVision::Image::StabilizationParams m_stabilizationParams;
+
+	MediaVision::Image::TrackingParams m_trackingParams;
+};
+
+DefaultConfiguration DefaultConfiguration::instance;
+
+DefaultConfiguration::DefaultConfiguration() :
+		m_objectFeaturesExtractingParams(),
+		m_sceneFeaturesExtractingParams(),
+		m_recognitionParams(15, 0.33, 0.1),
+		m_stabilizationParams(true, 3, 0.00006, 1.3, 2, 0.001),
+		m_trackingParams()
+{
+	m_objectFeaturesExtractingParams.mKeypointType = MediaVision::Image::KT_ORB;
+	m_objectFeaturesExtractingParams.mDescriptorType = MediaVision::Image::DT_ORB;
+	m_objectFeaturesExtractingParams.ORB.mScaleFactor = 1.2;
+	m_objectFeaturesExtractingParams.ORB.mMaximumFeaturesNumber = 1000;
+
+	m_sceneFeaturesExtractingParams.mKeypointType = MediaVision::Image::KT_ORB;
+	m_sceneFeaturesExtractingParams.mDescriptorType = MediaVision::Image::DT_ORB;
+	m_sceneFeaturesExtractingParams.ORB.mScaleFactor = 1.2;
+	m_sceneFeaturesExtractingParams.ORB.mMaximumFeaturesNumber = 5000;
+
+	m_trackingParams.mFramesFeaturesExtractingParams = m_sceneFeaturesExtractingParams;
+	m_trackingParams.mRecognitionParams = m_recognitionParams;
+	m_trackingParams.mStabilizationParams = m_stabilizationParams;
+	m_trackingParams.mExpectedOffset = 0.0;
+}
+
+const DefaultConfiguration& DefaultConfiguration::getInstance()
+{
+	return instance;
+}
+
+MediaVision::Image::FeaturesExtractingParams
+DefaultConfiguration::getObjectFeaturesExtractingParams() const
+{
+	return m_objectFeaturesExtractingParams;
+}
+
+MediaVision::Image::FeaturesExtractingParams
+DefaultConfiguration::getSceneFeaturesExtractingParams() const
+{
+	return m_sceneFeaturesExtractingParams;
+}
+
+MediaVision::Image::RecognitionParams
+DefaultConfiguration::getRecognitionParams() const
+{
+	return m_recognitionParams;
+}
+
+MediaVision::Image::StabilizationParams
+DefaultConfiguration::getStabilizationParams() const
+{
+	return m_stabilizationParams;
+}
+
+MediaVision::Image::TrackingParams
+DefaultConfiguration::getTrackingParams() const
+{
+	return m_trackingParams;
+}
 
 void extractTargetFeaturesExtractingParams(
 		mv_engine_config_h engine_cfg,
@@ -58,17 +132,18 @@ void extractTargetFeaturesExtractingParams(
 		working_cfg = engine_cfg;
 	}
 
-	featuresExtractingParams = defaultObjectFeaturesExtractingParams;
+	featuresExtractingParams =
+			DefaultConfiguration::getInstance().getObjectFeaturesExtractingParams();
 
 	mv_engine_config_get_double_attribute_c(
 			working_cfg,
-			"MV_IMAGE_RECOGNITION_OBJECT_SCALE_FACTOR",
-			&featuresExtractingParams.mScaleFactor);
+			MV_IMAGE_RECOGNITION_OBJECT_SCALE_FACTOR,
+			&featuresExtractingParams.ORB.mScaleFactor);
 
 	mv_engine_config_get_int_attribute_c(
 			working_cfg,
-			"MV_IMAGE_RECOGNITION_OBJECT_MAX_KEYPOINTS_NUM",
-			&featuresExtractingParams.mMaximumFeaturesNumber);
+			MV_IMAGE_RECOGNITION_OBJECT_MAX_KEYPOINTS_NUM,
+			&featuresExtractingParams.ORB.mMaximumFeaturesNumber);
 
 	if (NULL == engine_cfg) {
 		mv_destroy_engine_config(working_cfg);
@@ -87,17 +162,18 @@ void extractSceneFeaturesExtractingParams(
 		working_cfg = engine_cfg;
 	}
 
-	featuresExtractingParams = defaultSceneFeaturesExtractingParams;
+	featuresExtractingParams =
+			DefaultConfiguration::getInstance().getSceneFeaturesExtractingParams();
 
 	mv_engine_config_get_double_attribute_c(
 			working_cfg,
-			"MV_IMAGE_RECOGNITION_SCENE_SCALE_FACTOR",
-			&featuresExtractingParams.mScaleFactor);
+			MV_IMAGE_RECOGNITION_SCENE_SCALE_FACTOR,
+			&featuresExtractingParams.ORB.mScaleFactor);
 
 	mv_engine_config_get_int_attribute_c(
 			working_cfg,
-			"MV_IMAGE_RECOGNITION_SCENE_MAX_KEYPOINTS_NUM",
-			&featuresExtractingParams.mMaximumFeaturesNumber);
+			MV_IMAGE_RECOGNITION_SCENE_MAX_KEYPOINTS_NUM,
+			&featuresExtractingParams.ORB.mMaximumFeaturesNumber);
 
 	if (NULL == engine_cfg) {
 		mv_destroy_engine_config(working_cfg);
@@ -116,22 +192,23 @@ void extractRecognitionParams(
 		working_cfg = engine_cfg;
 	}
 
-	recognitionParams = defaultRecognitionParams;
+	recognitionParams =
+			DefaultConfiguration::getInstance().getRecognitionParams();
 
 	mv_engine_config_get_int_attribute_c(
 			working_cfg,
-			"MV_IMAGE_RECOGNITION_MIN_MATCH_NUM",
+			MV_IMAGE_RECOGNITION_MIN_MATCH_NUM,
 			&recognitionParams.mMinMatchesNumber);
 
 	mv_engine_config_get_double_attribute_c(
 			working_cfg,
-			"MV_IMAGE_RECOGNITION_REQ_MATCH_PART",
+			MV_IMAGE_RECOGNITION_REQ_MATCH_PART,
 			&recognitionParams.mRequiredMatchesPart);
 
 	mv_engine_config_get_double_attribute_c(
 			working_cfg,
-			"MV_IMAGE_RECOGNITION_TOLERANT_MATCH_PART_ERR",
-			&recognitionParams.mAllowableMatchesPartError);
+			MV_IMAGE_RECOGNITION_TOLERANT_MATCH_PART_ERR,
+			&recognitionParams.mTolerantMatchesPartError);
 
 	if (NULL == engine_cfg) {
 		mv_destroy_engine_config(working_cfg);
@@ -150,40 +227,32 @@ void extractStabilizationParams(
 		working_cfg = engine_cfg;
 	}
 
-	stabilizationParams = defaultStabilizationParams;
+	stabilizationParams =
+			DefaultConfiguration::getInstance().getStabilizationParams();
 
-	bool useStabilization = true;
 	mv_engine_config_get_bool_attribute_c(
 			working_cfg,
-			"MV_IMAGE_TRACKING_USE_STABLIZATION",
-			&useStabilization);
-
-	if (!useStabilization) {
-		stabilizationParams.mHistoryAmount = 0;
-		if (NULL == engine_cfg) {
-			mv_destroy_engine_config(working_cfg);
-		}
-		return;
-	}
+			MV_IMAGE_TRACKING_USE_STABLIZATION,
+			&stabilizationParams.mIsEnabled);
 
 	mv_engine_config_get_int_attribute_c(
 			working_cfg,
-			"MV_IMAGE_TRACKING_HISTORY_AMOUNT",
+			MV_IMAGE_TRACKING_HISTORY_AMOUNT,
 			&stabilizationParams.mHistoryAmount);
 
 	mv_engine_config_get_double_attribute_c(
 			working_cfg,
-			"MV_IMAGE_TRACKING_STABLIZATION_TOLERANT_SHIFT",
-			&stabilizationParams.mAllowableShift);
+			MV_IMAGE_TRACKING_STABLIZATION_TOLERANT_SHIFT,
+			&stabilizationParams.mTolerantShift);
 
 	mv_engine_config_get_double_attribute_c(
 			working_cfg,
-			"MV_IMAGE_TRACKING_STABLIZATION_SPEED",
+			MV_IMAGE_TRACKING_STABLIZATION_SPEED,
 			&stabilizationParams.mStabilizationSpeed);
 
 	mv_engine_config_get_double_attribute_c(
 			working_cfg,
-			"MV_IMAGE_TRACKING_STABLIZATION_ACCELERATION",
+			MV_IMAGE_TRACKING_STABLIZATION_ACCELERATION,
 			&stabilizationParams.mStabilizationAcceleration);
 
 	if (NULL == engine_cfg) {
@@ -203,7 +272,8 @@ void extractTrackingParams(
 		working_cfg = engine_cfg;
 	}
 
-	trackingParams = defaultTrackingParams;
+	trackingParams =
+			DefaultConfiguration::getInstance().getTrackingParams();
 
 	extractSceneFeaturesExtractingParams(
 			working_cfg,
@@ -219,7 +289,7 @@ void extractTrackingParams(
 
 	mv_engine_config_get_double_attribute_c(
 			working_cfg,
-			"MV_IMAGE_TRACKING_EXPECTED_OFFSET",
+			MV_IMAGE_TRACKING_EXPECTED_OFFSET,
 			&trackingParams.mExpectedOffset);
 
 	if (NULL == engine_cfg) {
@@ -344,11 +414,12 @@ int mv_image_recognize_open(
 	MediaVision::Image::FeaturesExtractingParams featuresExtractingParams;
 	extractSceneFeaturesExtractingParams(engine_cfg, featuresExtractingParams);
 
+	MediaVision::Image::ImageObject sceneImageObject(scene, featuresExtractingParams);
+
 	MediaVision::Image::RecognitionParams recognitionParams;
 	extractRecognitionParams(engine_cfg, recognitionParams);
 
-	MediaVision::Image::ImageRecognizer recognizer(scene,
-			featuresExtractingParams);
+	MediaVision::Image::ImageRecognizer recognizer(sceneImageObject);
 
 	mv_quadrangle_s *resultLocations[number_of_objects];
 
@@ -415,16 +486,13 @@ int mv_image_track_open(
 			convertSourceMV2GrayCV(source, frame),
 			"Failed to convert mv_source.");
 
-	MediaVision::Image::ImageTracker tracker(trackingParams);
-
 	MediaVision::Image::ImageTrackingModel *trackingModel =
 			(MediaVision::Image::ImageTrackingModel*)image_tracking_model;
 
-	tracker.track(frame, *trackingModel);
+	std::vector<cv::Point> resultContour;
+	const bool isTracked = trackingModel->track(frame, resultContour);
 
-	std::vector<cv::Point2f> resultContour = trackingModel->getLastlocation();
-
-	if (trackingModel->isDetected() &&
+	if (isTracked &&
 		MediaVision::Image::NumberOfQuadrangleCorners == resultContour.size()) {
 		mv_quadrangle_s result;
 		for (size_t pointNum = 0u;
@@ -478,22 +546,30 @@ int mv_image_object_fill_open(
 			convertSourceMV2GrayCV(source, image),
 			"Failed to convert mv_source.");
 
+	std::vector<cv::Point2f> roi;
+	if (NULL != location) {
+		roi.resize(4);
+
+		roi[0].x = location->point.x;
+		roi[0].y = location->point.y;
+
+		roi[1].x = roi[0].x + location->width;
+		roi[1].y = roi[0].y;
+
+		roi[2].x = roi[1].x;
+		roi[2].y = roi[1].y + location->height;
+
+		roi[3].x = roi[0].x;
+		roi[3].y = roi[2].y;
+	}
+
 	MediaVision::Image::FeaturesExtractingParams featuresExtractingParams;
 	extractTargetFeaturesExtractingParams(engine_cfg, featuresExtractingParams);
 
-	if (NULL == location) {
-		((MediaVision::Image::ImageObject*)image_object)->fill(image,
-				featuresExtractingParams);
-	} else {
-		if (!((MediaVision::Image::ImageObject*)image_object)->fill(image,
-								cv::Rect(location->point.x, location->point.y,
-								location->width, location->height),
-								featuresExtractingParams)) {
-			/* Wrong ROI (bounding box) */
-			LOGE("[%s] Wrong ROI.", __FUNCTION__);
-			return MEDIA_VISION_ERROR_INVALID_DATA;
-		}
-	}
+	static_cast<MediaVision::Image::ImageObject*>(image_object)->fill(
+			image,
+			featuresExtractingParams,
+			roi);
 
 	return MEDIA_VISION_ERROR_NONE;
 }
@@ -668,7 +744,7 @@ int mv_image_tracking_model_clone_open(
 		return MEDIA_VISION_ERROR_OUT_OF_MEMORY;
 	}
 
-	*(MediaVision::Image::ImageObject*)(*dst) = *(MediaVision::Image::ImageObject*)src;
+	*(MediaVision::Image::ImageTrackingModel*)(*dst) = *(MediaVision::Image::ImageTrackingModel*)src;
 
 	LOGD("Image tracking model has been successfully cloned");
 	return MEDIA_VISION_ERROR_NONE;

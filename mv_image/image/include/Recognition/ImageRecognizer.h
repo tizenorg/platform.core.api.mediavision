@@ -19,7 +19,8 @@
 
 #include "ImageMathUtil.h"
 #include "ImageConfig.h"
-#include "ImageObject.h"
+
+#include "Recognition/ImageObject.h"
 
 #include <opencv/cv.h>
 
@@ -39,17 +40,7 @@ namespace Image {
 class ImageRecognizer {
 public:
 	/**
-	 * @brief   @ref ImageRecognizer constructor based on scene image.
-	 *
-	 * @since_tizen 3.0
-	 * @param [in] sceneImage   The scene in which image objects will be recognized
-	 * @param [in] params       Scene features extracting parameters
-	 */
-	ImageRecognizer(const cv::Mat& sceneImage,
-			const FeaturesExtractingParams& params);
-
-	/**
-	 * @brief   @ref ImageRecognizer constructor based on thes scene @ref ImageObject.
+	 * @brief   @ref ImageRecognizer constructor based on the scene @ref ImageObject.
 	 *
 	 * @since_tizen 3.0
 	 * @param [in] scene   The scene for which the objects will be recognized by
@@ -70,13 +61,17 @@ public:
 	 * @since_tizen 3.0
 	 * @param [in]  target    @ref ImageObject, which will be recognized
 	 * @param [in]  params    Recognition parameters
-	 * @param [out] contour   The result contour of @a target object on the scene
+	 * @param [out] contour   The result contour of @a target object on the
+	 *                        scene
+	 * @param [out] ignoreFactor Scaling factor of area near the contour
+	 *              of object which will be ignored
 	 * @return true if object is found on the scene, otherwise return false
 	 */
 	bool recognize(
 			const ImageObject& target,
 			const RecognitionParams& params,
-			std::vector<cv::Point2f>& contour) const;
+			std::vector<cv::Point2f>& contour,
+			float ignoreFactor = 0.f) const;
 
 private:
 	ImageRecognizer();
@@ -84,7 +79,8 @@ private:
 	bool findHomophraphyMatrix(
 			const ImageObject& target,
 			const RecognitionParams& params,
-			cv::Mat& homophraphyMatrix) const;
+			cv::Mat& homophraphyMatrix,
+			float ignoreFactor) const;
 
 	size_t matchesSelection(
 			std::vector<cv::DMatch>& examples,
@@ -98,6 +94,7 @@ private:
 			const cv::Point2f corners[NumberOfQuadrangleCorners]);
 
 private:
+	/* TODO: Replace to cv::Ptr<ImageObject> */
 	ImageObject m_scene;
 
 	cv::BFMatcher m_matcher;

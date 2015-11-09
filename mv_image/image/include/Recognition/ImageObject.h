@@ -19,6 +19,8 @@
 
 #include "ImageConfig.h"
 
+#include "Features/FeaturePack.h"
+
 #include <opencv/cv.h>
 
 /**
@@ -88,31 +90,15 @@ public:
 	 *          new @ref ImageObject
 	 *
 	 * @since_tizen 3.0
-	 * @param [in] image    The image for which instance of @ref ImageObject
-	 *                      will be created
-	 * @param [in] params   Features extracting parameters
-	 */
-	void fill(const cv::Mat& image, const FeaturesExtractingParams& params);
-
-	/**
-	 * @brief   Fills @ref ImageObject class based on image.
-	 * @details Detects keypoints and extracts features from image and creates
-	 *          new @ref ImageObject
-	 *
-	 * @since_tizen 3.0
 	 * @param [in] image         The image for which instance of @ref
 	 *                           ImageObject will be created
-	 * @param [in] boundingBox   Bounding box of the object being analyzed in
-	 *                           the @a image
 	 * @param [in] params        Features extracting parameters
-	 * @return @a true on success, otherwise a @a false value
-	 * @retval true  Successful
-	 * @retval false Invalid ROI (bounding box)
+	 * @param [in] roi           Region of interested object on the @a image
 	 */
-	bool fill(
-			const cv::Mat& image,
-			const cv::Rect& boundingBox,
-			const FeaturesExtractingParams& params);
+	void fill(
+				const cv::Mat& image,
+				const FeaturesExtractingParams& params,
+				const std::vector<cv::Point2f>& roi = std::vector<cv::Point2f>());
 
 	/**
 	 * @brief Gets a value that determines how well an @ref ImageObject can be recognized.
@@ -136,6 +122,14 @@ public:
 	 * @return @c false if object is filled, otherwise return @c true
 	 */
 	bool isEmpty() const;
+
+	/**
+	 * @brief Sets a contour for the image object.
+	 *
+	 * @since_tizen 3.0
+	 * @param [in] contour  The contour which will be used with @ref ImageObject
+	 */
+	void setContour(const std::vector<cv::Point2f>& contour);
 
 	/**
 	 * @brief Sets a label for the image object.
@@ -173,17 +167,17 @@ public:
 	int load(const char *fileName);
 
 private:
-	static const int MinWidth = 5;
-	static const int MinHeight = 5;
-
-private:
 	void extractFeatures(
 			const cv::Mat& image,
-			const FeaturesExtractingParams& params);
-
-	void computeRecognitionRate(const cv::Mat& image);
+			const FeaturesExtractingParams& params,
+			const std::vector<cv::Point2f>& roi);
 
 private:
+
+	FeaturesExtractingParams m_featureExtractingParams;
+
+	FeaturePack m_features;
+
 	bool m_isEmpty;
 
 	bool m_isLabeled;
@@ -191,12 +185,6 @@ private:
 	int m_label;
 
 	std::vector<cv::Point2f> m_boundingContour;
-
-	std::vector<cv::KeyPoint> m_objectKeypoints;
-
-	cv::Mat m_objectDescriptors;
-
-	float m_recognitionRate;
 
 	friend class ImageRecognizer;
 

@@ -11,8 +11,8 @@ include_directories("${INC_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/include")
 include_directories("${PROJECT_SOURCE_DIR}/src")
 
-file(GLOB MV_IMAGE_INC_LIST "${PROJECT_SOURCE_DIR}/include/*.h")
-file(GLOB MV_IMAGE_SRC_LIST "${PROJECT_SOURCE_DIR}/src/*.cpp")
+file(GLOB_RECURSE MV_IMAGE_INC_LIST "${PROJECT_SOURCE_DIR}/include/*.h")
+file(GLOB_RECURSE MV_IMAGE_SRC_LIST "${PROJECT_SOURCE_DIR}/src/*.cpp")
 
 find_package(OpenCV REQUIRED core highgui imgproc objdetect features2d calib3d)
 if(NOT OpenCV_FOUND)

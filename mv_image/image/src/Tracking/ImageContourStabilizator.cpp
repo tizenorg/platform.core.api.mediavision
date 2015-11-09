@@ -14,32 +14,19 @@
  * limitations under the License.
  */
 
-#include "ImageContourStabilizator.h"
 #include "ImageMathUtil.h"
+
+#include "Tracking/ImageContourStabilizator.h"
 
 #include "mv_private.h"
 
 namespace MediaVision {
 namespace Image {
 ImageContourStabilizator::ImageContourStabilizator() :
-	m_movingHistory(MovingHistoryAmount),
-	m_priorities(MovingHistoryAmount)
+		m_movingHistory(),
+		m_priorities()
 {
 	reset();
-
-	/* increasing the stabilization rate */
-	m_speeds.push_back(0.3f);
-	m_speeds.push_back(0.4f);
-	m_speeds.push_back(0.5f);
-	m_speeds.push_back(0.6f);
-	m_speeds.push_back(0.8f);
-	m_speeds.push_back(1.f);
-
-	/* calculation of priorities for positions in the moving history */
-	for (size_t i = 0u; i < MovingHistoryAmount; ++i) {
-		/* linear dependence on the elapsed time */
-		m_priorities[i] = (i + 1) / ((MovingHistoryAmount + 1) * MovingHistoryAmount / 2.0f);
-	}
 }
 
 void ImageContourStabilizator::reset(void)
@@ -47,57 +34,58 @@ void ImageContourStabilizator::reset(void)
 	m_isPrepared = false;
 	m_tempContourIndex = -1;
 	m_currentHistoryAmount = 0;
-
-	LOGI("Outlier is detected.");
+	m_historyAmount = 0;
+	m_movingHistory.clear();
 }
 
-bool ImageContourStabilizator::stabilize(
+ImageContourStabilizator::StabilizationError ImageContourStabilizator::stabilize(
 		std::vector<cv::Point2f>& contour,
-		const StabilizationParams& /*params*/)
+		const StabilizationParams& params)
 {
+	if (!updateSettings(params)) {
+		LOGW("Not stabilized. Invalid settings.");
+
+		return InvalidSettings;
+	}
+
 	/* current implementation stabilizes quadrangles only */
 	if (contour.size() != NumberOfQuadrangleCorners) {
-		LOGW("Not stabilized. Empty contour.");
+		LOGW("Not stabilized. Unsupported contour type.");
 
-		return false;
+		return UnsupportedContourType;
 	}
 
 	m_currentCornersSpeed.resize(contour.size(), 0);
 
-	if (contour[0].x == contour[1].x && contour[0].y == contour[1].y) {
-		LOGW("Not stabilized. Invalid contour.");
-
-		return false;
-	}
-
-	if (m_lastStabilizedContour.empty()) {
+	if (m_lastStabilizedContour.empty())
 		m_lastStabilizedContour = contour;
-	}
 
 	std::vector<cv::Point2f> stabilizedState;
 
 	/* history amount < 2 it's no sense */
-	if (MovingHistoryAmount >= 2) {
+	if (m_historyAmount >= 2) {
 		/* first sample */
 		if (m_tempContourIndex == -1) {
-			m_movingHistory[1] = contour;
+			m_movingHistory.push_back(contour);
+			m_movingHistory.push_back(contour);
+
 			m_tempContourIndex = 1;
-			m_currentHistoryAmount = 1;
+			m_currentHistoryAmount = 2;
 
 			LOGI("Not stabilized. Too small moving history. (the first one)");
 
-			return false;
+			return TooShortMovingHistory;
 		}
 
 		/* too short moving history */
-		if (m_currentHistoryAmount < MovingHistoryAmount - 1) {
+		if (m_currentHistoryAmount < m_historyAmount) {
 			++m_currentHistoryAmount;
 			++m_tempContourIndex;
-			m_movingHistory[m_tempContourIndex] = contour;
+			m_movingHistory.push_back(contour);
 
-			LOGI("Not stabilized. Too small moving history.");
+			LOGI("Not stabilized. Too short moving history.");
 
-			return false;
+			return TooShortMovingHistory;
 		}
 
 		/* saving into moving history */
@@ -105,7 +93,7 @@ bool ImageContourStabilizator::stabilize(
 		m_movingHistory.push_back(contour);
 
 		if (!m_isPrepared) {
-			m_lastStabilizedContour = m_movingHistory[MovingHistoryAmount - 2];
+			m_lastStabilizedContour = m_movingHistory[m_historyAmount - 2];
 
 			LOGI("Not stabilized. Too small moving history. (the last one)");
 
@@ -115,14 +103,14 @@ bool ImageContourStabilizator::stabilize(
 		/* stabilization */
 		stabilizedState = computeStabilizedQuadrangleContour();
 
-		if (stabilizedState.empty()) {
+		if (stabilizedState.empty())
 			stabilizedState = m_lastStabilizedContour;
-		}
 	} else {
 		stabilizedState = m_lastStabilizedContour;
 	}
 
-	const float tolerantShift = getQuadrangleArea(contour.data()) * 0.00006f + 1.3f;
+	const float tolerantShift = getQuadrangleArea(contour.data()) *
+				m_tolerantShift + m_tolerantShiftExtra;
 
 	const size_t contourSize = stabilizedState.size();
 	for (size_t i = 0u; i < contourSize; ++i) {
@@ -150,6 +138,77 @@ bool ImageContourStabilizator::stabilize(
 
 	LOGI("Contour successfully stabilized.");
 
+	return Successfully;
+}
+
+bool ImageContourStabilizator::updateSettings(const StabilizationParams& params)
+{
+	if (params.mHistoryAmount < 1)
+		return false;
+
+	m_tolerantShift = (float)params.mTolerantShift;
+	m_tolerantShiftExtra = (float)params.mTolerantShiftExtra;
+
+	if (m_historyAmount != (size_t)params.mHistoryAmount) {
+		m_historyAmount = (size_t)params.mHistoryAmount;
+
+		m_priorities.resize(m_historyAmount);
+
+		/* calculation of priorities for positions in the moving history */
+		for (size_t i = 0u; i < m_historyAmount; ++i) {
+			/* linear dependence on the elapsed time */
+			m_priorities[i] = ((i + 1) * 2.0f) /
+						((m_historyAmount + 1) * m_historyAmount);
+		}
+	}
+
+	while (m_historyAmount > (size_t)params.mHistoryAmount) {
+		m_movingHistory.pop_front();
+		--m_historyAmount;
+	}
+
+	if ((size_t)params.mHistoryAmount > m_historyAmount) {
+		/* TODO: save current moving history */
+
+		m_tempContourIndex = -1;
+		m_historyAmount = (size_t)params.mHistoryAmount;
+		m_movingHistory.clear();
+	}
+
+	bool speedIsValid = false;
+	if (m_speeds.size() > 1) {
+		const static float Epsilon = 0.0001f;
+		if (fabs(m_speeds[0] - params.mStabilizationSpeed) < Epsilon &&
+				fabs((m_speeds[1] - m_speeds[0]) -
+				params.mStabilizationAcceleration) < Epsilon) {
+		speedIsValid = true;
+		}
+	}
+
+	if (!speedIsValid) {
+		m_speeds.clear();
+
+		int speedsSize = (int)((1 - params.mStabilizationSpeed) /
+					params.mStabilizationAcceleration) + 1;
+
+		if (speedsSize < 1) {
+			m_speeds.push_back(1.0f);
+		} else {
+			static const int MaxSpeedsSize = 25;
+
+			if (speedsSize > MaxSpeedsSize)
+				speedsSize = MaxSpeedsSize;
+
+			float speed = std::max(0.f,
+					std::min((float)params.mStabilizationSpeed, 1.0f));
+
+			for (int i = 0; i < speedsSize; ++i) {
+				m_speeds.push_back(speed);
+				speed += params.mStabilizationAcceleration;
+			}
+		}
+	}
+
 	return true;
 }
 
@@ -157,11 +216,11 @@ std::vector<cv::Point2f> ImageContourStabilizator::computeStabilizedQuadrangleCo
 {
 	/* final contour */
 	std::vector<cv::Point2f> stabilizedState(
-			NumberOfQuadrangleCorners, cv::Point2f(0.f, 0.f));
+				NumberOfQuadrangleCorners, cv::Point2f(0.f, 0.f));
 
 	/* calculation the direction of contour corners to a new location */
 	std::vector<cv::Point2f> directions(
-			NumberOfQuadrangleCorners, cv::Point2f(0.f, 0.f));
+				NumberOfQuadrangleCorners, cv::Point2f(0.f, 0.f));
 
 	/* computing expected directions and outliers searching */
 	bool expressiveTime = false;
@@ -170,25 +229,25 @@ std::vector<cv::Point2f> ImageContourStabilizator::computeStabilizedQuadrangleCo
 	std::vector<cv::Point2f> directionsToLastPos(NumberOfQuadrangleCorners);
 	for (size_t j = 0u; j < NumberOfQuadrangleCorners; ++j) {
 		/* calculation the moving directions and computing average direction */
-		std::vector<cv::Point2f> trackDirections(MovingHistoryAmount - 1);
+		std::vector<cv::Point2f> trackDirections(m_historyAmount - 1);
 		cv::Point2f averageDirections(0.f, 0.f);
 
-		for (size_t i = 0u; i < MovingHistoryAmount - 1; ++i) {
+		for (size_t i = 0u; i < m_historyAmount - 1; ++i) {
 			averageDirections.x += (trackDirections[i].x =
 					m_movingHistory[i+1][j].x - m_movingHistory[i][j].x) /
-					(MovingHistoryAmount - 1);
+					(m_historyAmount - 1);
 
 			averageDirections.y += (trackDirections[i].y =
 					m_movingHistory[i+1][j].y - m_movingHistory[i][j].y) /
-					(MovingHistoryAmount - 1);
+					(m_historyAmount - 1);
 		}
 
 		/* calculation a deviations and select outlier */
-		std::vector<float> directionDistances(MovingHistoryAmount - 1);
+		std::vector<float> directionDistances(m_historyAmount - 1);
 		float maxDistance = 0.f, prevMaxDistance = 0.f;
 		int idxWithMaxDistance = 0;
 		int numExpressiveDirection = -1;
-		for (size_t i = 0u; i < MovingHistoryAmount - 1; ++i) {
+		for (size_t i = 0u; i < m_historyAmount - 1; ++i) {
 			directionDistances[i] = getDistance(
 					trackDirections[i],
 					averageDirections);
@@ -213,7 +272,7 @@ std::vector<cv::Point2f> ImageContourStabilizator::computeStabilizedQuadrangleCo
 
 		/* final direction computing */
 		float summPriority = 0.f;
-		for (size_t i = 0u; i < MovingHistoryAmount - 1; ++i) {
+		for (size_t i = 0u; i < m_historyAmount - 1; ++i) {
 			if ((int)i != numExpressiveDirection) {
 				directions[j].x += trackDirections[i].x * m_priorities[i];
 				directions[j].y += trackDirections[i].y * m_priorities[i];
@@ -221,22 +280,21 @@ std::vector<cv::Point2f> ImageContourStabilizator::computeStabilizedQuadrangleCo
 			}
 		}
 
-		if (numExpressiveDirection == MovingHistoryAmount - 1) {
-				expressiveTime = true;
-		}
+		if (numExpressiveDirection == (int)(m_historyAmount - 1))
+			expressiveTime = true;
 
 		summPriorityWithoutToLastPos[j] = summPriority;
-		priorityToLastPos[j] = m_priorities[MovingHistoryAmount - 1];
+		priorityToLastPos[j] = m_priorities[m_historyAmount - 1];
 
 		directions[j].x -= directionsToLastPos[j].x =
-						(m_lastStabilizedContour[j].x -
-							m_movingHistory[MovingHistoryAmount - 1][j].x) *
-							priorityToLastPos[j];
+					(m_lastStabilizedContour[j].x -
+					m_movingHistory[m_historyAmount - 1][j].x) *
+					priorityToLastPos[j];
 
 		directions[j].y -= directionsToLastPos[j].y =
-						(m_lastStabilizedContour[j].y -
-							m_movingHistory[MovingHistoryAmount - 1][j].y) *
-							priorityToLastPos[j];
+					(m_lastStabilizedContour[j].y -
+					m_movingHistory[m_historyAmount - 1][j].y) *
+					priorityToLastPos[j];
 
 		summPriority += priorityToLastPos[j];
 
@@ -248,12 +306,12 @@ std::vector<cv::Point2f> ImageContourStabilizator::computeStabilizedQuadrangleCo
 	for (size_t j = 0u; j < NumberOfQuadrangleCorners; ++j) {
 		if (expressiveTime) {
 			directions[j].x *= (summPriorityWithoutToLastPos[j] +
-					priorityToLastPos[j]);
+						priorityToLastPos[j]);
 			directions[j].x -= directionsToLastPos[j].x;
 			directions[j].x /= summPriorityWithoutToLastPos[j];
 
 			directions[j].y *= (summPriorityWithoutToLastPos[j] +
-					priorityToLastPos[j]);
+						priorityToLastPos[j]);
 			directions[j].y -= directionsToLastPos[j].y;
 			directions[j].y /= summPriorityWithoutToLastPos[j];
 		}

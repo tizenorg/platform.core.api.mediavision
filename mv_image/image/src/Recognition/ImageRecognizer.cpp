@@ -14,23 +14,15 @@
  * limitations under the License.
  */
 
-#include "ImageRecognizer.h"
-#include "ImageObject.h"
+#include "Recognition/ImageRecognizer.h"
+#include "Recognition/ImageObject.h"
 
 #include "mv_private.h"
 
 namespace MediaVision {
 namespace Image {
-ImageRecognizer::ImageRecognizer(
-	const cv::Mat& sceneImage,
-	const FeaturesExtractingParams& params) :
-	m_scene(sceneImage, params)
-{
-	; /* NULL */
-}
-
 ImageRecognizer::ImageRecognizer(const ImageObject& scene) :
-	m_scene(scene)
+		m_scene(scene)
 {
 	; /* NULL */
 }
@@ -43,23 +35,24 @@ ImageRecognizer::~ImageRecognizer()
 bool ImageRecognizer::recognize(
 		const ImageObject& target,
 		const RecognitionParams& params,
-		std::vector<cv::Point2f>& contour) const
+		std::vector<cv::Point2f>& contour,
+		float ignoreFactor) const
 {
 	cv::Mat homophraphyMatrix;
 
 	contour.clear();
 
-	if (MinimumNumberOfFeatures > target.m_objectKeypoints.size()) {
+	if (MinimumNumberOfFeatures > target.m_features.m_objectKeypoints.size()) {
 		LOGW("[%s] Image object can't be recognized (Recognition rate is too small).", __FUNCTION__);
 		return false;
 	}
 
-	if (MinimumNumberOfFeatures > m_scene.m_objectKeypoints.size()) {
+	if (MinimumNumberOfFeatures > m_scene.m_features.m_objectKeypoints.size()) {
 		LOGW("[%s] Scene image can't be analyzed (Too few features for recognition).", __FUNCTION__);
 		return false;
 	}
 
-	if(!findHomophraphyMatrix(target, params, homophraphyMatrix)) {
+	if(!findHomophraphyMatrix(target, params, homophraphyMatrix, ignoreFactor)) {
 		LOGE("[%s] Can't match the features.", __FUNCTION__);
 		return false;
 	}
@@ -81,11 +74,15 @@ bool ImageRecognizer::recognize(
 bool ImageRecognizer::findHomophraphyMatrix(
 		const ImageObject& target,
 		const RecognitionParams& params,
-		cv::Mat& homophraphyMatrix) const
+		cv::Mat& homophraphyMatrix,
+		float ignoreFactor) const
 {
 	std::vector<cv::DMatch> matches;
 
-	m_matcher.match(target.m_objectDescriptors, m_scene.m_objectDescriptors, matches);
+	m_matcher.match(
+			target.m_features.m_objectDescriptors,
+			m_scene.m_features.m_objectDescriptors,
+			matches);
 
 	size_t matchesNumber = matches.size();
 
@@ -98,18 +95,18 @@ bool ImageRecognizer::findHomophraphyMatrix(
 			params.mRequiredMatchesPart * matchesNumber;
 
 	size_t allowableMatchesNumberError =
-			params.mAllowableMatchesPartError * requiredMatchesNumber;
+			params.mTolerantMatchesPartError * requiredMatchesNumber;
 
-	if ((matchesNumber - allowableMatchesNumberError) >
-		(size_t)params.mMinMatchesNumber &&
-		(requiredMatchesNumber + allowableMatchesNumberError) <
-		matchesNumber) {
-		if ((requiredMatchesNumber - allowableMatchesNumberError) <
-			(size_t)params.mMinMatchesNumber) {
-			if ((requiredMatchesNumber + allowableMatchesNumberError) >
+	if (matchesNumber - allowableMatchesNumberError >
+			(size_t)params.mMinMatchesNumber &&
+			requiredMatchesNumber + allowableMatchesNumberError <
+			matchesNumber) {
+		if (requiredMatchesNumber - allowableMatchesNumberError <
 				(size_t)params.mMinMatchesNumber) {
+			if (requiredMatchesNumber + allowableMatchesNumberError >
+					(size_t)params.mMinMatchesNumber) {
 				requiredMatchesNumber = ((size_t)params.mMinMatchesNumber +
-						requiredMatchesNumber + allowableMatchesNumberError) / 2;
+				requiredMatchesNumber + allowableMatchesNumberError) / 2;
 
 				allowableMatchesNumberError = requiredMatchesNumber-
 						(size_t)params.mMinMatchesNumber +
@@ -128,13 +125,12 @@ bool ImageRecognizer::findHomophraphyMatrix(
 													requiredMatchesNumber,
 													allowableMatchesNumberError);
 
-		if (filterAmount >= MinimumNumberOfFeatures) {
+		if (filterAmount >= MinimumNumberOfFeatures)
 			matches.resize(filterAmount);
-		} else {
+		else
 			LOGW("[%s] Wrong filtration of feature matches.", __FUNCTION__);
-		}
 
-		 matchesNumber = matches.size();
+		matchesNumber = matches.size();
 	}
 
 	std::vector<cv::Point2f> objectPoints(matchesNumber);
@@ -142,11 +138,28 @@ bool ImageRecognizer::findHomophraphyMatrix(
 
 	for (size_t matchIdx = 0; matchIdx < matchesNumber; ++matchIdx) {
 		objectPoints[matchIdx] =
-				target.m_objectKeypoints[matches[matchIdx].queryIdx].pt;
+				target.m_features.m_objectKeypoints[matches[matchIdx].queryIdx].pt;
 
 		scenePoints[matchIdx] =
-				m_scene.m_objectKeypoints[matches[matchIdx].trainIdx].pt;
+				m_scene.m_features.m_objectKeypoints[matches[matchIdx].trainIdx].pt;
 	}
+
+	if (ignoreFactor > FLT_EPSILON) {
+		const std::vector<cv::Point2f> significantArea = contourResize(
+				target.m_boundingContour,
+				ignoreFactor);
+
+		for (size_t matchIdx = 0; matchIdx < objectPoints.size(); ++matchIdx) {
+			if (!checkAccessory(objectPoints[matchIdx], significantArea)) {
+				objectPoints.erase(objectPoints.begin() + matchIdx);
+				scenePoints.erase(scenePoints.begin() + matchIdx);
+				--matchIdx;
+			}
+		}
+	}
+
+	if (objectPoints.size() < MinimumNumberOfFeatures)
+		return false;
 
 	homophraphyMatrix = cv::findHomography(objectPoints, scenePoints, CV_RANSAC);
 
@@ -159,9 +172,8 @@ size_t ImageRecognizer::matchesSelection(
 {
 	size_t sizeOfExamples = examples.size();
 
-	if ((filterAmount + allowableError) > sizeOfExamples) {
+	if ((filterAmount + allowableError) > sizeOfExamples)
 		return examples.size();
-	}
 
 	int startLeftLimit = 0;
 	int startRightLimit = sizeOfExamples - 1;
@@ -175,44 +187,39 @@ size_t ImageRecognizer::matchesSelection(
 
 	while (true) {
 		if (leftLimit >= rightLimit) {
-			if (leftLimit < (requiredNumber - (int)allowableError)) {
+			if (leftLimit < (requiredNumber - (int)allowableError))
 				leftLimit = requiredNumber + (int)allowableError;
-			}
 
 			break;
 		}
 
 		supportElement = computeLinearSupportElement(examples, requiredNumber,
-				leftLimit, rightLimit);
+					leftLimit, rightLimit);
 
 		/* Iteration similar quicksort */
 		while (true) {
-			/* Search the leftmost element
-			 *which have bigger confidence than support element
-			 */
+			/* Search the leftmost element which have bigger confidence than support element */
 			while (examples[leftLimit].distance <= supportElement &&
-				leftLimit < startRightLimit) {
+					leftLimit < startRightLimit) {
 				++leftLimit;
 			}
 
-			/* Search the rightmost element
-			 *which have smaller confidence than support element
-			 */
+			/* Search the rightmost element which have smaller confidence than support element */
 			while (examples[rightLimit].distance >= supportElement &&
-				rightLimit >= startLeftLimit) {
+					rightLimit >= startLeftLimit) {
 				--rightLimit;
 			}
 
-			if (leftLimit >= rightLimit) {
+			if (leftLimit >= rightLimit)
 				break;
-			}
 
 			/* Swap */
 			std::swap(examples[leftLimit], examples[rightLimit]);
 		}
-		if (abs(filterAmount - leftLimit) <= (int)allowableError) {
+
+		if (abs(filterAmount - leftLimit) <= (int)allowableError)
 			break;
-		}
+
 		if ((int)filterAmount > leftLimit) {
 			requiredNumber -= leftLimit - startLeftLimit;
 
@@ -248,9 +255,8 @@ float ImageRecognizer::computeLinearSupportElement(const std::vector<cv::DMatch>
 		}
 	}
 
-	/* Linear approximation. f(x) = k*x + b
-	 * f(sizeOfExamples) = maxValue; f(1) = minValue;
-	 */
+	/* Linear approximation. f(x) = k*x + b */
+	/* f(sizeOfExamples) = maxValue; f(1) = minValue; */
 	const float b = (maxValue - minValue * sizeOfExamples) / (1 - sizeOfExamples);
 	const float k = minValue - b;
 
@@ -261,8 +267,10 @@ float ImageRecognizer::computeLinearSupportElement(const std::vector<cv::DMatch>
 bool ImageRecognizer::isPossibleQuadrangleCorners(
 		const cv::Point2f corners[NumberOfQuadrangleCorners])
 {
-	static const float Epsilon = cv::TermCriteria::EPS;
-	static const float MinSizeOfDetectedArea = 30.f;
+	static const float Epsilon = 0.1f;
+
+	/* TODO: move the MinSizeOfDetectedArea out of the ImageRecognizer */
+	static const float MinSizeOfDetectedArea = 64.f;
 
 	const float firstSemiArea = getTriangleArea(corners[0], corners[2], corners[1]) +
 			getTriangleArea(corners[0], corners[2], corners[3]);
@@ -271,9 +279,8 @@ bool ImageRecognizer::isPossibleQuadrangleCorners(
 			getTriangleArea(corners[1], corners[3], corners[0]);
 
 	if (Epsilon < fabs(firstSemiArea - secondSemiArea) ||
-		MinSizeOfDetectedArea > (firstSemiArea + secondSemiArea)) {
+			MinSizeOfDetectedArea > (firstSemiArea + secondSemiArea))
 		return false;
-	}
 
 	return true;
 }

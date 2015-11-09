@@ -16,10 +16,10 @@
 
 #include "FaceTrackingModel.h"
 
-#include <app_common.h>
-
 #include "mv_private.h"
 #include "mv_common.h"
+
+#include <app_common.h>
 
 #include <unistd.h>
 
@@ -73,17 +73,19 @@ int FaceTrackingModel::save(const std::string& fileName)
 		return MEDIA_VISION_ERROR_INVALID_OPERATION;
 	}
 
-	std::string prefix_path = std::string(app_get_data_path());
-	LOGD("prefix_path: %s", prefix_path.c_str());
-
 	std::string filePath;
-	filePath += prefix_path;
-filePath += fileName;
+	char *cPath = app_get_data_path();
+	if (NULL == cPath)
+		filePath = fileName;
+	else
+		filePath = std::string(cPath) + fileName;
+
+	std::string prefixPath = filePath.substr(0, filePath.find_last_of('/'));
+	LOGD("prefixPath: %s", prefixPath.c_str());
 
 	/* check the directory is available */
-	std::string prefix_path_check = filePath.substr(0, filePath.find_last_of('/'));
-	if (access(prefix_path_check.c_str(), F_OK)) {
-		LOGE("Can't save tracking model. Path[%s] doesn't existed.", prefix_path_check.c_str());
+	if (access(prefixPath.c_str(), F_OK)) {
+		LOGE("Can't save tracking model. Path[%s] doesn't existed.", prefixPath.c_str());
 
 		return MEDIA_VISION_ERROR_INVALID_PATH;
 	}
@@ -108,16 +110,15 @@ filePath += fileName;
 
 int FaceTrackingModel::load(const std::string& fileName)
 {
-	/* find directory */
-	std::string prefix_path = std::string(app_get_data_path());
-	LOGD("prefix_path: %s", prefix_path.c_str());
-
 	std::string filePath;
-	filePath += prefix_path;
-	filePath += fileName;
+	char *cPath = app_get_data_path();
+	if (NULL == cPath)
+		filePath = fileName;
+	else
+		filePath = std::string(cPath) + fileName;
 
 	if (access(filePath.c_str(), F_OK)) {
-		LOGE("Can't load face tracking model. File[%s] doesn't exist.", filePath.c_str());
+		LOGE("Can't load face tracking model. File[%s] doesn't existed.", filePath.c_str());
 
 		return MEDIA_VISION_ERROR_INVALID_PATH;
 	}
