@@ -19,6 +19,8 @@ option(MEDIA_VISION_IMAGE_LICENSE_PORT
        "Turn on building of licensed port of the image module (if OFF - open port will be built)." OFF)
 option(MEDIA_VISION_FACE_LICENSE_PORT
        "Turn on building of licensed port of the face module (if OFF - open port will be built)." OFF)
+option(MEDIA_VISION_SURVEILLANCE_LICENSE_PORT
+       "Turn on building of licensed port of the surveillance module (if OFF - open port will be built)." OFF)
 
 set(MV_COMMON_LIB_NAME "mv_common")
 set(MV_BARCODE_DETECTOR_LIB_NAME "mv_barcode_detector" CACHE STRING
@@ -29,6 +31,8 @@ set(MV_IMAGE_LIB_NAME "mv_image" CACHE STRING
        "Name of the library will be built for image module (without extension).")
 set(MV_FACE_LIB_NAME "mv_face" CACHE STRING
        "Name of the library will be built for barcode generating module (without extension).")
+set(MV_SURVEILLANCE_LIB_NAME "mv_surveillance" CACHE STRING
+       "Name of the library will be built for surveillance module (without extension).")
 
 
 SET(INC_DIR "${PROJECT_SOURCE_DIR}/include")
@@ -64,12 +68,20 @@ else()
     SET(INC_FACE "${PROJECT_SOURCE_DIR}/mv_face/face/include")
 endif()
 
+if(MEDIA_VISION_SURVEILLANCE_LICENSE_PORT)
+    add_definitions(-DMEDIA_VISION_SURVEILLANCE_LICENSE_PORT)
+    SET(INC_SURVEILLANCE "${PROJECT_SOURCE_DIR}/mv_surveillance/surveillance_lic/include")
+else()
+    SET(INC_SURVEILLANCE "${PROJECT_SOURCE_DIR}/mv_surveillance/surveillance/include")
+endif()
+
 INCLUDE_DIRECTORIES(${INC_DIR}
                     ${INC_COMMON}
                     ${INC_BARCODE_DETECTOR}
                     ${INC_BARCODE_GENERATOR}
                     ${INC_FACE}
-                    ${INC_IMAGE})
+                    ${INC_IMAGE}
+                    ${INC_SURVEILLANCE})
 
 SET(dependents "dlog capi-media-tool capi-system-info capi-appfw-application")
 SET(pc_dependents "dlog")
@@ -100,6 +112,7 @@ ADD_SUBDIRECTORY(mv_common)
 ADD_SUBDIRECTORY(mv_barcode)
 ADD_SUBDIRECTORY(mv_image)
 ADD_SUBDIRECTORY(mv_face)
+ADD_SUBDIRECTORY(mv_surveillance)
 
 aux_source_directory(src SOURCES)
 ADD_LIBRARY(${fw_name} SHARED ${SOURCES})
@@ -109,7 +122,8 @@ TARGET_LINK_LIBRARIES(${fw_name} ${MV_COMMON_LIB_NAME}
                                  ${MV_BARCODE_GENERATOR_LIB_NAME}
                                  ${MV_IMAGE_LIB_NAME}
                                  ${MV_FACE_LIB_NAME}
-                                 ${${fw_name}_LDFLAGS})
+                                 ${${fw_name}_LDFLAGS}
+                                 ${MV_SURVEILLANCE_LIB_NAME})
 
 SET_TARGET_PROPERTIES(${fw_name}
      PROPERTIES

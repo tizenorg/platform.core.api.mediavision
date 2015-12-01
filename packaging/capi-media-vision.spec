@@ -1,6 +1,6 @@
 Name:        capi-media-vision
 Summary:     Media Vision library for Tizen Native API
-Version:     0.2.5
+Version:     0.3.0
 Release:     0
 Group:       Multimedia/Framework
 License:     Apache-2.0 and BSD-2.0
@@ -49,6 +49,17 @@ export CFLAGS="$CFLAGS -DTIZEN_DEBUG_ENABLE"
 export CXXFLAGS="$CXXFLAGS -DTIZEN_DEBUG_ENABLE"
 export FFLAGS="$FFLAGS -DTIZEN_DEBUG_ENABLE"
 %endif
+
+%ifarch %{arm}
+export CFLAGS="$CFLAGS -DENABLE_NEON"
+export CXXFLAGS="$CXXFLAGS -DENABLE_NEON"
+%endif
+
+%ifarch %{aarch64}
+export CFLAGS="$CFLAGS -DENABLE_NEON"
+export CXXFLAGS="$CXXFLAGS -DENABLE_NEON"
+%endif
+
 MAJORVER=`echo %{version} | awk 'BEGIN {FS="."}{print $1}'`
 %cmake . -DFULLVER=%{version} -DMAJORVER=${MAJORVER}
 

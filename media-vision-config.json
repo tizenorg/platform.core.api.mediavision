@@ -114,6 +114,21 @@
             "name"  : "MV_FACE_RECOGNITION_MODEL_TYPE",
             "type"  : "integer",
             "value" : 3
+        },
+        {
+            "name"  : "MV_SURVEILLANCE_FACE_RECOGNITION_MODEL_FILE_PATH",
+            "type"  : "string",
+            "value" : ""
+        },
+        {
+            "name"  : "MV_SURVEILLANCE_MOVEMENT_DETECTION_THRESHOLD",
+            "type"  : "integer",
+            "value" : 10
+        },
+        {
+            "name"  : "MV_SURVEILLANCE_SKIP_FRAMES_COUNT",
+            "type"  : "integer",
+            "value" : 0
         }
     ]
 }
