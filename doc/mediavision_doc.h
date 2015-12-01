@@ -24,13 +24,16 @@
  * * Face detection, recognition, and tracking;\n
  * * Barcode detection and generation;\n
  * * Flat Image detection, recognition and tracking;\n
- * * Flat Image features extraction.
+ * * Flat Image features extraction;\n
+ * * Surveillance: movement detection, person appearance/disappearance,
+ *   person recognition.
  *
  * @defgroup    CAPI_MEDIA_VISION_COMMON_MODULE Media Vision Common
  * @ingroup     CAPI_MEDIA_VISION_MODULE
  * @brief  Common functions and enumerations used in
  *         @ref CAPI_MEDIA_VISION_FACE_MODULE,
- *         @ref CAPI_MEDIA_VISION_IMAGE_MODULE and
+ *         @ref CAPI_MEDIA_VISION_IMAGE_MODULE,
+ *         @ref CAPI_MEDIA_VISION_SURVEILLANCE_MODULE and
  *         @ref CAPI_MEDIA_VISION_BARCODE_MODULE submodules.
  * @section CAPI_MEDIA_VISION_COMMON_MODULE_HEADER Required Header
  *      \#include <mv_common.h>
@@ -247,6 +250,125 @@
  * For QR codes it is possible to specify error correction code and encoding
  * mode (see @ref mv_barcode_qr_mode_e). Generation to file supports several
  * formats (see @ref mv_barcode_image_format_e).
+ *
+ * @defgroup    CAPI_MEDIA_VISION_SURVEILLANCE_MODULE Media Vision Surveillance
+ * @ingroup     CAPI_MEDIA_VISION_MODULE
+ * @brief Video surveillance module.
+ * @section CAPI_MEDIA_VISION_SURVEILLANCE_MODULE_HEADER Required Header
+ *      \#include <mv_surveillance.h>
+ *
+ * @section CAPI_MEDIA_VISION_SURVEILLANCE_MODULE_FEATURE Related Features
+ * This API is related with the following features:\n
+ *  - http://tizen.org/feature/vision.image_recognition\n
+ *  - http://tizen.org/feature/vision.face_recognition\n
+ *
+ * It is recommended to design feature related codes in your application for
+ * reliability.\n
+ * You can check if a device supports the related features for this API by using
+ * @ref CAPI_SYSTEM_SYSTEM_INFO_MODULE, thereby controlling the procedure of
+ * your application.\n
+ * To ensure your application is only running on the device with specific
+ * features, please define the features in your manifest file using the manifest
+ * editor in the SDK.\n
+ * More details on featuring your application can be found from
+ * <a href="https://developer.tizen.org/development/tools/native-tools/manifest-text-editor#feature">
+ *   <b>Feature Element</b>.
+ * </a>
+ *
+ * @section CAPI_MEDIA_VISION_SURVEILLANCE_MODULE_OVERVIEW Overview
+ * @ref CAPI_MEDIA_VISION_SURVEILLANCE_MODULE provides functionality can be
+ * utilized for creation of video surveillance systems. The main idea underlying
+ * surveillance is event subscription model. By default, supported event types
+ * are described in @ref CAPI_MEDIA_VISION_SURVEILLANCE_EVENT_TYPES section.
+ * @ref mv_surveillance_subscribe_event_trigger() function has to be used to
+ * create subscription to the particular event trigger. Triggers are handled by
+ * @ref mv_surveillance_event_trigger_h type. Such type handlers can be created
+ * with @ref mv_surveillance_event_trigger_create() function and destroyed with
+ * @ref mv_surveillance_event_trigger_destroy() function. Once event trigger
+ * subscription is created, corresponding @ref mv_surveillance_event_occurred_cb
+ * callback will be invoked each time when event is detected, i.e. trigger is
+ * activated. @ref mv_surveillance_result_h event detection result handler will
+ * be passed to the callback together with identifier of the video stream where
+ * event was detected and @ref mv_source_h handler containing frame in which
+ * detection was performed. It is possible to retrieve specific to event type
+ * result values using @ref mv_surveillance_result_h handler. In the
+ * @ref mv_surveillance_get_result_value() function documentation can be found
+ * detailed description of result values retrieving. Following table contains
+ * general events and corresponding event detection results can be obtained by
+ * this approach:
+ * <table>
+ * <tr>
+ *     <td><b>Event</b></td>
+ *     <td><b>Event result values</b></td>
+ * </tr>
+ * <tr>
+ *     <td>@ref MV_SURVEILLANCE_EVENT_TYPE_MOVEMENT_DETECTED</td>
+ *     <td>
+ *         @ref MV_SURVEILLANCE_MOVEMENT_NUMBER_OF_REGIONS;<br>
+ *         @ref MV_SURVEILLANCE_MOVEMENT_REGIONS
+ *     </td>
+ * </tr>
+ * <tr>
+ *     <td>@ref MV_SURVEILLANCE_EVENT_TYPE_PERSON_APPEARED_DISAPPEARED</td>
+ *     <td>
+ *         @ref MV_SURVEILLANCE_PERSONS_APPEARED_NUMBER;<br>
+ *         @ref MV_SURVEILLANCE_PERSONS_DISAPPEARED_NUMBER;<br>
+ *         @ref MV_SURVEILLANCE_PERSONS_TRACKED_NUMBER;<br>
+ *         @ref MV_SURVEILLANCE_PERSONS_APPEARED_LOCATIONS;<br>
+ *         @ref MV_SURVEILLANCE_PERSONS_DISAPPEARED_LOCATIONS;<br>
+ *         @ref MV_SURVEILLANCE_PERSONS_TRACKED_LOCATIONS
+ *     </td>
+ * </tr>
+ * <tr>
+ *     <td>@ref MV_SURVEILLANCE_EVENT_TYPE_PERSON_RECOGNIZED</td>
+ *     <td>
+ *         @ref MV_SURVEILLANCE_PERSONS_RECOGNIZED_NUMBER;<br>
+ *         @ref MV_SURVEILLANCE_PERSONS_RECOGNIZED_LOCATIONS;<br>
+ *         @ref MV_SURVEILLANCE_PERSONS_RECOGNIZED_LABELS;<br>
+ *         @ref MV_SURVEILLANCE_PERSONS_RECOGNIZED_CONFIDENCES
+ *     </td>
+ * </tr>
+ * </table>
+ * Before subscription of the event trigger with
+ * @ref mv_surveillance_subscribe_event_trigger() call it is possible to create
+ * @ref mv_engine_config_h handle and configurate following attributes:
+ * - @ref MV_SURVEILLANCE_SKIP_FRAMES_COUNT to setup number of frames will be
+     ignored by event trigger;
+ * - @ref MV_SURVEILLANCE_MOVEMENT_DETECTION_THRESHOLD to specify sensitivity of
+ *   the @ref MV_SURVEILLANCE_EVENT_TYPE_MOVEMENT_DETECTED event detection;
+ * - @ref MV_SURVEILLANCE_FACE_RECOGNITION_MODEL_FILE_PATH to specify the file
+ *   where face recognition model to be used for recognition is stored.
+ *
+ * Created engine config has to be used as a parameter of
+ * @ref mv_surveillance_subscribe_event_trigger() to apply the configuration. If
+ * NULL will be passed instead of valid @ref mv_engine_config_h handle, then
+ * default attribute values will be used for subsriptions.
+ * To make surveillance system work with video sequences
+ * @ref mv_surveillance_push_source() function has to
+ * be used for each frame in the sequence in the correct order. Multiple video
+ * sources can be supported by the system. To distinguish different video
+ * sources unique stream identifier has to be assigned to each subscription.
+ * Then, particular identifier can be passed as a parameter to the
+ * @ref mv_surveillance_push_source() function. After pushing the source to the
+ * surveillance system, it will notify all triggers which were subscribed to
+ * process frames coming from video stream which source has been pushed.
+ * If trigger(s) is(are) activated on the source, then corresponding callback(s)
+ * of @ref mv_surveillance_event_occurred_cb type will be called.
+ * Additionally, region where event detection will be performed by the triggers
+ * can be set with @ref mv_surveillance_set_event_trigger_roi() function and
+ * gotten with @ref mv_surveillance_get_event_trigger_roi(). ROI is specified
+ * independently for the each event trigger, so it is possible to detect events
+ * of different types in the different parts of the incoming frames.
+ * Event trigger subscription can be stopped any time using
+ * @ref mv_surveillance_unsubscribe_event_trigger() function. Additionally,
+ * @ref mv_surveillance_foreach_supported_event_type() and
+ * @ref mv_surveillance_foreach_event_result_name() functions can be found
+ * useful if it is required to obtain supported event types list or result
+ * value names list dynamically.
+ *
+ * @defgroup    CAPI_MEDIA_VISION_SURVEILLANCE_EVENT_TYPES Media Vision Surveillance Event Types
+ * @ingroup     CAPI_MEDIA_VISION_SURVEILLANCE_MODULE
+ * @brief Event types supported by the Surveillance module.
  */
 
 #endif  /* __TIZEN_MEDIAVISION_DOC_H__ */

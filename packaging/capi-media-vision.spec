@@ -49,6 +49,17 @@ export CFLAGS="$CFLAGS -DTIZEN_DEBUG_ENABLE"
 export CXXFLAGS="$CXXFLAGS -DTIZEN_DEBUG_ENABLE"
 export FFLAGS="$FFLAGS -DTIZEN_DEBUG_ENABLE"
 %endif
+
+%ifarch %{arm}
+export CFLAGS="$CFLAGS -DENABLE_NEON"
+export CXXFLAGS="$CXXFLAGS -DENABLE_NEON"
+%endif
+
+%ifarch %{aarch64}
+export CFLAGS="$CFLAGS -DENABLE_NEON"
+export CXXFLAGS="$CXXFLAGS -DENABLE_NEON"
+%endif
+
 MAJORVER=`echo %{version} | awk 'BEGIN {FS="."}{print $1}'`
 %cmake . -DFULLVER=%{version} -DMAJORVER=${MAJORVER}
 
