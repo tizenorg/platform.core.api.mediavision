@@ -220,6 +220,18 @@ int ImageHelper::saveImageFromBuffer(
     return MEDIA_VISION_ERROR_NONE;
 }
 
+int ImageHelper::destroyLoadedBuffer(unsigned char *pDataBuffer)
+{
+	if (!pDataBuffer) {
+		return MEDIA_VISION_ERROR_NONE;
+	}
+
+	delete [] pDataBuffer;
+	pDataBuffer = NULL;
+
+	return MEDIA_VISION_ERROR_NONE;
+}
+
 int ImageHelper::drawRectangleOnBuffer(
         int topLeftVertexX,
         int topLeftVertexY,

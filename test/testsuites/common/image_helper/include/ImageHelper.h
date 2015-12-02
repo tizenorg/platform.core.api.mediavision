@@ -76,6 +76,7 @@ public:
      * @return @c 0 on success, otherwise a negative error value
      *
      * @see ImageHelper::saveImageFromBuffer()
+	 * @see ImageHelper::destroyLoadedBuffer()
      */
     static int loadImageToBuffer(
             const char *filePath,
@@ -102,6 +103,19 @@ public:
             unsigned char *pDataBuffer,
             const ImageData& imageData,
             int quality = 100);
+
+   /**
+     * @brief Destroys loaded buffer by loadImageToBuffer().
+     *
+     * @since_tizen 3.0
+     * @param [out] pDataBuffer    The buffer of unsigned chars where image data
+     *                             will be stored
+     * @return @c 0 on success, otherwise a negative error value
+     *
+     * @see ImageHelper::loadImageToBuffer()
+     */
+    static int destroyLoadedBuffer(
+            unsigned char *pDataBuffer);
 
     /**
      * @brief Draws the rectangle of specified size on the image data buffer.

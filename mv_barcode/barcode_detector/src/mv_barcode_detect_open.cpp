@@ -44,6 +44,11 @@ int mv_barcode_detect_open(
 	}
 
 	zbar::Image greyImage = image.convert("Y800");
+	if (!greyImage.get_data()) {
+		LOGE("fail to image convert by zbar");
+		return MEDIA_VISION_ERROR_INVALID_OPERATION;
+	}
+
 	greyImage.set_crop(roi.point.x, roi.point.y, roi.width, roi.height);
 	zbar::ImageScanner scanner;
 

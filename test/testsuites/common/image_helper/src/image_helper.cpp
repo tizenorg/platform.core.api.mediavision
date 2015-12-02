@@ -85,6 +85,11 @@ int save_image_from_buffer(
     return ImageHelper::saveImageFromBuffer(file_path, data_buffer, imageData, quality);
 }
 
+int destroy_loaded_buffer(unsigned char *data_buffer)
+{
+	return ImageHelper::destroyLoadedBuffer(data_buffer);
+}
+
 int draw_rectangle_on_buffer(
         int tl_vertex_x,
         int tl_vertex_y,
