@@ -295,7 +295,7 @@ int load_mv_source_from_file(
                err);
         if (NULL != data_buffer)
         {
-            free(data_buffer);
+			destroy_loaded_buffer(data_buffer);
         }
 
         return err;
@@ -316,7 +316,7 @@ int load_mv_source_from_file(
 
     if (NULL != data_buffer)
     {
-        free(data_buffer);
+        destroy_loaded_buffer(data_buffer);
     }
 
     return err;

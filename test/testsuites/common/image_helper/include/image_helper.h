@@ -66,6 +66,7 @@ typedef struct
  * @return @c 0 on success, otherwise a negative error value
  *
  * @see save_image_from_buffer()
+ * @see destroy_loaded_buffer()
  */
 int load_image_to_buffer(
         const char *file_path,
@@ -92,6 +93,17 @@ int save_image_from_buffer(
         unsigned char *data_buffer,
         const image_data_s *image_data,
         int quality);
+
+/**
+ * @brief Destroys loaded buffer by load_image_to_buffer().
+ *
+ * @since_tizen 3.0
+ * @param [in] data_buffer    Data buffer to be deallocated
+ * @return @c 0 on success, otherwise a negative error value
+ *
+ * @see load_image_to_buffer()
+ */
+int destroy_loaded_buffer(unsigned char *data_buffer);
 
 /**
  * @brief Draws the rectangle of specified size on the image data buffer.

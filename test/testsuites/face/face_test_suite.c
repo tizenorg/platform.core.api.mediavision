@@ -865,7 +865,7 @@ int perform_model_evaluation(mv_face_recognition_model_h model)
 		}
 
 		labels[dir_n] = known_label ? face_label : -1;
-		strcpy(directories[dir_n], in_file_name);
+		snprintf(directories[dir_n], 1024, "%s", in_file_name);
 		label_count += (0 == unique_checks[face_label] ? 1 : 0);
 		if (labels[dir_n] >= 0)
 			unique_checks[labels[dir_n]] += 1;
@@ -895,6 +895,7 @@ int perform_model_evaluation(mv_face_recognition_model_h model)
 	mv_source_h source = NULL;
 	int err = mv_create_source(&source);
 	if (MEDIA_VISION_ERROR_NONE != err) {
+		free(directories);
 		printf(TEXT_RED
 				"ERROR: Errors were occurred during creating the source!!! code: %i"
 				TEXT_RESET "\n", err);
