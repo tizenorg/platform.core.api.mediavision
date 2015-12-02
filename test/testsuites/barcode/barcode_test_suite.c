@@ -610,7 +610,7 @@ int detect_barcode(barcode_model_s model, mv_rectangle_s roi)
 	err = mv_barcode_detect(source, mv_engine_config, roi, barcode_detected_cb, &model);
 
 	if (data_buffer != NULL)
-		free(data_buffer);
+		destroy_loaded_buffer(data_buffer);
 
 	if (MEDIA_VISION_ERROR_NONE != err) {
 		printf("ERROR: Errors were occurred during barcode detection!!! code: %i\n", err);

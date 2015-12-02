@@ -168,8 +168,6 @@ int FaceEyeCondition::recognizeEyeCondition(
 	}
 
 	if (NULL == eyeCondition) {
-		*eyeCondition = MV_FACE_EYES_NOT_FOUND;
-
 		LOGE("Output eye condition is NULL. Eye condition recognition failed.");
 		return MEDIA_VISION_ERROR_INVALID_PARAMETER;
 	}
