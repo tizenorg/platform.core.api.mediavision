@@ -443,8 +443,15 @@ int generate_barcode_to_source(barcode_model_s model)
 
 	LOGI("Call the mv_barcode_generate_source() function");
 
+	mv_engine_config_h mv_engine_config;
+	err = mv_create_engine_config(&mv_engine_config);
+	if (MEDIA_VISION_ERROR_NONE != err) {
+		printf("ERROR: Errors were occurred during creating the media engine "
+				"config: %i\n", err);
+	}
+
 	err = mv_barcode_generate_source(
-			NULL,
+			mv_engine_config,
 			model.message,
 			model.type,
 			model.mode,
@@ -460,6 +467,12 @@ int generate_barcode_to_source(barcode_model_s model)
 		if (MEDIA_VISION_ERROR_NONE != err2) {
 			printf("ERROR: Error occurred when try to destroy Media Vision source."
 					"Error code: %i\n", err2);
+		}
+
+		const int err3 = mv_destroy_engine_config(mv_engine_config);
+		if (MEDIA_VISION_ERROR_NONE != err3) {
+			printf("ERROR: Errors were occurred during destroying the media engine "
+					"config: %i\n", err3);
 		}
 
 		MEDIA_VISION_FUNCTION_LEAVE();
@@ -509,6 +522,12 @@ int generate_barcode_to_source(barcode_model_s model)
 					"source. Error code: %i\n", err);
 		}
 
+		err = mv_destroy_engine_config(mv_engine_config);
+		if (MEDIA_VISION_ERROR_NONE != err) {
+			printf("ERROR: Errors were occurred during destroying the media engine "
+					"config: %i\n", err);
+		}
+
 		MEDIA_VISION_FUNCTION_LEAVE();
 
 		return MEDIA_VISION_ERROR_INTERNAL;
@@ -520,12 +539,26 @@ int generate_barcode_to_source(barcode_model_s model)
 	if (0 == strcmp(model.file_name + strlen(model.file_name) - 4, ".jpg") ||
 		0 == strcmp(model.file_name + strlen(model.file_name) - 5, ".jpeg")) {
 		jpeg_file_name = (char*)malloc(strlen(model.file_name) + 1);
-		strcpy(jpeg_file_name, model.file_name);
+		if (jpeg_file_name == NULL) {
+			mv_destroy_source(source);
+			mv_destroy_engine_config(mv_engine_config);
+			MEDIA_VISION_FUNCTION_LEAVE();
+			return MEDIA_VISION_ERROR_OUT_OF_MEMORY;
+		}
+
+		strncpy(jpeg_file_name, model.file_name, strlen(model.file_name) + 1);
 		jpeg_file_name[strlen(model.file_name)] = '\0';
 	} else {
 		jpeg_file_name = (char*)malloc(strlen(model.file_name) + 5);
-		strcpy(jpeg_file_name, model.file_name);
-		strcpy(jpeg_file_name + strlen(model.file_name), ".jpg");
+		if (jpeg_file_name == NULL) {
+			mv_destroy_source(source);
+			mv_destroy_engine_config(mv_engine_config);
+			MEDIA_VISION_FUNCTION_LEAVE();
+			return MEDIA_VISION_ERROR_OUT_OF_MEMORY;
+		}
+
+		strncpy(jpeg_file_name, model.file_name, strlen(model.file_name) + 5);
+		strncpy(jpeg_file_name + strlen(model.file_name), ".jpg", 5);
 		jpeg_file_name[strlen(model.file_name) + 4] = '\0';
 	}
 
@@ -537,6 +570,12 @@ int generate_barcode_to_source(barcode_model_s model)
 	if (MEDIA_VISION_ERROR_NONE != err2) {
 		printf("ERROR: Error occurred when try to destroy Media Vision source."
 			"Error code: %i\n", err2);
+	}
+
+	const int err3 = mv_destroy_engine_config(mv_engine_config);
+	if (MEDIA_VISION_ERROR_NONE != err3) {
+		printf("ERROR: Errors were occurred during destroying the media engine "
+			"config: %i\n", err);
 	}
 
 	MEDIA_VISION_FUNCTION_LEAVE();
@@ -656,7 +695,12 @@ int input_string(const char *prompt, size_t max_len, char **string)
 	size_t real_string_len = strlen(buffer);
 	buffer[real_string_len - 1] = '\0';
 	*string = (char*)malloc(real_string_len * sizeof(char));
-	strcpy(*string, buffer);
+	if (*string == NULL) {
+		MEDIA_VISION_FUNCTION_LEAVE();
+		return -1;
+	}
+
+	strncpy(*string, buffer, real_string_len);
 
 	size_t str_len = strlen(*string);
 

@@ -38,7 +38,7 @@ int CopyOpenCVAlgorithmParameters(const cv::Ptr<cv::FaceRecognizer>& srcAlg,
 {
 	char tempPath[1024];
 
-	sprintf(tempPath, "/tmp/alg_copy_%p_%p", srcAlg.obj, dstAlg.obj);
+	snprintf(tempPath, 1024, "/tmp/alg_copy_%p_%p", srcAlg.obj, dstAlg.obj);
 
 	srcAlg->save(tempPath);
 	dstAlg->load(tempPath);

@@ -227,7 +227,7 @@ float FeatureMatcher::getTolerantError() const
 
 void FeatureMatcher::setTolerantError(float tolerantError)
 {
-	m_affectingPart = std::max(0.f, std::min(1.f, tolerantError));
+	m_tolerantError = std::max(0.f, std::min(1.f, tolerantError));
 }
 
 size_t FeatureMatcher::getMinimumMatchesNumber() const

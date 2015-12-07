@@ -545,7 +545,7 @@ int perform_mv_face_recognition_model_add_face_example(
 				if (file_name[0] == '.')
 					continue;
 
-				sprintf(file_path, "%s/%s", in_file_name, file_name);
+				snprintf(file_path, 1024, "%s/%s", in_file_name, file_name);
 				err = add_single_example(model, file_path, NULL, &face_label);
 
 				if (MEDIA_VISION_ERROR_NONE != err) {
@@ -918,7 +918,7 @@ int perform_model_evaluation(mv_face_recognition_model_h model)
 				if (file_name[0] == '.')
 					continue;
 
-				sprintf(file_path, "%s/%s", directories[i], file_name);
+				snprintf(file_path, 1024, "%s/%s", directories[i], file_name);
 				err = load_mv_source_from_file(file_path, source);
 				if (MEDIA_VISION_ERROR_NONE != err) {
 					printf(TEXT_RED "Failed to test on example from %s. "
@@ -1056,11 +1056,10 @@ int perform_recognize()
 								"Error with code %i was occurred during destoy"
 								TEXT_RESET "\n", err);
 				}
-
-				return err;
 			} else {
-				return MEDIA_VISION_ERROR_NONE;
+				err = MEDIA_VISION_ERROR_NONE;
 			}
+			break;
 		default:
 			sel_opt = 0;
 			printf("ERROR: Incorrect option was selected.\n");
@@ -1069,8 +1068,12 @@ int perform_recognize()
 
 		print_action_result(names[sel_opt - 1], err, notification_type);
 
-		sel_opt = 0;
+		if (sel_opt != 11) {
+			sel_opt = 0;
+		}
 	}
+
+	return err;
 }
 
 int perform_mv_face_tracking_model_save(mv_face_tracking_model_h model)
@@ -1415,13 +1418,13 @@ int perform_mv_face_tracking_model_prepare(mv_face_tracking_model_h model)
 		char str_prompt[100];
 		while (idx < 4) {
 			++idx;
-			sprintf(str_prompt, "Specify point %i x coordinate: x%i = ",
+			snprintf(str_prompt, 100, "Specify point %i x coordinate: x%i = ",
 					idx - 1, idx);
 			while (-1 == input_int(str_prompt, INT_MIN, INT_MAX,
 									&(roi.points[idx - 1].x))) {
 				printf("Incorrect input! Try again.\n");
 			}
-			sprintf(str_prompt, "Specify point %i y coordinate: y%i = ",
+			snprintf(str_prompt, 100, "Specify point %i y coordinate: y%i = ",
 								idx - 1, idx);
 			while (-1 == input_int(str_prompt, INT_MIN, INT_MAX,
 									&(roi.points[idx - 1].y))) {
@@ -1533,7 +1536,7 @@ void track_cb(
 	}
 
 	char file_path[1024];
-	sprintf(file_path, "%s/%05d.jpg", track_output_dir, track_frame_counter);
+	snprintf(file_path, 1024, "%s/%05d.jpg", track_output_dir, track_frame_counter);
 	if (MEDIA_VISION_ERROR_NONE == save_image_from_buffer(
 					file_path, out_buffer, &image_data, 100)) {
 		printf("Frame %i was outputted as %s\n", track_frame_counter, file_path);
@@ -1806,11 +1809,10 @@ int perform_track()
 							"Error with code %i was occurred during destroy"
 							TEXT_RESET "\n", err);
 				}
-
-				return err;
 			} else {
-				return MEDIA_VISION_ERROR_NONE;
+				err = MEDIA_VISION_ERROR_NONE;
 			}
+			break;
 		default:
 			sel_opt = 0;
 			printf("ERROR: Incorrect input.\n");
@@ -1819,8 +1821,12 @@ int perform_track()
 
 		print_action_result(names[sel_opt - 1], err, notification_type);
 
-		sel_opt = 0;
+		if (sel_opt != 6) {
+			sel_opt = 0;
+		}
 	}
+
+	return err;
 }
 
 int perform_eye_condition_recognize()

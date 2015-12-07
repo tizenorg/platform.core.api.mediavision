@@ -31,6 +31,8 @@ ImageContourStabilizator::ImageContourStabilizator() :
 
 void ImageContourStabilizator::reset(void)
 {
+	m_tolerantShift = 0.0f;
+	m_tolerantShiftExtra = 0.0f;
 	m_isPrepared = false;
 	m_tempContourIndex = -1;
 	m_currentHistoryAmount = 0;

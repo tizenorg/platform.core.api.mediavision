@@ -411,6 +411,8 @@ int mv_image_recognize_open(
 			convertSourceMV2GrayCV(source, scene),
 			"Failed to convert mv_source.");
 
+	int ret = MEDIA_VISION_ERROR_NONE;
+
 	MediaVision::Image::FeaturesExtractingParams featuresExtractingParams;
 	extractSceneFeaturesExtractingParams(engine_cfg, featuresExtractingParams);
 
@@ -431,6 +433,11 @@ int mv_image_recognize_open(
 		if (isRecognized && (resultContour.size() ==
 			MediaVision::Image::NumberOfQuadrangleCorners)) {
 			resultLocations[objectNum] = new mv_quadrangle_s;
+			if (resultLocations[objectNum] == NULL) {
+				ret = MEDIA_VISION_ERROR_OUT_OF_MEMORY;
+				goto ErrorExit;
+			}
+
 			for (size_t pointNum = 0u;
 				pointNum < MediaVision::Image::NumberOfQuadrangleCorners;
 				++pointNum) {
@@ -452,6 +459,8 @@ int mv_image_recognize_open(
 			number_of_objects,
 			user_data);
 
+ErrorExit:
+
 	for (int objectNum = 0; objectNum < number_of_objects; ++objectNum) {
 		if (resultLocations[objectNum] != NULL) {
 			delete resultLocations[objectNum];
@@ -459,7 +468,7 @@ int mv_image_recognize_open(
 		}
 	}
 
-	return MEDIA_VISION_ERROR_NONE;
+	return ret;
 }
 
 int mv_image_track_open(

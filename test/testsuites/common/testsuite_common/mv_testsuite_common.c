@@ -103,7 +103,11 @@ int input_string(const char *prompt, size_t max_len, char **string)
     size_t real_string_len = strlen(buffer);
     buffer[real_string_len - 1] = '\0';
     *string = (char*)malloc(real_string_len * sizeof(char));
-    strcpy(*string, buffer);
+	if (*string == NULL) {
+		return -1;
+	}
+
+    strncpy(*string, buffer, real_string_len);
 
     return strlen(*string);
 }

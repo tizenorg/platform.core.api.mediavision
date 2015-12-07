@@ -85,62 +85,66 @@ void testing_object_fill(
 	switch (source_type) {
 	case SOURCE_TYPE_GENERATION: {
 		if (OBJECT_TYPE_IMAGE_OBJECT == object_type) {
-			sprintf(
+			snprintf(
 						target->origin_label,
+						testing_object_maximum_label_length,
 						"generated from \"%s\"",
 						(char*)source);
 		} else if (OBJECT_TYPE_IMAGE_TRACKING_MODEL == object_type) {
-			sprintf(
+			snprintf(
 						target->origin_label,
+						testing_object_maximum_label_length,
 						"generated from image object which is %s",
 						((testing_object_h)source)->actual_label);
 		} else {
-			sprintf(
+			snprintf(
 						target->origin_label,
+						testing_object_maximum_label_length,
 						"generated unknown type of testing object");
 		}
 
-		strcpy(target->actual_label, target->origin_label);
+		strncpy(target->actual_label, target->origin_label, testing_object_maximum_label_length);
 		break;
 	}
 	case SOURCE_TYPE_LOADING: {
-		sprintf(target->origin_label, "loaded from \"%s\"", (char*)source);
-		strcpy(target->actual_label, target->origin_label);
+		snprintf(target->origin_label, testing_object_maximum_label_length, "loaded from \"%s\"", (char*)source);
+		strncpy(target->actual_label, target->origin_label, testing_object_maximum_label_length);
 		break;
 	}
 	case SOURCE_TYPE_CLONING: {
 		testing_object_h source_object = (testing_object_h)source;
-		strcpy(target->origin_label, source_object->origin_label);
+		strncpy(target->origin_label, source_object->origin_label, testing_object_maximum_label_length);
 		target->cloning_counter = source_object->cloning_counter + 1;
 
 		char number_of_cloning[10];
 		number_of_cloning[0] = '\0';
 		if (1 < target->cloning_counter) {
-			sprintf(number_of_cloning, "%s%i%s",
+			snprintf(number_of_cloning, 10, "%s%i%s",
 						"(x", target->cloning_counter, ")");
 		}
 
 		char type_name[20];
 		if (OBJECT_TYPE_IMAGE_OBJECT == object_type)
-			sprintf(type_name, "image object");
+			snprintf(type_name, 20, "image object");
 		else if (OBJECT_TYPE_IMAGE_TRACKING_MODEL == object_type)
-			sprintf(type_name, "tracking model");
+			snprintf(type_name, 20, "tracking model");
 		else
-			sprintf(type_name, "unknown object");
+			snprintf(type_name, 20, "unknown object");
 
-		sprintf(target->actual_label, "%s%s%s%s%s%s",
+		snprintf(target->actual_label, testing_object_maximum_label_length,
+						"%s%s%s%s%s%s",
 						"cloned ", number_of_cloning,
 						" from ", type_name,
 						" which is ", target->origin_label);
 		break;
 	}
 	case SOURCE_TYPE_EMPTY: {
-		strcpy(target->origin_label, "created an empty");
-		strcpy(target->actual_label, target->origin_label);
+		strncpy(target->origin_label, "created an empty", testing_object_maximum_label_length);
+		strncpy(target->actual_label, target->origin_label, testing_object_maximum_label_length);
 		break;
 	}
 	default: {
-		strcpy(target->origin_label, "having unknown source");
+		strncpy(target->origin_label, "having unknown source", testing_object_maximum_label_length);
 		break;
 	}
 	}

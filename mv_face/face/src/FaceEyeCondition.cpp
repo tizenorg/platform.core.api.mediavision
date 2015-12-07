@@ -64,13 +64,13 @@ void FaceEyeCondition::splitEyes(
 	const double xRightEyeCenter = (2 * eyeAreaRight.x + eyeAreaRight.width) / 2.;
 	const double yRightEyeCenter = (2 * eyeAreaRight.y + eyeAreaRight.height) / 2.;
 
-	const cv::Rect leftEyeRect(xLeftEyeCenter - eyeAreaLeft.width / 4,
-								yLeftEyeCenter - eyeAreaLeft.height / 4,
+	const cv::Rect leftEyeRect((int)(xLeftEyeCenter - (double)eyeAreaLeft.width / 4),
+								(int)(yLeftEyeCenter - (double)eyeAreaLeft.height / 4),
 								eyeAreaLeft.width / 2,
 								eyeAreaLeft.height / 2);
 
-	const cv::Rect rightEyeRect(xRightEyeCenter - eyeAreaRight.width / 4,
-								yRightEyeCenter - eyeAreaRight.height / 4,
+	const cv::Rect rightEyeRect((int)(xRightEyeCenter - (double)eyeAreaRight.width / 4),
+								(int)(yRightEyeCenter - (double)eyeAreaRight.height / 4),
 								eyeAreaRight.width / 2,
 								eyeAreaRight.height / 2);
 
