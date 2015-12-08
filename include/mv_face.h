@@ -661,10 +661,10 @@ int mv_face_recognition_model_clone(
  *          This examples can be removed by
  *          @ref mv_face_recognition_model_reset() function if
  *          it is needed to clear the memory.
- * @remarks @a recognition_model is saved to the application's data directory.
+ * @remarks @a recognition_model is saved to the absolute directory path.
  *          After model is saved to the file, it can be loaded from this file
  *          by @ref mv_face_recognition_model_load() function.
- * @param [in] file_name            Name of the file to save the model
+ * @param [in] file_name            Name of the path/file to save the model
  * @param [in] recognition_model    The handle to the recognition model to be
  *                                  saved to the file
  * @return @c 0 on success, otherwise a negative error value
@@ -699,10 +699,10 @@ int mv_face_recognition_model_save(
  *          @ref mv_face_recognition_model_reset() function. It
  *          is recommended to clear the memory if learning algorithm doesn't
  *          support reinforcement learning.
- * @remarks @a recognition_model is loaded from the application's data directory.
+ * @remarks @a recognition_model is loaded from the absolute directory path.
  *          @a recognition_model must be destroyed using
  *          @ref mv_face_recognition_model_destroy().
- * @param [in]  file_name            Name of file to load the model
+ * @param [in]  file_name            Name of path/file to load the model
  * @param [out] recognition_model    The handle to the recognition model
  *                                   to be loaded from the file
  * @return @c 0 on success, otherwise a negative error value
@@ -1033,10 +1033,10 @@ int mv_face_tracking_model_clone(
  * @brief Calls this method to save tracking model to the file.
  *
  * @since_tizen 3.0
- * @remarks @ tracking_model is saved to the application's data directory.
+ * @remarks @ tracking_model is saved to the absolute directory path.
  *          After model is saved to the file, it can be loaded from this file
  *          with @ref mv_face_tracking_model_load() function.
- * @param [in] file_name         Name of the file to save the model
+ * @param [in] file_name         Name of the path/file to save the model
  * @param [in] tracking_model    The handle to the tracking model to be
  *                               saved to the file
  * @return @c 0 on success, otherwise a negative error value
@@ -1064,10 +1064,10 @@ int mv_face_tracking_model_save(
  * @brief Calls this method to load a tracking model from file.
  *
  * @since_tizen 3.0
- * @remarks @a tracking_model is loaded from the application's data directory.
+ * @remarks @a tracking_model is loaded from the absolute directory path.
  *          @a tracking_model must be destroyed using
  *          @ref mv_face_tracking_model_destroy.
- * @param [in] file_name         Name of file to load the model
+ * @param [in] file_name         Name of path/file to load the model
  * @param [out] tracking_model   The handle to the tracking model to be
  *                               loaded from file
  * @return @c 0 on success, otherwise a negative error value
