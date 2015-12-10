@@ -25,8 +25,6 @@
 #include "mv_private.h"
 #include "mv_common.h"
 
-#include <app_common.h>
-
 #include <opencv/cv.h>
 #include <opencv2/features2d/features2d.hpp>
 
@@ -180,11 +178,8 @@ bool ImageObject::getLabel(int& label) const
 int ImageObject::save(const char *fileName) const
 {
 	std::string filePath;
-	char *cPath = app_get_data_path();
-	if (NULL == cPath)
-		filePath = fileName;
-	else
-		filePath = std::string(cPath) + std::string(fileName);
+
+	filePath = fileName;
 
 	std::string prefixPath = filePath.substr(0, filePath.find_last_of('/'));
 	LOGD("prefixPath: %s", prefixPath.c_str());
@@ -216,11 +211,8 @@ int ImageObject::save(const char *fileName) const
 int ImageObject::load(const char *fileName)
 {
 	std::string filePath;
-	char *cPath = app_get_data_path();
-	if (NULL == cPath)
-		filePath = fileName;
-	else
-		filePath = std::string(cPath) + std::string(fileName);
+
+	filePath = fileName;
 
 	if (access(filePath.c_str(), F_OK)) {
 		LOGE("Can't load image object model. Path[%s] doesn't existed.", filePath.c_str());

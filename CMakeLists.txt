@@ -83,7 +83,7 @@ INCLUDE_DIRECTORIES(${INC_DIR}
                     ${INC_IMAGE}
                     ${INC_SURVEILLANCE})
 
-SET(dependents "dlog capi-media-tool capi-system-info capi-appfw-application")
+SET(dependents "dlog capi-media-tool capi-system-info")
 SET(pc_dependents "dlog")
 
 INCLUDE(FindPkgConfig)
