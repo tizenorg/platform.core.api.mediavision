@@ -19,8 +19,6 @@
 #include "mv_private.h"
 #include "mv_common.h"
 
-#include <app_common.h>
-
 #include <unistd.h>
 
 namespace MediaVision {
@@ -74,11 +72,8 @@ int FaceTrackingModel::save(const std::string& fileName)
 	}
 
 	std::string filePath;
-	char *cPath = app_get_data_path();
-	if (NULL == cPath)
-		filePath = fileName;
-	else
-		filePath = std::string(cPath) + fileName;
+
+	filePath = fileName;
 
 	std::string prefixPath = filePath.substr(0, filePath.find_last_of('/'));
 	LOGD("prefixPath: %s", prefixPath.c_str());
@@ -111,11 +106,8 @@ int FaceTrackingModel::save(const std::string& fileName)
 int FaceTrackingModel::load(const std::string& fileName)
 {
 	std::string filePath;
-	char *cPath = app_get_data_path();
-	if (NULL == cPath)
-		filePath = fileName;
-	else
-		filePath = std::string(cPath) + fileName;
+
+	filePath = fileName;
 
 	if (access(filePath.c_str(), F_OK)) {
 		LOGE("Can't load face tracking model. File[%s] doesn't existed.", filePath.c_str());

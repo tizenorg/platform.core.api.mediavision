@@ -1,13 +1,12 @@
 Name:        capi-media-vision
 Summary:     Media Vision library for Tizen Native API
-Version:     0.3.3
+Version:     0.3.4
 Release:     0
 Group:       Multimedia/Framework
 License:     Apache-2.0 and BSD-2.0
 Source0:     %{name}-%{version}.tar.gz
 BuildRequires: cmake
 BuildRequires: pkgconfig(capi-media-tool)
-BuildRequires: pkgconfig(capi-appfw-application)
 BuildRequires: pkgconfig(libtbm)
 BuildRequires: pkgconfig(dlog)
 BuildRequires: pkgconfig(capi-system-info)

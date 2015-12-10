@@ -25,8 +25,6 @@
 #include "mv_private.h"
 #include "mv_common.h"
 
-#include <app_common.h>
-
 #include <fstream>
 #include <unistd.h>
 
@@ -223,11 +221,8 @@ ImageTrackingModel& ImageTrackingModel::operator=(const ImageTrackingModel& copy
 int ImageTrackingModel::save(const char *filepath) const
 {
 	std::string filePath;
-	char *cPath = app_get_data_path();
-	if (NULL == cPath)
-		filePath = std::string(filepath);
-	else
-		filePath = std::string(cPath) + std::string(filepath);
+
+	filePath = std::string(filepath);
 
 	std::string prefixPath = filePath.substr(0, filePath.find_last_of('/'));
 	LOGD("prefixPath: %s", prefixPath.c_str());
@@ -258,11 +253,8 @@ int ImageTrackingModel::save(const char *filepath) const
 int ImageTrackingModel::load(const char *filepath)
 {
 	std::string filePath;
-	char *cPath = app_get_data_path();
-	if (NULL == cPath)
-		filePath = std::string(filepath);
-	else
-		filePath = std::string(cPath) + std::string(filepath);
+
+	filePath = std::string(filepath);
 
 	if (access(filePath.c_str(),F_OK)) {
 		LOGE("Can't load tracking model. Path[%s] doesn't existed.", filepath);
