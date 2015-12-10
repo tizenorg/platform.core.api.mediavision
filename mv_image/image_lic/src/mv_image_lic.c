@@ -17,134 +17,133 @@
 #include "mv_image_lic.h"
 
 int mv_image_recognize_lic(
-        mv_source_h source,
-        const mv_image_object_h *image_objects,
-        int number_of_objects,
-        mv_engine_config_h engine_cfg,
-        mv_image_recognized_cb recognized_cb,
-        void *user_data)
+		mv_source_h source,
+		const mv_image_object_h *image_objects,
+		int number_of_objects,
+		mv_engine_config_h engine_cfg,
+		mv_image_recognized_cb recognized_cb,
+		void *user_data)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_track_lic(
-        mv_source_h source,
-        mv_image_tracking_model_h image_tracking_model,
-        mv_engine_config_h engine_cfg,
-        mv_image_tracked_cb tracked_cb,
-        void *user_data)
+		mv_source_h source,
+		mv_image_tracking_model_h image_tracking_model,
+		mv_engine_config_h engine_cfg,
+		mv_image_tracked_cb tracked_cb,
+		void *user_data)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_object_create_lic(
-        mv_image_object_h *image_object)
+		mv_image_object_h *image_object)
 
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
-
 int mv_image_object_destroy_lic(
-        mv_image_object_h image_object)
+		mv_image_object_h image_object)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_object_fill_lic(
-        mv_image_object_h image_object,
-        mv_engine_config_h engine_cfg,
-        mv_source_h source,
-        mv_rectangle_s *location)
+		mv_image_object_h image_object,
+		mv_engine_config_h engine_cfg,
+		mv_source_h source,
+		mv_rectangle_s *location)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_object_get_recognition_rate_lic(
-        mv_image_object_h image_object,
-        double *recognition_rate)
+		mv_image_object_h image_object,
+		double *recognition_rate)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_object_set_label_lic(
-        mv_image_object_h image_object,
-        int label)
+		mv_image_object_h image_object,
+		int label)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_object_get_label_lic(
-        mv_image_object_h image_object,
-        int *label)
+		mv_image_object_h image_object,
+		int *label)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_object_clone_lic(
-        mv_image_object_h src,
-        mv_image_object_h *dst)
+		mv_image_object_h src,
+		mv_image_object_h *dst)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_object_save_lic(
-        mv_image_object_h image_object,
-        const char *file_name)
+		mv_image_object_h image_object,
+		const char *file_name)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_object_load_lic(
-        mv_image_object_h image_object,
-        const char *file_name)
+		mv_image_object_h image_object,
+		const char *file_name)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_tracking_model_create_lic(
-        mv_image_tracking_model_h *image_tracking_model)
+		mv_image_tracking_model_h *image_tracking_model)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_tracking_model_set_target_lic(
-        mv_image_object_h image_object,
-        mv_image_tracking_model_h image_tracking_model)
+		mv_image_object_h image_object,
+		mv_image_tracking_model_h image_tracking_model)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_tracking_model_destroy_lic(
-        mv_image_tracking_model_h image_tracking_model)
+		mv_image_tracking_model_h image_tracking_model)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_tracking_model_refresh_lic(
-        mv_image_tracking_model_h image_tracking_model,
-        mv_engine_config_h engine_cfg)
+		mv_image_tracking_model_h image_tracking_model,
+		mv_engine_config_h engine_cfg)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_tracking_model_clone_lic(
-        mv_image_tracking_model_h src,
-        mv_image_tracking_model_h *dst)
+		mv_image_tracking_model_h src,
+		mv_image_tracking_model_h *dst)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_tracking_model_save_lic(
-        mv_image_tracking_model_h image_tracking_model,
-        const char *file_name)
+		mv_image_tracking_model_h image_tracking_model,
+		const char *file_name)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }
 
 int mv_image_tracking_model_load_lic(
-        mv_image_tracking_model_h image_tracking_model,
-        const char *file_name)
+		mv_image_tracking_model_h image_tracking_model,
+		const char *file_name)
 {
-    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+	return MEDIA_VISION_ERROR_NOT_SUPPORTED;
 }

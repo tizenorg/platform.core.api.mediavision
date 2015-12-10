@@ -29,7 +29,7 @@ int mv_get_mask_buffer(
 	unsigned char **mask_buffer)
 {
 	if (buffer_width == 0u || buffer_height == 0u ||
-			polygon == NULL|| points_number == 0u || mask_buffer == NULL) {
+			polygon == NULL || points_number == 0u || mask_buffer == NULL) {
 		LOGE("Wrong input parameter. Getting mask buffer failed.");
 		return MEDIA_VISION_ERROR_INVALID_PARAMETER;
 	}
@@ -48,17 +48,15 @@ int mv_get_mask_buffer(
 	int min_y = polygon[0].y;
 
 	for (k = 1u; k < points_number; ++k) {
-		if (polygon[k].x > max_x) {
+		if (polygon[k].x > max_x)
 			max_x = polygon[k].x;
-		} else if (polygon[k].x < min_x) {
+		else if (polygon[k].x < min_x)
 			min_x = polygon[k].x;
-		}
 
-		if (polygon[k].y > max_y) {
+		if (polygon[k].y > max_y)
 			max_y = polygon[k].y;
-		} else if (polygon[k].y < min_y) {
+		else if (polygon[k].y < min_y)
 			min_y = polygon[k].y;
-		}
 	}
 
 

@@ -58,7 +58,7 @@ int mv_surveillance_event_trigger_create(
 
 	memset(handle, 0, sizeof(mv_surveillance_event_trigger_s));
 
-	// default values:
+	/* default values: */
 	handle->trigger_id = ++__mv_surveillance_id_counter;
 	handle->event_type = strndup(event_type, 255);
 	handle->number_of_roi_points = 0;
@@ -102,8 +102,8 @@ int mv_surveillance_get_event_trigger_type(
 			(mv_surveillance_event_trigger_s *)trigger;
 	*event_type = strndup(handle->event_type, 255);
 
-    MEDIA_VISION_FUNCTION_LEAVE();
-    return MEDIA_VISION_ERROR_NONE;
+	MEDIA_VISION_FUNCTION_LEAVE();
+	return MEDIA_VISION_ERROR_NONE;
 }
 
 int mv_surveillance_set_event_trigger_roi(
@@ -154,11 +154,11 @@ int mv_surveillance_get_event_trigger_roi(
 			(mv_surveillance_event_trigger_s *) trigger;
 
 	*number_of_points = handle->number_of_roi_points;
-	if (0 == *number_of_points)
-	{
+	if (0 == *number_of_points) {
 		MEDIA_VISION_FUNCTION_LEAVE();
 		return MEDIA_VISION_ERROR_NONE;
 	}
+
 	*roi = (mv_point_s *) malloc(
 					sizeof(mv_point_s) * handle->number_of_roi_points);
 
