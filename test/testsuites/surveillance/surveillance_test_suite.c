@@ -137,7 +137,7 @@ int main(void)
 		"Exit"
 	};
 
-	while(1) {
+	while (1) {
 		char exit = 'n';
 		int sel_opt = show_menu("Select action:", options, names, 8);
 		switch (sel_opt) {
@@ -367,7 +367,7 @@ void subscribe_to_event()
 			video_stream_id,
 			NULL,
 			detect_person_appeared_cb,
- 			NULL);
+			NULL);
 	} else if (strncmp(event_type,
 					MV_SURVEILLANCE_EVENT_TYPE_PERSON_RECOGNIZED,
 					MAX_EVENT_TYPE_LEN) == 0) {
@@ -546,7 +546,7 @@ void unsubscribe_from_all_events()
 	}
 
 	unsubscribed_number > 0 ?
-	PRINT_S("%d event(s) was successfully unsubscribed", unsubscribed_number):
+	PRINT_S("%d event(s) was successfully unsubscribed", unsubscribed_number) :
 	PRINT_Y("\nThere are no triggers can be unsubscribed.");
 }
 
@@ -628,7 +628,7 @@ void turn_on_off_saving_to_image()
 	save_results_to_image = !save_results_to_image;
 
 	save_results_to_image ?
-		PRINT_Y("Save event results to image files ON."):
+		PRINT_Y("Save event results to image files ON.") :
 		PRINT_Y("Save event results to image files OFF.");
 }
 
@@ -656,8 +656,7 @@ void detect_person_appeared_cb(
 		 mv_source_get_height(source, &(image_data.image_height)) ||
 		 mv_source_get_colorspace(source, &(image_data.image_colorspace)) ||
 		 out_buffer == NULL ||
-		 buf_size == 0))
-	{
+		 buf_size == 0)) {
 		PRINT_R("ERROR: Creating out image is impossible.");
 
 		return;
@@ -978,8 +977,7 @@ void person_recognized_cb(
 		 mv_source_get_height(source, &(image_data.image_height)) ||
 		 mv_source_get_colorspace(source, &(image_data.image_colorspace)) ||
 		 out_buffer == NULL ||
-		 buf_size == 0))
-	{
+		 buf_size == 0)) {
 		PRINT_R("ERROR: Creating out image is impossible.");
 
 		return;
@@ -1087,8 +1085,7 @@ void movement_detected_cb(
 		 mv_source_get_height(source, &(image_data.image_height)) ||
 		 mv_source_get_colorspace(source, &(image_data.image_colorspace)) ||
 		 out_buffer == NULL ||
-		 buf_size == 0))
-	{
+		 buf_size == 0)) {
 		PRINT_R("ERROR: Creating out image is impossible.");
 
 		if (movement_regions != NULL)

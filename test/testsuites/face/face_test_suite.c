@@ -1068,9 +1068,8 @@ int perform_recognize()
 
 		print_action_result(names[sel_opt - 1], err, notification_type);
 
-		if (sel_opt != 11) {
+		if (sel_opt != 11)
 			sel_opt = 0;
-		}
 	}
 
 	return err;
@@ -1821,9 +1820,8 @@ int perform_track()
 
 		print_action_result(names[sel_opt - 1], err, notification_type);
 
-		if (sel_opt != 6) {
+		if (sel_opt != 6)
 			sel_opt = 0;
-		}
 	}
 
 	return err;
