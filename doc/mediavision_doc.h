@@ -70,7 +70,7 @@
  * features, please define the features in your manifest file using the manifest
  * editor in the SDK.\n
  * More details on featuring your application can be found from
- * <a href="../org.tizen.mobile.native.appprogramming/html/ide_sdk_tools/feature_element.htm">
+ * <a href="https://developer.tizen.org/development/tools/native-tools/manifest-text-editor#feature">
  *    <b>Feature Element</b>.
  * </a>
  *
@@ -79,8 +79,6 @@
  * @brief Face detection, recognition, and tracking.
  * @section CAPI_MEDIA_VISION_FACE_MODULE_HEADER Required Header
  *      \#include <mv_face.h>
- *
- * @section CAPI_MEDIA_VISION_FACE_MODULE_OVERVIEW Overview
  *
  * @section CAPI_MEDIA_VISION_FACE_MODULE_FEATURE Related Features
  * This API is related with the following features:\n
@@ -95,10 +93,11 @@
  * features, please define the features in your manifest file using the manifest
  * editor in the SDK.\n
  * More details on featuring your application can be found from
- * <a href="../org.tizen.mobile.native.appprogramming/html/ide_sdk_tools/feature_element.htm">
+ * <a href="https://developer.tizen.org/development/tools/native-tools/manifest-text-editor#feature">
  *   <b>Feature Element</b>.
  * </a>
  *
+ * @section CAPI_MEDIA_VISION_FACE_MODULE_OVERVIEW Overview
  * @ref CAPI_MEDIA_VISION_FACE_MODULE contains @ref mv_face_detect() function
  * to detect faces on @ref mv_source_h, and @ref mv_face_detected_cb callback
  * to process detected faces. Also it contains @ref mv_face_recognize() function
@@ -128,7 +127,7 @@
  * function can be used.\n
  * Module contains function
  * @ref mv_face_track() which performs tracking on @ref mv_source_h for
- * @ref mv_face_tracking_model_h and  @ref mv_face_on_tracked_cb which process
+ * @ref mv_face_tracking_model_h and  @ref mv_face_tracked_cb which process
  * tracked face. Tracking model should be created with
  * @ref mv_face_tracking_model_create() and destroyed with
  * @ref mv_face_tracking_model_destroy(). Tracking model should be prepared
@@ -152,8 +151,6 @@
  * @section CCAPI_MEDIA_VISION_IMAGE_MODULE_HEADER Required Header
  *      \#include <mv_image.h>
  *
- * @section CAPI_MEDIA_VISION_IMAGE_MODULE_OVERVIEW Overview
- *
  * @section CAPI_MEDIA_VISION_IMAGE_MODULE_FEATURE Related Features
  * This API is related with the following features:\n
  *  - http://tizen.org/feature/vision.image_recognition\n
@@ -167,10 +164,11 @@
  * features, please define the features in your manifest file using the manifest
  * editor in the SDK.\n
  * More details on featuring your application can be found from
- * <a href="../org.tizen.mobile.native.appprogramming/html/ide_sdk_tools/feature_element.htm">
+ * <a href="https://developer.tizen.org/development/tools/native-tools/manifest-text-editor#feature">
  *   <b>Feature Element</b>.
  * </a>
  *
+ * @section CAPI_MEDIA_VISION_IMAGE_MODULE_OVERVIEW Overview
  * @ref CAPI_MEDIA_VISION_IMAGE_MODULE contains @ref mv_image_recognize()
  * function to recognize images on @ref mv_source_h, and @ref
  * mv_image_recognized_cb callback to process recognition result. Module
@@ -202,8 +200,6 @@
  * @section CAPI_MEDIA_VISION_BARCODE_MODULE_HEADER Required Header
  *      \#include <mv_barcode.h>
  *
- * @section CAPI_MEDIA_VISION_BARCODE_MODULE_OVERVIEW Overview
- *
  * @section CAPI_MEDIA_VISION_BARCODE_MODULE_FEATURE Related Features
  * This API is related with the following features:\n
  *  - http://tizen.org/feature/vision.barcode_detection\n
@@ -218,10 +214,11 @@
  * features, please define the features in your manifest file using the manifest
  * editor in the SDK.\n
  * More details on featuring your application can be found from
- * <a href="../org.tizen.mobile.native.appprogramming/html/ide_sdk_tools/feature_element.htm">
+ * <a href="https://developer.tizen.org/development/tools/native-tools/manifest-text-editor#feature">
  *   <b>Feature Element</b>.
  * </a>
  *
+ * @section CAPI_MEDIA_VISION_BARCODE_MODULE_OVERVIEW Overview
  * @ref CAPI_MEDIA_VISION_BARCODE_MODULE contains two submodules:\n
  * * Detection submodule,
  * * Generation submodule.\n

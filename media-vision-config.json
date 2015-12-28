@@ -36,7 +36,8 @@
             "type"  : "integer",
             "value" : -1
         },
-        {    "name"  : "MV_BARCODE_GENERATE_ATTR_TEXT",
+        {
+             "name"  : "MV_BARCODE_GENERATE_ATTR_TEXT",
              "type"  : "integer",
              "value" : 0
         },

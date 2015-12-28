@@ -9,8 +9,6 @@ SET(PREFIX ${CMAKE_INSTALL_PREFIX})
 
 # Configure for porting layer:
 
-# Configure for porting layer:
-
 option(MEDIA_VISION_BARCODE_DETECTOR_LICENSE_PORT
        "Turn on building of licensed port of the barcode detecting module (if OFF - open port will be built)." OFF)
 option(MEDIA_VISION_BARCODE_GENERATOR_LICENSE_PORT
@@ -117,12 +115,12 @@ ADD_SUBDIRECTORY(mv_surveillance)
 aux_source_directory(src SOURCES)
 ADD_LIBRARY(${fw_name} SHARED ${SOURCES})
 
-TARGET_LINK_LIBRARIES(${fw_name} ${MV_COMMON_LIB_NAME}
+TARGET_LINK_LIBRARIES(${fw_name} ${${fw_name}_LDFLAGS}
+                                 ${MV_COMMON_LIB_NAME}
                                  ${MV_BARCODE_DETECTOR_LIB_NAME}
                                  ${MV_BARCODE_GENERATOR_LIB_NAME}
                                  ${MV_IMAGE_LIB_NAME}
                                  ${MV_FACE_LIB_NAME}
-                                 ${${fw_name}_LDFLAGS}
                                  ${MV_SURVEILLANCE_LIB_NAME})
 
 SET_TARGET_PROPERTIES(${fw_name}
