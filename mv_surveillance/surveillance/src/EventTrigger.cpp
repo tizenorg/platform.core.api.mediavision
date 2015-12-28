@@ -144,8 +144,10 @@ int EventTrigger::applyROIToImage(
 						&maskBuffer);
 
 		if (error != MEDIA_VISION_ERROR_NONE || maskBuffer == NULL) {
-			if (maskBuffer != NULL)
-				delete maskBuffer;
+			if (maskBuffer != NULL) {
+				free(maskBuffer);
+				maskBuffer = NULL;
+			}
 
 			LOGE("Getting mask buffer failed.");
 			return error;
@@ -159,7 +161,8 @@ int EventTrigger::applyROIToImage(
 					imageWidth,
 					image);
 
-		delete maskBuffer;
+		free(maskBuffer);
+		maskBuffer = NULL;
 
 		if (error != MEDIA_VISION_ERROR_NONE) {
 			LOGE("Applying mask buffer failed.");
