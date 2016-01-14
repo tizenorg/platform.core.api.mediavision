@@ -316,15 +316,18 @@ int mv_barcode_generate_image_open(
 	}
 
 	int showText = 0;
-	error = mv_engine_config_get_int_attribute(engine_cfg, "MV_BARCODE_GENERATE_ATTR_TEXT", &showText);
-	if (error != MEDIA_VISION_ERROR_NONE) {
-		LOGW("mv_engine_config_get_int_attribute failed");
-		return error;
-	}
 
-	if (showText == BARCODE_GEN_TEXT_VISIBLE && type == MV_BARCODE_QR) {
-		LOGW("QR code generation with visible text is not supported");
-		return MEDIA_VISION_ERROR_INVALID_OPERATION;
+	if (engine_cfg != NULL) {
+		error = mv_engine_config_get_int_attribute(engine_cfg, "MV_BARCODE_GENERATE_ATTR_TEXT", &showText);
+		if (error != MEDIA_VISION_ERROR_NONE) {
+			LOGW("mv_engine_config_get_int_attribute failed");
+			return error;
+		}
+
+		if (showText == BARCODE_GEN_TEXT_VISIBLE && type == MV_BARCODE_QR) {
+			LOGW("QR code generation with visible text is not supported");
+			return MEDIA_VISION_ERROR_INVALID_OPERATION;
+		}
 	}
 
 	error = BarcodeGenerator::generateBarcodeToImage(

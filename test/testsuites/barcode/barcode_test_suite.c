@@ -357,15 +357,15 @@ void barcode_detected_cb(
 					continue;
 				}
 
-				const int rectangle_thickness = 6;
 				const int drawing_color[] = {255, 0, 0};
+
 				if (MEDIA_VISION_ERROR_NONE != draw_rectangle_on_buffer(
 					minX,
 					minY,
 					maxX,
 					maxY,
+					6,
 					drawing_color,
-					rectangle_thickness,
 					&image_data,
 					draw_buffer)) {
 					continue;
