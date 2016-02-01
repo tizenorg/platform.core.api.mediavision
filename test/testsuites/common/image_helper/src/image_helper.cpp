@@ -141,20 +141,6 @@ int draw_quadrangle_on_buffer(
                             data_buffer);
 }
 
-int convert_jpeglib_colorspace_to_mv_colorspace(
-        J_COLOR_SPACE in_colorspace,
-        mv_colorspace_e *out_colorspace)
-{
-    return ImageHelper::convertJpeglibColorspaceToMVColorspace(in_colorspace, out_colorspace);
-}
-
-int convert_mv_colorspace_to_jpeglib_colorspace(
-        mv_colorspace_e in_colorspace,
-        J_COLOR_SPACE *out_colorspace)
-{
-    return ImageHelper::convertMVColorspaceToJpeglibColorspace(in_colorspace, out_colorspace);
-}
-
 int convert_buffer_to_RGB888(
         const unsigned char *in_buffer,
         const image_data_s *image_data,

@@ -1,7 +1,7 @@
 Name:        capi-media-vision
 Summary:     Media Vision library for Tizen Native API
 Version:     0.3.6
-Release:     0
+Release:     1
 Group:       Multimedia/Framework
 License:     Apache-2.0 and BSD-2.0
 Source0:     %{name}-%{version}.tar.gz
@@ -18,8 +18,6 @@ BuildRequires: zint
 BuildRequires: zint-devel
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: dlogutil
-BuildRequires: libjpeg-turbo
-BuildRequires: libjpeg-turbo-devel
 BuildRequires: pkgconfig(libavcodec)
 BuildRequires: pkgconfig(libavformat)
 BuildRequires: pkgconfig(libswscale)

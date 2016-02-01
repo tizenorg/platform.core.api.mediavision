@@ -22,8 +22,6 @@
 #include <stddef.h>
 #include <stdio.h>
 
-#include <jpeglib.h>
-
 /**
  * @file   ImageHelper.h
  * @brief  ImageHelper class definition.
@@ -171,37 +169,6 @@ public:
             const cv::Scalar& color,
             const ImageData& imageData,
             unsigned char *pDataBuffer);
-
-    /**
-     * @brief Convers libjpeg colorspace to the Tizen 'image util' colorspace.
-     *
-     * @since_tizen 3.0
-     * @param [in]  inColorspace      The libjpeg colorspace to be converted.
-     * @param [out] pOutColorspace    The Tizen 'image util' colorspace that
-     *                                will be obtained after conversion
-     * @return @c 0 on success, otherwise a negative error value
-     *
-     * @see ImageHelper::convertMVColorspaceToJpeglibColorspace()
-     */
-    static int convertJpeglibColorspaceToMVColorspace(
-            J_COLOR_SPACE inColorspace,
-            mv_colorspace_e *pOutColorspace);
-
-    /**
-     * @brief Convers libjpeg colorspace to the Tizen image util colorspace.
-     *
-     * @since_tizen 3.0
-     * @param [in]  inColorspace      The Tizen 'image util' colorspace to be
-     *                                converted
-     * @param [out] pOutColorspace    The libjpeg colorspace that will be
-     *                                obtained after conversion
-     * @return @c 0 on success, otherwise a negative error value
-     *
-     * @see ImageHelper::convertJpeglibColorspaceToMVColorspace()
-     */
-    static int convertMVColorspaceToJpeglibColorspace(
-            mv_colorspace_e inColorspace,
-            J_COLOR_SPACE *pOutColorspace);
 
     /**
      * @brief Converts image data to the image data of RGB888 colorspace.
