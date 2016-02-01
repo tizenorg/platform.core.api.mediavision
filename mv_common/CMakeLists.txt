@@ -34,6 +34,6 @@ else()
     add_library(${PROJECT_NAME} SHARED ${MV_COMMON_INCLUDE_LIST} ${MV_COMMON_SRC_LIST})
 endif()
 
-TARGET_LINK_LIBRARIES(${MV_COMMON_LIB_NAME} jpeg ${OpenCV_LIBS} capi-media-tool tbm json-glib-1.0)
+TARGET_LINK_LIBRARIES(${MV_COMMON_LIB_NAME} ${OpenCV_LIBS} capi-media-tool tbm json-glib-1.0)
 
 INSTALL(TARGETS ${PROJECT_NAME} DESTINATION ${LIB_INSTALL_DIR})

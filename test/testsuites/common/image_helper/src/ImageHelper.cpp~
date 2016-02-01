@@ -284,6 +284,50 @@ int ImageHelper::drawQuadrangleOnBuffer(
     return MEDIA_VISION_ERROR_NONE;
 }
 
+int ImageHelper::convertJpeglibColorspaceToMVColorspace(
+        J_COLOR_SPACE inColorspace,
+        mv_colorspace_e *pOutColorspace)
+{
+    if (pOutColorspace == NULL)
+    {
+        return MEDIA_VISION_ERROR_INVALID_PARAMETER;
+    }
+
+    switch(inColorspace)
+    {
+        case JCS_GRAYSCALE:
+            (*pOutColorspace) = MEDIA_VISION_COLORSPACE_Y800;
+            return MEDIA_VISION_ERROR_NONE;
+        case JCS_RGB:
+            (*pOutColorspace) = MEDIA_VISION_COLORSPACE_RGB888;
+            return MEDIA_VISION_ERROR_NONE;
+        default:
+            return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+    }
+
+    return MEDIA_VISION_ERROR_NONE;
+}
+
+int ImageHelper::convertMVColorspaceToJpeglibColorspace(
+        mv_colorspace_e inColorspace,
+        J_COLOR_SPACE *pOutColorspace)
+{
+    // todo: support more colorspaces:
+    switch (inColorspace)
+    {
+        case MEDIA_VISION_COLORSPACE_Y800:
+            (*pOutColorspace) = JCS_GRAYSCALE;
+            return MEDIA_VISION_ERROR_NONE;
+        case MEDIA_VISION_COLORSPACE_RGB888:
+            (*pOutColorspace) = JCS_RGB;
+            return MEDIA_VISION_ERROR_NONE;
+        default:
+            return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+    }
+
+    return MEDIA_VISION_ERROR_NOT_SUPPORTED;
+}
+
 int ImageHelper::convertBufferToRGB888(
         const unsigned char *pInBuffer,
         const ImageData& imageData,

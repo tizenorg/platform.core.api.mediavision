@@ -31,8 +31,6 @@ extern "C" {
 #include <stdio.h>
 #endif
 
-#include <jpeglib.h>
-
 /**
  * @file   image_helper.h
  * @brief  Helper functions that provides set of useful methods for image management
@@ -153,37 +151,6 @@ int draw_quadrangle_on_buffer(
         const int rgb_color[3],
         const image_data_s *image_data,
         unsigned char *data_buffer);
-
-/**
- * @brief Converts libjpeg colorspace to the Tizen 'image util' colorspace.
- *
- * @since_tizen 3.0
- * @param [in]  in_colorspace     The libjpeg colorspace to be converted.
- * @param [out] out_colorspace    The Tizen 'image util' colorspace that
- *                                will be obtained after conversion
- * @return @c 0 on success, otherwise a negative error value
- *
- * @see convert_mv_colorspace_to_jpeglib_colorspace()
- */
-int convert_jpeglib_colorspace_to_mv_colorspace(
-        J_COLOR_SPACE in_colorspace,
-        mv_colorspace_e *out_colorspace);
-
-/**
- * @brief Converts libjpeg colorspace to the Tizen image util colorspace.
- *
- * @since_tizen 3.0
- * @param [in]  in_colorspace     The Tizen 'image util' colorspace to be
- *                                converted
- * @param [out] out_colorspace    The libjpeg colorspace that will be
- *                                obtained after conversion
- * @return @c 0 on success, otherwise a negative error value
- *
- * @see convert_jpeglib_colorspace_to_mv_colorspace()
- */
-int convert_mv_colorspace_to_jpeglib_colorspace(
-        mv_colorspace_e in_colorspace,
-        J_COLOR_SPACE *out_colorspace);
 
 /**
  * @brief Converts image data to the image data of RGB888 colorspace.
