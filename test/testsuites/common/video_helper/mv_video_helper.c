@@ -36,12 +36,14 @@ typedef struct _mv_video_reader_s {
 	GstElement *filesrc;
 	GstElement *decodebin;
 	GstElement *videoconvert;
+	GstElement *queue;
 	GstElement *appsink;
 
 	void *new_sample_cb_user_data;
 	void *eos_cb_user_data;
 
 	GstCaps *caps;
+	gulong pad_probe_id;
 
 	pthread_spinlock_t new_sample_cb_guard;
 	pthread_spinlock_t eos_cb_guard;
@@ -81,6 +83,8 @@ static int _mv_video_writer_state_change(mv_video_writer_s *writer, GstState sta
 static void appsink_eos(GstAppSink *appsink, gpointer user_data);
 static GstFlowReturn appsink_newsample(GstAppSink *appsink, gpointer user_data);
 static void cb_newpad(GstElement *decodebin, GstPad *new_pad, gpointer user_data);
+
+static GstPadProbeReturn pad_probe_data_cb (GstPad *pad, GstPadProbeInfo *info, gpointer user_data);
 
 /* video reader */
 int mv_create_video_reader(
@@ -191,6 +195,7 @@ int mv_video_reader_load(
 	}
 
 	gst_video_info_from_caps(&info, handle->caps);
+
 	gst_caps_unref(handle->caps);
 
 	*fps = info.fps_n/info.fps_d;
@@ -464,12 +469,14 @@ static int _mv_video_reader_create_internals(
 	reader->filesrc = gst_element_factory_make("filesrc", "filesrc");
 	reader->decodebin = gst_element_factory_make("decodebin", "decoder");
 	reader->videoconvert = gst_element_factory_make("videoconvert", "convert");
+	reader->queue = gst_element_factory_make("queue", "queue");
 	reader->appsink = gst_element_factory_make("appsink", "appsink");
 
 	if ((!reader->pl) ||
 		(!reader->filesrc) ||
 		(!reader->decodebin) ||
 		(!reader->videoconvert) ||
+		(!reader->queue) ||
 		(!reader->appsink)) {
 		LOGE("Unable to create video read pipeline elements");
 		return MEDIA_VISION_ERROR_INVALID_OPERATION;
@@ -479,6 +486,7 @@ static int _mv_video_reader_create_internals(
 					reader->filesrc,
 					reader->decodebin,
 					reader->videoconvert,
+					reader->queue,
 					reader->appsink,
 					NULL);
 
@@ -489,6 +497,7 @@ static int _mv_video_reader_link_internals(
 		mv_video_reader_s *reader)
 {
 	GstCaps *caps = NULL;
+	GstPad *pad = NULL;
 
 	if (!gst_element_link_many(reader->filesrc,
 				reader->decodebin,
@@ -504,8 +513,10 @@ static int _mv_video_reader_link_internals(
 					reader);
 
 	if (!gst_element_link_many(reader->videoconvert,
-			reader->appsink, NULL)) {
-		LOGE("Unable to link filesrc to decodebin");
+			reader->queue,
+			reader->appsink,
+			 NULL)) {
+		LOGE("Unable to link videocovnert-queue-appsink");
 		return MEDIA_VISION_ERROR_INVALID_OPERATION;
 	}
 
@@ -531,6 +542,14 @@ static int _mv_video_reader_link_internals(
 					"enable-last-sample", TRUE,
 					"sync", FALSE,
 					NULL);
+
+
+	/* pad probe */
+	pad = gst_element_get_static_pad(reader->queue, "src");
+
+	gst_pad_add_probe(pad, GST_PAD_PROBE_TYPE_BUFFER,
+					(GstPadProbeCallback)pad_probe_data_cb, reader, NULL);
+	gst_object_unref(pad);
 
 	return MEDIA_VISION_ERROR_NONE;
 }
@@ -795,7 +814,6 @@ static GstFlowReturn appsink_newsample(
 			break;
 		default:
 			LOGE("Video pixel format is not supported\n");
-
 			gst_buffer_unmap(buf, &info);
 			gst_sample_unref(sample);
 			return GST_FLOW_ERROR;
@@ -838,6 +856,9 @@ static void appsink_eos(
 		handle->eos_cb(handle->eos_cb_user_data);
 
 	pthread_spin_unlock(&(handle->eos_cb_guard));
+
+
+	gst_pad_remove_probe(gst_element_get_static_pad(handle->queue, "src"), handle->pad_probe_id);
 }
 
 static void cb_newpad(
@@ -859,14 +880,32 @@ static void cb_newpad(
 	}
 
 	/* Check for pad is video */
-	reader->caps = gst_pad_query_caps(pad, NULL);
-	str = gst_caps_get_structure(reader->caps, 0);
+	caps = gst_pad_query_caps(pad, NULL);
+	str = gst_caps_get_structure(caps, 0);
 	if (!g_strrstr(gst_structure_get_name(str), "video")) {
 		LOGI("Not a video pad");
 		gst_object_unref(video_pad);
 		return;
 	}
-
+	gst_caps_unref(caps);
 	gst_pad_link(pad, video_pad);
 	g_object_unref(video_pad);
+}
+
+static GstPadProbeReturn pad_probe_data_cb (
+	GstPad *pad,
+	GstPadProbeInfo *info,
+	gpointer user_data)
+{
+	if (user_data == NULL) {
+		return GST_PAD_PROBE_PASS;
+	}
+	mv_video_reader_s *reader = (mv_video_reader_s *) user_data;
+
+	if (reader->caps == NULL) {
+		reader->caps = gst_pad_get_current_caps(pad);
+		reader->pad_probe_id = GST_PAD_PROBE_INFO_ID(info);
+	}
+
+	return GST_PAD_PROBE_OK;
 }
