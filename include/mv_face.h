@@ -662,8 +662,7 @@ int mv_face_recognition_model_clone(
  *          @ref mv_face_recognition_model_reset() function if
  *          it is needed to clear the memory.
  * @remarks @a recognition_model is saved to the absolute path directory.
- *          Use @ref app_get_data_path for the private app storage path or
- *          @ref app_get_shared_data_path for the app shared storage path.
+ *          Use @ref app_get_data_path for the private app storage path.
  *          After model is saved to the file, it can be loaded from this file
  *          by @ref mv_face_recognition_model_load() function.
  * @param [in] file_name            Name of the path/file to save the model
@@ -686,7 +685,6 @@ int mv_face_recognition_model_clone(
  * @see mv_face_recognition_model_load()
  * @see mv_face_recognition_model_create()
  * @see app_get_data_path()
- * @see app_get_shared_data_path()
  */
 int mv_face_recognition_model_save(
         const char *file_name,
@@ -704,8 +702,7 @@ int mv_face_recognition_model_save(
  *          is recommended to clear the memory if learning algorithm doesn't
  *          support reinforcement learning.
  * @remarks @a recognition_model is loaded from the absolute path directory.
- *          Use @ref app_get_data_path for the private app storage path or
- *          @ref app_get_shared_data_path for the app shared storage path.
+ *          Use @ref app_get_data_path for the private app storage path.
  *          @a recognition_model must be destroyed using
  *          @ref mv_face_recognition_model_destroy().
  * @param [in]  file_name            Name of path/file to load the model
@@ -726,7 +723,6 @@ int mv_face_recognition_model_save(
  * @see mv_face_recognition_model_save()
  * @see mv_face_recognition_model_destroy()
  * @see app_get_data_path()
- * @see app_get_shared_data_path()
  */
 int mv_face_recognition_model_load(
         const char *file_name,
@@ -1042,8 +1038,7 @@ int mv_face_tracking_model_clone(
  *
  * @since_tizen 3.0
  * @remarks @a tracking_model is saved to the absolute path directory.
- *          Use @ref app_get_data_path for the private app storage path or
- *          @ref app_get_shared_data_path for the app shared storage path.
+ *          Use @ref app_get_data_path for the private app storage path.
  *          After model is saved to the file, it can be loaded from this file
  *          with @ref mv_face_tracking_model_load() function.
  * @param [in] file_name         Name of the path/file to save the model
@@ -1066,7 +1061,6 @@ int mv_face_tracking_model_clone(
  * @see mv_face_tracking_model_load()
  * @see mv_face_tracking_model_create()
  * @see app_get_data_path()
- * @see app_get_shared_data_path()
  */
 int mv_face_tracking_model_save(
         const char *file_name,
@@ -1077,8 +1071,7 @@ int mv_face_tracking_model_save(
  *
  * @since_tizen 3.0
  * @remarks @a tracking_model is loaded from the absolute path directory.
- *          Use @ref app_get_data_path for the private app storage path or
- *          @ref app_get_shared_data_path for the app shared storage path.
+ *          Use @ref app_get_data_path for the private app storage path.
  *          @a tracking_model must be destroyed using
  *          @ref mv_face_tracking_model_destroy.
  * @param [in] file_name         Name of path/file to load the model
@@ -1104,7 +1097,6 @@ int mv_face_tracking_model_save(
  * @see mv_face_tracking_model_save()
  * @see mv_face_tracking_model_destroy()
  * @see app_get_data_path()
- * @see app_get_shared_data_path()
  */
 int mv_face_tracking_model_load(
         const char *file_name,

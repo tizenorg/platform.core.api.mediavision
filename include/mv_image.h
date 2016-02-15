@@ -618,8 +618,7 @@ int mv_image_object_clone(
  *
  * @since_tizen 3.0
  * @remarks @a image_object is saved to the absolute path directory.
- *          Use @ref app_get_data_path for the private app storage path or
- *          @ref app_get_shared_data_path for the app shared storage path.
+ *          Use @ref app_get_data_path for the private app storage path.
  * @param [in] file_name       Name of the file to path/save the image object
  * @param [in] image_object    The handle to the image object which will be saved
  * @return @c 0 on success, otherwise a negative error value
@@ -645,8 +644,7 @@ int mv_image_object_save(
  *
  * @since_tizen 3.0
  * @remarks @a image_object is loaded from the absolute path directory.
- *          Use @ref app_get_data_path for the private app storage path or
- *          @ref app_get_shared_data_path for the app shared storage path.
+ *          Use @ref app_get_data_path for the private app storage path.
  *          @a image_object must be destroyed using
  *          @ref mv_image_object_destroy().
  * @param [in]  file_name       Name of path/file to load the image object
@@ -804,8 +802,7 @@ int mv_image_tracking_model_clone(
  *
  * @since_tizen 3.0
  * @remarks @a image_tracking_model is saved to the absolute path directory.
- *          Use @ref app_get_data_path for the private app storage path or
- *          @ref app_get_shared_data_path for the app shared storage path.
+ *          Use @ref app_get_data_path for the private app storage path.
  * @param [in] file_name               Name of path/file to save the model
  * @param [in] image_tracking_model    The handle to the image tracking model
  *                                     to be saved
@@ -833,8 +830,7 @@ int mv_image_tracking_model_save(
  *
  * @since_tizen 3.0
  * @remarks @a image_tracking_model is loaded from the absolute path directory.
- *          Use @ref app_get_data_path for the private app storage path or
- *          @ref app_get_shared_data_path for the app shared storage path.
+ *          Use @ref app_get_data_path for the private app storage path.
  *          @a image_tracking_model must be destroyed using
  *          @ref mv_image_tracking_model_destroy.
  * @param [in]  file_name               Name of path/file to load model
