@@ -532,14 +532,15 @@ int perform_mv_face_recognition_model_add_face_example(
 		}
 
 		DIR *dir;
-		struct dirent *ent;
+		struct dirent ent;
+		struct dirent *dent;
 		if ((dir = opendir(in_file_name)) != NULL) {
 			char file_path[1024] = "";
 
 			/* Traverses all the files and directories within source directory */
-			while ((ent = readdir(dir)) != NULL) {
+			while (!readdir_r(dir, &ent, &dent) && dent) {
 				/* Determine current entry name */
-				const char *file_name = ent->d_name;
+				const char *file_name = ent.d_name;
 
 				/* If current entry is directory, or hidden object, skip the step: */
 				if (file_name[0] == '.')
@@ -904,15 +905,16 @@ int perform_model_evaluation(mv_face_recognition_model_h model)
 
 	for (i = 0; i < dir_n; ++i) {
 		DIR *dir;
-		struct dirent *ent;
+		struct dirent ent;
+		struct dirent *dent;
 		printf("Processing %s...\n", directories[i]);
 		if ((dir = opendir(directories[i])) != NULL) {
 			char file_path[1024] = "";
 
 			/* Traverses all the files and directories within source directory */
-			while ((ent = readdir(dir)) != NULL) {
+			while (!readdir_r(dir, &ent, &dent) && dent) {
 				/* Determine current entry name */
-				const char *file_name = ent->d_name;
+				const char *file_name = ent.d_name;
 
 				/* If current entry is directory, or hidden object, skip the step: */
 				if (file_name[0] == '.')
