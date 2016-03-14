@@ -118,13 +118,14 @@ int convert_rgb_to(unsigned char *src_buffer, unsigned char **dst_buffer,
 			src_picture.linesize, 0, image_data.image_height,
 			dst_picture.data, dst_picture.linesize);
 
-	*cvt_buffer_size = avpicture_get_size(pixel_format,
+	int picture_size = avpicture_get_size(pixel_format,
 			image_data.image_width, image_data.image_height);
-	if(*cvt_buffer_size < 0) {
+	if(picture_size < 0) {
 		avpicture_free(&dst_picture);
 		MEDIA_VISION_FUNCTION_LEAVE();
 		return MEDIA_VISION_ERROR_OUT_OF_MEMORY;
 	}
+	*cvt_buffer_size = (unsigned long)picture_size;
 
 	(*dst_buffer) = (unsigned char*)malloc(*cvt_buffer_size);
 	memcpy(*dst_buffer, dst_picture.data[0], *cvt_buffer_size);
