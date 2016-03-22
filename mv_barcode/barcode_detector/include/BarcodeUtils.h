@@ -29,7 +29,7 @@ namespace Barcode {
 /**
  * @brief    This function converts media vision image handle to zbar image handle.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in]  mvSource      Media vision image handle
  * @param [out] zbarSource    Zbar image handle
  * @return @c MEDIA_VISION_ERROR_NONE on success,

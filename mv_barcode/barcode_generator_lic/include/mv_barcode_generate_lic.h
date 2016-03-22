@@ -32,7 +32,7 @@ extern "C" {
 /**
  * @brief Generates @ref mv_source_h with barcode image.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in]  engine_cfg      The handle to the configuration of the engine
  * @param [in]  message         The message to be encoded in the barcode
  * @param [in]  image_width     The width of the generated image
@@ -66,7 +66,7 @@ int mv_barcode_generate_source_lic(
 /**
  * @brief Generates image file with barcode.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in] engine_cfg      The handle to the configuration of the engine
  * @param [in] message         The message to be encoded in the barcode
  * @param [in] image_width     The width of the generated image

@@ -36,7 +36,7 @@ extern "C" {
 /**
  * @brief Point in 2D space.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  */
 typedef struct
 {
@@ -47,7 +47,7 @@ typedef struct
 /**
  * @brief Location of the object bounded by quadrangle defined by four 2D points.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  */
 typedef struct
 {
@@ -59,7 +59,7 @@ typedef struct
  * @brief Location of the object bounded by rectangle defined by
  *        coordinates of top left corner, width and height.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  */
 typedef struct
 {
@@ -71,7 +71,7 @@ typedef struct
 /**
  * @brief Enumeration for Media Vision error.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  */
 typedef enum
 {
@@ -107,7 +107,7 @@ typedef enum
  * @brief Enumeration for Media Vision @ref mv_engine_config_h handle attribute
  *        type.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  */
 typedef enum
 {
@@ -120,7 +120,7 @@ typedef enum
 /**
  * @brief Enumeration for Media Vision colorspace.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  */
 typedef enum
 {
@@ -150,7 +150,7 @@ typedef enum
  *          destroy it and release resources by @ref mv_destroy_engine_config()
  *          function.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  *
  * @see mv_create_engine_config()
  * @see mv_destroy_engine_config()
@@ -160,14 +160,14 @@ typedef void *mv_engine_config_h;
 /**
  * @brief The handle to the source.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  */
 typedef void *mv_source_h;
 
 /**
  * @brief Creates a source handle.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @remarks You must release @a source by using @ref mv_destroy_source().
  * @param [out] source    A new handle to the source
  * @return @c 0 on success, otherwise a negative error value
@@ -184,7 +184,7 @@ int mv_create_source(
 /**
  * @brief Destroys the source handle and releases all its resources.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in] source    The handle to the source to be destroyed
  * @return @c 0 on success, otherwise a negative error value
  * @retval #MEDIA_VISION_ERROR_NONE Successful
@@ -199,7 +199,7 @@ int mv_destroy_source(
 /**
  * @brief Fills the media source based on the media packet.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in,out] source          The handle to the source
  * @param [in]     media_packet    The handle to the media packet from which
  *                                 will be filled the source
@@ -223,7 +223,7 @@ int mv_source_fill_by_media_packet(
 /**
  * @brief Fills the media source based on the buffer and metadata.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in,out] source             The handle to the source
  * @param [in]     data_buffer        The buffer of image data
  * @param [in]     buffer_size        The buffer size
@@ -251,7 +251,7 @@ int mv_source_fill_by_buffer(
 /**
  * @brief Clears the buffer of the media source.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in,out] source    The handle to the source
  * @return @c 0 on success, otherwise a negative error value
  * @retval #MEDIA_VISION_ERROR_NONE Successful
@@ -266,7 +266,7 @@ int mv_source_clear(
 /**
  * @brief Gets buffer of the media source.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @remarks Note that the retrieved buffer will be destroyed when
  *          @ref mv_destroy_source() or @ref mv_source_clear() function
  *          is called for the @a source.
@@ -291,7 +291,7 @@ int mv_source_get_buffer(
 /**
  * @brief Gets height of the media source.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in]    source         The handle to the source
  * @param [out]   image_height   The height of an image in the source
  * @return @c 0 on success, otherwise a negative error value
@@ -310,7 +310,7 @@ int mv_source_get_height(
 /**
  * @brief Gets width of the media source.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in]    source        The handle to the source
  * @param [out]   image_width   The width of an image in the source
  * @return @c 0 on success, otherwise a negative error value
@@ -329,7 +329,7 @@ int mv_source_get_width(
 /**
  * @brief Gets colorspace of the media source.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in]    source             The handle to the source
  * @param [out]   image_colorspace   The colorspace of an image in the source
  * @return @c 0 on success, otherwise a negative error value
@@ -348,7 +348,7 @@ int mv_source_get_colorspace(
 /**
  * @brief Creates the handle to the configuration of engine.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @remarks Available engine configuration attributes can be get by using
  *          @ref mv_engine_config_foreach_supported_attribute().
  *          The attributes can be changed by @ref mv_engine_config_h
@@ -379,7 +379,7 @@ int mv_create_engine_config(
  * @brief Destroys the engine configuration handle and releases all its
  *        resources.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in] engine_cfg    The handle to the engine configuration
  *                           to be destroyed
  * @return @c 0 on success, otherwise a negative error value
@@ -396,7 +396,7 @@ int mv_destroy_engine_config(
 /**
  * @brief Sets the double attribute to the configuration.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in] engine_cfg        Engine configuration for which @a value has
  *                               to be set
  * @param [in] name              String key of the attribute will be used for
@@ -422,7 +422,7 @@ int mv_engine_config_set_double_attribute(
 /**
  * @brief Sets the integer attribute to the configuration.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in] engine_cfg        Engine configuration for which @a value has
  *                               to be set
  * @param [in] name              String key of the attribute will be used for
@@ -450,7 +450,7 @@ int mv_engine_config_set_int_attribute(
 /**
  * @brief Sets the boolean attribute to the configuration.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in] engine_cfg        Engine configuration for which @a value has
  *                               to be set
  * @param [in] name              String key of the attribute will be used for
@@ -476,7 +476,7 @@ int mv_engine_config_set_bool_attribute(
 /**
  * @brief Sets the string attribute to the configuration.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in] engine_cfg        Engine configuration for which @a value has
  *                               to be set
  * @param [in] name              String key of the attribute will be used for
@@ -502,7 +502,7 @@ int mv_engine_config_set_string_attribute(
 /**
  * @brief Gets the double attribute from the configuration dictionary.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in] engine_cfg        Engine configuration from which @a value
  *                               has to be gotten
  * @param [in] name              String key of the attribute will be used for
@@ -529,7 +529,7 @@ int mv_engine_config_get_double_attribute(
 /**
  * @brief Gets the integer attribute from the configuration dictionary.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in] engine_cfg        Engine configuration from which @a value
  *                               has to be gotten
  * @param [in] name              String key of the attribute will be used for
@@ -558,7 +558,7 @@ int mv_engine_config_get_int_attribute(
 /**
  * @brief Gets the boolean attribute from the configuration dictionary.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in] engine_cfg        Engine configuration from which @a value
  *                               has to be gotten
  * @param [in] name              String key of the attribute will be used for
@@ -585,7 +585,7 @@ int mv_engine_config_get_bool_attribute(
 /**
  * @brief Gets the string attribute from the configuration dictionary.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @remarks Function allocates memory required for output @a value, so
  *          it has to be removed by the user himself.
  * @param [in] engine_cfg        Engine configuration from which @a value
@@ -615,7 +615,7 @@ int mv_engine_config_get_string_attribute(
  * @brief Called to get information (type and name) once for each supported
  *        attribute.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in] attribute_type    The supported attribute type
  * @param [in] attribute_name    The supported attribute name
  * @param [in] user_data         The user data passed from the
@@ -638,7 +638,7 @@ typedef bool (*mv_supported_attribute_cb)(
  *          Names of the attributes can be used with @ref mv_engine_config_h
  *          related getters and setters to get/set appropriate attribute values.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @remarks If @a callback is called zero times after
  *          @ref mv_engine_config_foreach_supported_attribute() call, then
  *          engine configuration is not supported and setting of attributes will

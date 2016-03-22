@@ -27,7 +27,7 @@ namespace Barcode {
 /**
  * @brief The Barcode type enumeration.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  */
 enum BarcodeType {
 	BARCODE_QR = 58,
@@ -43,7 +43,7 @@ enum BarcodeType {
 /**
  * @brief The Barcode error correction level enumeration.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @remarks This is unavailable for 1D barcodes.
  */
 enum BarcodeQRErrorCorrectionLevel {
@@ -57,7 +57,7 @@ enum BarcodeQRErrorCorrectionLevel {
 /**
  * @brief The Barcode encoding mode enumeration.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @remarks This is unavailable for 1D barcodes.
  */
 enum BarcodeQREncodingMode {
@@ -72,7 +72,7 @@ enum BarcodeQREncodingMode {
 /**
  * @brief The Barcode image format enumeration.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  */
 enum BarcodeImageFormat {
 	BARCODE_IMAGE_JPG,
@@ -83,7 +83,7 @@ enum BarcodeImageFormat {
 /**
  * @brief The Barcode generation text option enumeration.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  */
 enum BarcodeGenTextOpt {
 	BARCODE_GEN_TEXT_INVISIBLE,
@@ -93,7 +93,7 @@ enum BarcodeGenTextOpt {
 /**
  * @brief The Barcode error enumeration.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  */
 enum BarcodeError {
 	BARCODE_ERROR_NONE = 0,

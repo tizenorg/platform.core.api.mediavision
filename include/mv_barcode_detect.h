@@ -37,7 +37,7 @@ extern "C" {
 /**
  * @brief Define MV_BARCODE_DETECT_ATTR_TARGET to set target attribute of the engine configuration
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  *
  * @see mv_barcode_detect_attr_target_e
  */
@@ -46,7 +46,7 @@ extern "C" {
 /**
  * @brief Enumeration to target attribute
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  */
 typedef enum {
 	MV_BARCODE_DETECT_ATTR_TARGET_ALL,          /**< 1D and 2D */
@@ -60,7 +60,7 @@ typedef enum {
  * @details If no barcode is detected then the method will be called, barcodes
  *          and states will be equal to NULL, and @a number_of_barcodes - 0.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in] source               The handle to the media source
  * @param [in] engine_cfg           The handle to the configuration of the engine
  * @param [in] barcode_locations    The quadrangle locations of detected barcodes
@@ -86,7 +86,7 @@ typedef void (*mv_barcode_detected_cb)(
 /**
  * @brief Detects barcode(s) on source and reads message from it.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @elseif WEARABLE 3.0 @endif
  * @param [in] source            The media source handle
  * @param [in] engine_cfg        The handle to the configuration of the engine
  * @param [in] roi               Region of interest - rectangular area on the
