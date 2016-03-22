@@ -42,7 +42,7 @@ public:
 	 * @details Create new engine configuration dictionary and set default
 	 *          attributes values.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 */
 	EngineConfig();
 
@@ -54,7 +54,7 @@ public:
 	/**
 	 * @brief Sets attribute with double value.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @param [in] key          The string name of the attribute
 	 * @param [in] value        The double attribute value to be set
 	 * @return @c MEDIA_VISION_ERROR_NONE on success,\n
@@ -65,7 +65,7 @@ public:
 	/**
 	 * @brief Sets attribute with integer value.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @param [in] key          The string name of the attribute
 	 * @param [in] value        The integer attribute value to be set
 	 * @return @c MEDIA_VISION_ERROR_NONE on success,\n
@@ -76,7 +76,7 @@ public:
 	/**
 	 * @brief Sets attribute with boolean value.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @param [in] key          The string name of the attribute
 	 * @param [in] value        The boolean attribute value to be set
 	 * @return @c MEDIA_VISION_ERROR_NONE on success,\n
@@ -87,7 +87,7 @@ public:
 	/**
 	 * @brief Sets attribute with string value.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @param [in] key          The string name of the attribute
 	 * @param [in] value        The string attribute value to be set
 	 * @return @c MEDIA_VISION_ERROR_NONE on success,\n
@@ -98,7 +98,7 @@ public:
 	/**
 	 * @brief Gets double attribute value by attribute name.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @param [in]  key          The string name of the attribute
 	 * @param [out] value   r    The double attribute value to be obtained
 	 * @return @c MEDIA_VISION_ERROR_NONE on success,\n
@@ -111,7 +111,7 @@ public:
 	/**
 	 * @brief Gets integer attribute value by attribute name.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @param [in]  key          The string name of the attribute
 	 * @param [out] value        The integer attribute value to be obtained
 	 * @return @c MEDIA_VISION_ERROR_NONE on success,\n
@@ -124,7 +124,7 @@ public:
 /**
 	 * @brief Gets boolean attribute value by attribute name.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @param [in]  key          The string name of the attribute
 	 * @param [out] value        The boolean attribute value to be obtained
 	 * @return @c MEDIA_VISION_ERROR_NONE on success,\n
@@ -137,7 +137,7 @@ public:
 	/**
 	 * @brief Gets string attribute value by attribute name.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @param [in]  key          The string name of the attribute
 	 * @param [out] value        The string attribute value to be obtained
 	 * @return @c MEDIA_VISION_ERROR_NONE on success,\n

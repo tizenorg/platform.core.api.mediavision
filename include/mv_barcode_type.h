@@ -35,7 +35,7 @@ extern "C" {
  * @brief Enumeration for supported barcode types.
  * @details QR codes (versions 1 to 40) and set of 1D barcodes are supported
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  */
 typedef enum
 {
@@ -53,7 +53,7 @@ typedef enum
 /**
  * @brief Enumeration for supported QR code error correction level.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @remarks This is unavailable for 1D barcodes
  */
 typedef enum
@@ -68,7 +68,7 @@ typedef enum
 /**
  * @brief Enumeration for supported QR code encoding mode.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @remarks This is unavailable for 1D barcodes
  */
 typedef enum
@@ -83,7 +83,7 @@ typedef enum
 /**
  * @brief Enumeration for supported image formats for the barcode generating.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  */
 typedef enum
 {

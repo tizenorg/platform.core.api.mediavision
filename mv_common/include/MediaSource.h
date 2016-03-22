@@ -41,7 +41,7 @@ public:
 	 *          width, height and buffer size; NULL for buffer;
 	 *          MEDIA_VISION_COLORSPACE_INVALID for colorspace.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 *
 	 * @see MediaSource::~MediaSource()
 	 */
@@ -50,7 +50,7 @@ public:
 	/**
 	 * @brief   Destroys the MediaSource and releases all its resources.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 *
 	 * @see MediaSource::MediaSource()
 	 */
@@ -60,7 +60,7 @@ public:
 	 * @brief   Clears the MediaSource.
 	 * @details Releases all internal resources and set parameters to default values.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 *
 	 * @see MediaSource::MediaSource()
 	 * @see MediaSource::fill()
@@ -70,7 +70,7 @@ public:
 	/**
 	 * @brief Fills the MediaSource based on the buffer and metadata.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @param [in] buffer       The buffer of image data
 	 * @param [in] bufferSize   The buffer size
 	 * @param [in] width        The image width
@@ -87,7 +87,7 @@ public:
 	/**
 	 * @brief Gets data buffer of the MediaSource.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 *  @return Pointer to the data buffer.
 	 */
 	unsigned char *getBuffer(void) const;
@@ -95,7 +95,7 @@ public:
 /**
 	 * @brief Gets buffer size of the MediaSource.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @return Size of data buffer.
 	 */
 	unsigned int getBufferSize(void) const;
@@ -103,7 +103,7 @@ public:
 	/**
 	 * @brief Gets image width of the MediaSource.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @return Width of image.
 	 */
 	unsigned int getWidth(void) const;
@@ -111,7 +111,7 @@ public:
 	/**
 	 * @brief Gets image height of the MediaSource.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @return Height of image.
 	 */
 	unsigned int getHeight(void) const;
@@ -119,7 +119,7 @@ public:
 	/**
 	 * @brief Gets image colorspace of the MediaSource.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @return Colorspace of image.
 	 */
 	mv_colorspace_e getColorspace(void) const;

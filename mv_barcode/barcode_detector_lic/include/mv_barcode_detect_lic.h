@@ -32,7 +32,7 @@ extern "C" {
 /**
  * @brief Detects barcode(s) on source and reads message from it.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in] source        The media source handle
  * @param [in] engine_cfg    The handle to the configuration of the engine
  * @param [in] roi           Region of interest - rectangular area on the

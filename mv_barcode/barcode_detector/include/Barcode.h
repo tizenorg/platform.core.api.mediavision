@@ -33,7 +33,7 @@ public:
 	/**
 	 * @brief   Barcode constructor.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @remarks create copy of bar_obj
 	 * @param   [in] barObj zbar barcode handle
 	 *
@@ -43,14 +43,14 @@ public:
 	/**
 	 * @brief  Barcode destructor.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 */
 	~Barcode();
 
 	/**
 	 * @brief  Gets encoded message from barcode object.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @return Encoded message
 	 */
 	std::string getMessage(void) const;
@@ -58,7 +58,7 @@ public:
 	/**
 	 * @brief Gets the type of the barcode.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @return Enumeration value corresponding to the barcode type
 	 */
 	mv_barcode_type_e getType(void) const;
@@ -67,7 +67,7 @@ public:
 	 * @brief  Calculates location of barcode handle from zbar.
 	 *         location polygon.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @param  [out] location    Quadrangle that contains barcode on image
 	 * @return @c MEDIA_VISION_ERROR_NONE on success,
 	 *         otherwise a negative error value
