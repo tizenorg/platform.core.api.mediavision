@@ -31,7 +31,7 @@ extern "C" {
 /**
  * @brief Creates a source handle.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @remarks You must release @a source by using @ref mv_destroy_source_c().
  * @param [out] source    A new handle to the source
  * @return @c 0 on success, otherwise a negative error value
@@ -47,7 +47,7 @@ int mv_create_source_c(
 /**
  * @brief Destroys the source handle and releases all its resources.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in] source    The handle to the source to be destroyed
  * @return @c 0 on success, otherwise a negative error value
  * @retval #MEDIA_VISION_ERROR_NONE Successful
@@ -61,7 +61,7 @@ int mv_destroy_source_c(
 /**
  * @brief Fills the media source based on the media packet.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in,out] source          The handle to the source
  * @param [in]     media_packet    The handle to the media packet from which
  *                                 will be filled the source
@@ -84,7 +84,7 @@ int mv_source_fill_by_media_packet_c(
 /**
  * @brief Fills the media source based on the buffer and metadata.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in,out] source             The handle to the source
  * @param [in]     data_buffer        The buffer of image data
  * @param [in]     buffer_size        The buffer size
@@ -111,7 +111,7 @@ int mv_source_fill_by_buffer_c(
 /**
  * @brief Clears the buffer of the media source.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in] source    The handle to the source
  * @return @c 0 on success, otherwise a negative error value
  * @retval #MEDIA_VISION_ERROR_NONE Successful
@@ -125,7 +125,7 @@ int mv_source_clear_c(
 /**
  * @brief Gets buffer of the media source.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @remarks Note that the retrieved buffer will be destroyed when
  *          @ref mv_destroy_source_c() or @ref mv_source_clear_c() function
  *          is called for the @a source.
@@ -149,7 +149,7 @@ int mv_source_get_buffer_c(
 /**
  * @brief Gets height of the media source.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in]    source         The handle to the source
  * @param [out]   image_height   The height of the source
  * @return @c 0 on success, otherwise a negative error value
@@ -167,7 +167,7 @@ int mv_source_get_height_c(
 /**
  * @brief Gets width of the media source.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in]    source        The handle to the source
  * @param [out]   image_width   The width of the source
  * @return @c 0 on success, otherwise a negative error value
@@ -185,7 +185,7 @@ int mv_source_get_width_c(
 /**
  * @brief Gets colorspace of the media source.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in]    source             The handle to the source
  * @param [out]   image_colorspace   The colorspace of the source
  * @return @c 0 on success, otherwise a negative error value
@@ -203,7 +203,7 @@ int mv_source_get_colorspace_c(
 /**
  * @brief Creates the handle to the configuration of engine.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [out] engine_cfg    The handle to the engine to be created
  * @return @c 0 on success, otherwise a negative error value
  * @retval #MEDIA_VISION_ERROR_NONE Successful
@@ -228,7 +228,7 @@ int mv_create_engine_config_c(
  * @brief Destroys the engine configuration handle and releases all its
  *        resources.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in] engine_cfg    The handle to the engine configuration
  *                           to be destroyed
  * @return @c 0 on success, otherwise a negative error value
@@ -244,7 +244,7 @@ int mv_destroy_engine_config_c(
 /**
  * @brief Sets the double attribute to the configuration.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in] engine_cfg        Engine configuration for which @a value has
  *                               to be set
  * @param [in] name              String key of the attribute will be used for
@@ -268,7 +268,7 @@ int mv_engine_config_set_double_attribute_c(
 /**
  * @brief Sets the integer attribute to the configuration.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in] engine_cfg        Engine configuration for which @a value has
  *                               to be set
  * @param [in] name              String key of the attribute will be used for
@@ -292,7 +292,7 @@ int mv_engine_config_set_int_attribute_c(
 /**
  * @brief Sets the boolean attribute to the configuration.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in] engine_cfg        Engine configuration for which @a value has
  *                               to be set
  * @param [in] name              String key of the attribute will be used for
@@ -316,7 +316,7 @@ int mv_engine_config_set_bool_attribute_c(
 /**
  * @brief Sets the string attribute to the configuration.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in] engine_cfg        Engine configuration for which @a value has
  *                               to be set
  * @param [in] name              String key of the attribute will be used for
@@ -340,7 +340,7 @@ int mv_engine_config_set_string_attribute_c(
 /**
  * @brief Gets the double attribute from the configuration dictionary.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in] engine_cfg        Engine configuration from which @a value
  *                               has to be gotten
  * @param [in] name              String key of the attribute will be used for
@@ -366,7 +366,7 @@ int mv_engine_config_get_double_attribute_c(
 /**
  * @brief Gets the integer attribute from the configuration dictionary.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in] engine_cfg        Engine configuration from which @a value
  *                               has to be gotten
  * @param [in] name              String key of the attribute will be used for
@@ -392,7 +392,7 @@ int mv_engine_config_get_int_attribute_c(
 /**
  * @brief Gets the boolean attribute from the configuration dictionary.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @param [in] engine_cfg        Engine configuration from which @a value
  *                               has to be gotten
  * @param [in] name              String key of the attribute will be used for
@@ -418,7 +418,7 @@ int mv_engine_config_get_bool_attribute_c(
 /**
  * @brief Gets the string attribute from the configuration dictionary.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @remarks Function allocates memory required for output @a value, so
  *          it has to be removed by the user himself.
  * @param [in] engine_cfg        Engine configuration from which @a value
@@ -449,7 +449,7 @@ int mv_engine_config_get_string_attribute_c(
  *          Names of the attributes can be used with @ref mv_engine_config_h
  *          related getters and setters to get/set appropriate attribute values.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @remarks If @a callback is called zero times after
  *          @ref mv_engine_config_foreach_supported_attribute() call, then
  *          engine configuration is not supported and setting of attributes will
