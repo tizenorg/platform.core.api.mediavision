@@ -28,28 +28,28 @@ bool __mv_check_system_info_feature_supported()
 	const int nRetVal1 = system_info_get_platform_bool("http://tizen.org/feature/vision.barcode_detection", &isBarcodeDetectionSupported);
 
 	if (nRetVal1 != SYSTEM_INFO_ERROR_NONE) {
-		LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
+		LOGE("SYSTEM_INFO_ERROR: vision.barcode_detection");
 		return false;
 	}
 
 	const int nRetVal2 = system_info_get_platform_bool("http://tizen.org/feature/vision.barcode_generation", &isBarcodeGenerationSupported);
 
 	if (nRetVal2 != SYSTEM_INFO_ERROR_NONE) {
-		LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
+		LOGE("SYSTEM_INFO_ERROR: vision.barcode_generation");
 		return false;
 	}
 
 	const int nRetVal3 = system_info_get_platform_bool("http://tizen.org/feature/vision.face_recognition", &isFaceRecognitionSupported);
 
 	if (nRetVal3 != SYSTEM_INFO_ERROR_NONE) {
-		LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
+		LOGE("SYSTEM_INFO_ERROR: vision.face_recognition");
 		return false;
 	}
 
 	const int nRetVal4 = system_info_get_platform_bool("http://tizen.org/feature/vision.image_recognition", &isImageRecognitionSupported);
 
 	if (nRetVal4 != SYSTEM_INFO_ERROR_NONE) {
-		LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
+		LOGE("SYSTEM_INFO_ERROR: vision.image_recognition");
 		return false;
 	}
 
@@ -75,7 +75,7 @@ bool __mv_barcode_detect_check_system_info_feature_supported()
 	const int nRetVal = system_info_get_platform_bool("http://tizen.org/feature/vision.barcode_detection", &isBarcodeDetectionSupported);
 
 	if (nRetVal != SYSTEM_INFO_ERROR_NONE) {
-		LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
+		LOGE("SYSTEM_INFO_ERROR: vision.barcode_detectio");
 		return false;
 	}
 
@@ -95,7 +95,7 @@ bool __mv_barcode_generate_check_system_info_feature_supported()
 	const int nRetVal = system_info_get_platform_bool("http://tizen.org/feature/vision.barcode_generation", &isBarcodeGenerationSupported);
 
 	if (nRetVal != SYSTEM_INFO_ERROR_NONE) {
-		LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
+		LOGE("SYSTEM_INFO_ERROR: vision.barcode_generation");
 		return false;
 	}
 
@@ -115,7 +115,7 @@ bool __mv_face_check_system_info_feature_supported()
 	const int nRetVal = system_info_get_platform_bool("http://tizen.org/feature/vision.face_recognition", &isFaceRecognitionSupported);
 
 	if (nRetVal != SYSTEM_INFO_ERROR_NONE) {
-		LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
+		LOGE("SYSTEM_INFO_ERROR: vision.face_recognition");
 		return false;
 	}
 
@@ -135,7 +135,7 @@ bool __mv_image_check_system_info_feature_supported()
 	const int nRetVal = system_info_get_platform_bool("http://tizen.org/feature/vision.image_recognition", &isImageRecognitionSupported);
 
 	if (nRetVal != SYSTEM_INFO_ERROR_NONE) {
-		LOGE("[%s] SYSTEM_INFO_ERROR: __FUNCTION__");
+		LOGE("SYSTEM_INFO_ERROR: vision.image_recognition");
 		return false;
 	}
 
