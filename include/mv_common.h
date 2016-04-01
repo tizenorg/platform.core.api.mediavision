@@ -38,10 +38,9 @@ extern "C" {
  *
  * @since_tizen 2.4
  */
-typedef struct
-{
-    int x; /**< X-axis coordinate of the point in 2D space */
-    int y; /**< Y-axis coordinate of the point in 2D space */
+typedef struct {
+	int x; /**< X-axis coordinate of the point in 2D space */
+	int y; /**< Y-axis coordinate of the point in 2D space */
 } mv_point_s;
 
 /**
@@ -49,10 +48,9 @@ typedef struct
  *
  * @since_tizen 2.4
  */
-typedef struct
-{
-    mv_point_s points[4];    /**< Four points that define object bounding
-                                  quadrangle */
+typedef struct {
+	mv_point_s points[4];    /**< Four points that define object bounding
+								quadrangle */
 } mv_quadrangle_s;
 
 /**
@@ -61,11 +59,10 @@ typedef struct
  *
  * @since_tizen 2.4
  */
-typedef struct
-{
-    mv_point_s point;     /**< Top left corner of rectangle coordinates */
-    int width;            /**< Width of the bounding rectangle */
-    int height;           /**< Height of the bounding rectangle */
+typedef struct {
+	mv_point_s point;     /**< Top left corner of rectangle coordinates */
+	int width;            /**< Width of the bounding rectangle */
+	int height;           /**< Height of the bounding rectangle */
 } mv_rectangle_s;
 
 /**
@@ -73,34 +70,33 @@ typedef struct
  *
  * @since_tizen 2.4
  */
-typedef enum
-{
-    MEDIA_VISION_ERROR_NONE
-            = TIZEN_ERROR_NONE,                /**< Successful */
-    MEDIA_VISION_ERROR_NOT_SUPPORTED
-            = TIZEN_ERROR_NOT_SUPPORTED,       /**< Not supported */
-    MEDIA_VISION_ERROR_MSG_TOO_LONG
-            = TIZEN_ERROR_MSG_TOO_LONG,        /**< Message too long */
-    MEDIA_VISION_ERROR_NO_DATA
-            = TIZEN_ERROR_NO_DATA,             /**< No data */
-    MEDIA_VISION_ERROR_KEY_NOT_AVAILABLE
-            = TIZEN_ERROR_KEY_NOT_AVAILABLE,   /**< Key not available */
-    MEDIA_VISION_ERROR_OUT_OF_MEMORY
-            = TIZEN_ERROR_OUT_OF_MEMORY,       /**< Out of memory */
-    MEDIA_VISION_ERROR_INVALID_PARAMETER
-            = TIZEN_ERROR_INVALID_PARAMETER,   /**< Invalid parameter */
-    MEDIA_VISION_ERROR_INVALID_OPERATION
-            = TIZEN_ERROR_INVALID_OPERATION,   /**< Invalid operation */
-    MEDIA_VISION_ERROR_PERMISSION_DENIED
-            = TIZEN_ERROR_NOT_PERMITTED,       /**< Not permitted */
-    MEDIA_VISION_ERROR_NOT_SUPPORTED_FORMAT
-            = TIZEN_ERROR_MEDIA_VISION | 0x01, /**< Not supported format */
-    MEDIA_VISION_ERROR_INTERNAL
-            = TIZEN_ERROR_MEDIA_VISION | 0x02, /**< Internal error */
-    MEDIA_VISION_ERROR_INVALID_DATA
-            = TIZEN_ERROR_MEDIA_VISION | 0x03, /**< Invalid data */
-    MEDIA_VISION_ERROR_INVALID_PATH
-            = TIZEN_ERROR_MEDIA_VISION | 0x04, /**< Invalid path (Since 3.0) */
+typedef enum {
+	MEDIA_VISION_ERROR_NONE
+			= TIZEN_ERROR_NONE,                /**< Successful */
+	MEDIA_VISION_ERROR_NOT_SUPPORTED
+			= TIZEN_ERROR_NOT_SUPPORTED,       /**< Not supported */
+	MEDIA_VISION_ERROR_MSG_TOO_LONG
+			= TIZEN_ERROR_MSG_TOO_LONG,        /**< Message too long */
+	MEDIA_VISION_ERROR_NO_DATA
+			= TIZEN_ERROR_NO_DATA,             /**< No data */
+	MEDIA_VISION_ERROR_KEY_NOT_AVAILABLE
+			= TIZEN_ERROR_KEY_NOT_AVAILABLE,   /**< Key not available */
+	MEDIA_VISION_ERROR_OUT_OF_MEMORY
+			= TIZEN_ERROR_OUT_OF_MEMORY,       /**< Out of memory */
+	MEDIA_VISION_ERROR_INVALID_PARAMETER
+			= TIZEN_ERROR_INVALID_PARAMETER,   /**< Invalid parameter */
+	MEDIA_VISION_ERROR_INVALID_OPERATION
+			= TIZEN_ERROR_INVALID_OPERATION,   /**< Invalid operation */
+	MEDIA_VISION_ERROR_PERMISSION_DENIED
+			= TIZEN_ERROR_NOT_PERMITTED,       /**< Not permitted */
+	MEDIA_VISION_ERROR_NOT_SUPPORTED_FORMAT
+			= TIZEN_ERROR_MEDIA_VISION | 0x01, /**< Not supported format */
+	MEDIA_VISION_ERROR_INTERNAL
+			= TIZEN_ERROR_MEDIA_VISION | 0x02, /**< Internal error */
+	MEDIA_VISION_ERROR_INVALID_DATA
+			= TIZEN_ERROR_MEDIA_VISION | 0x03, /**< Invalid data */
+	MEDIA_VISION_ERROR_INVALID_PATH
+			= TIZEN_ERROR_MEDIA_VISION | 0x04, /**< Invalid path (Since 3.0) */
 } mv_error_e;
 
 /**
@@ -109,12 +105,11 @@ typedef enum
  *
  * @since_tizen 2.4
  */
-typedef enum
-{
-    MV_ENGINE_CONFIG_ATTR_TYPE_DOUBLE,     /**< Double attribute type */
-    MV_ENGINE_CONFIG_ATTR_TYPE_INTEGER,    /**< Integer attribute type */
-    MV_ENGINE_CONFIG_ATTR_TYPE_BOOLEAN,    /**< Boolean attribute type */
-    MV_ENGINE_CONFIG_ATTR_TYPE_STRING      /**< String attribute type */
+typedef enum {
+	MV_ENGINE_CONFIG_ATTR_TYPE_DOUBLE,     /**< Double attribute type */
+	MV_ENGINE_CONFIG_ATTR_TYPE_INTEGER,    /**< Integer attribute type */
+	MV_ENGINE_CONFIG_ATTR_TYPE_BOOLEAN,    /**< Boolean attribute type */
+	MV_ENGINE_CONFIG_ATTR_TYPE_STRING      /**< String attribute type */
 } mv_config_attribute_type_e;
 
 /**
@@ -122,20 +117,19 @@ typedef enum
  *
  * @since_tizen 2.4
  */
-typedef enum
-{
-    MEDIA_VISION_COLORSPACE_INVALID, /**< The colorspace type is invalid */
-    MEDIA_VISION_COLORSPACE_Y800,    /**< The colorspace type is Y800 */
-    MEDIA_VISION_COLORSPACE_I420,    /**< The colorspace type is I420 */
-    MEDIA_VISION_COLORSPACE_NV12,    /**< The colorspace type is NV12 */
-    MEDIA_VISION_COLORSPACE_YV12,    /**< The colorspace type is YV12 */
-    MEDIA_VISION_COLORSPACE_NV21,    /**< The colorspace type is NV21 */
-    MEDIA_VISION_COLORSPACE_YUYV,    /**< The colorspace type is YUYV */
-    MEDIA_VISION_COLORSPACE_UYVY,    /**< The colorspace type is UYVY */
-    MEDIA_VISION_COLORSPACE_422P,    /**< The colorspace type is 422P */
-    MEDIA_VISION_COLORSPACE_RGB565,  /**< The colorspace type is RGB565 */
-    MEDIA_VISION_COLORSPACE_RGB888,  /**< The colorspace type is RGB888 */
-    MEDIA_VISION_COLORSPACE_RGBA,    /**< The colorspace type is RGBA */
+typedef enum {
+	MEDIA_VISION_COLORSPACE_INVALID, /**< The colorspace type is invalid */
+	MEDIA_VISION_COLORSPACE_Y800,    /**< The colorspace type is Y800 */
+	MEDIA_VISION_COLORSPACE_I420,    /**< The colorspace type is I420 */
+	MEDIA_VISION_COLORSPACE_NV12,    /**< The colorspace type is NV12 */
+	MEDIA_VISION_COLORSPACE_YV12,    /**< The colorspace type is YV12 */
+	MEDIA_VISION_COLORSPACE_NV21,    /**< The colorspace type is NV21 */
+	MEDIA_VISION_COLORSPACE_YUYV,    /**< The colorspace type is YUYV */
+	MEDIA_VISION_COLORSPACE_UYVY,    /**< The colorspace type is UYVY */
+	MEDIA_VISION_COLORSPACE_422P,    /**< The colorspace type is 422P */
+	MEDIA_VISION_COLORSPACE_RGB565,  /**< The colorspace type is RGB565 */
+	MEDIA_VISION_COLORSPACE_RGB888,  /**< The colorspace type is RGB888 */
+	MEDIA_VISION_COLORSPACE_RGBA,    /**< The colorspace type is RGBA */
 } mv_colorspace_e;
 
 /**
@@ -179,7 +173,7 @@ typedef void *mv_source_h;
  * @see mv_destroy_source()
  */
 int mv_create_source(
-        mv_source_h *source);
+		mv_source_h *source);
 
 /**
  * @brief Destroys the source handle and releases all its resources.
@@ -194,7 +188,7 @@ int mv_create_source(
  * @see mv_create_source()
  */
 int mv_destroy_source(
-        mv_source_h source);
+		mv_source_h source);
 
 /**
  * @brief Fills the media source based on the media packet.
@@ -217,8 +211,8 @@ int mv_destroy_source(
  * @see mv_destroy_source()
  */
 int mv_source_fill_by_media_packet(
-        mv_source_h source,
-        media_packet_h media_packet);
+		mv_source_h source,
+		media_packet_h media_packet);
 
 /**
  * @brief Fills the media source based on the buffer and metadata.
@@ -241,12 +235,12 @@ int mv_source_fill_by_media_packet(
  * @see mv_source_clear()
  */
 int mv_source_fill_by_buffer(
-        mv_source_h source,
-        unsigned char *data_buffer,
-        unsigned int buffer_size,
-        unsigned int image_width,
-        unsigned int image_height,
-        mv_colorspace_e image_colorspace);
+		mv_source_h source,
+		unsigned char *data_buffer,
+		unsigned int buffer_size,
+		unsigned int image_width,
+		unsigned int image_height,
+		mv_colorspace_e image_colorspace);
 
 /**
  * @brief Clears the buffer of the media source.
@@ -261,7 +255,7 @@ int mv_source_fill_by_buffer(
  * @see mv_source_fill_by_buffer()
  */
 int mv_source_clear(
-        mv_source_h source);
+		mv_source_h source);
 
 /**
  * @brief Gets buffer of the media source.
@@ -284,9 +278,9 @@ int mv_source_clear(
  * @see mv_source_get_colorspace()
  */
 int mv_source_get_buffer(
-        mv_source_h source,
-        unsigned char **data_buffer,
-        unsigned int *buffer_size);
+		mv_source_h source,
+		unsigned char **data_buffer,
+		unsigned int *buffer_size);
 
 /**
  * @brief Gets height of the media source.
@@ -304,8 +298,8 @@ int mv_source_get_buffer(
  * @see mv_source_get_buffer()
  */
 int mv_source_get_height(
-        mv_source_h source,
-        unsigned int *image_height);
+		mv_source_h source,
+		unsigned int *image_height);
 
 /**
  * @brief Gets width of the media source.
@@ -323,8 +317,8 @@ int mv_source_get_height(
  * @see mv_source_get_buffer()
  */
 int mv_source_get_width(
-        mv_source_h source,
-        unsigned int *image_width);
+		mv_source_h source,
+		unsigned int *image_width);
 
 /**
  * @brief Gets colorspace of the media source.
@@ -342,8 +336,8 @@ int mv_source_get_width(
  * @see mv_source_get_buffer()
  */
 int mv_source_get_colorspace(
-        mv_source_h source,
-        mv_colorspace_e *image_colorspace);
+		mv_source_h source,
+		mv_colorspace_e *image_colorspace);
 
 /**
  * @brief Creates the handle to the configuration of engine.
@@ -373,7 +367,7 @@ int mv_source_get_colorspace(
  * @see mv_engine_config_get_string_attribute()
  */
 int mv_create_engine_config(
-        mv_engine_config_h *engine_cfg);
+		mv_engine_config_h *engine_cfg);
 
 /**
  * @brief Destroys the engine configuration handle and releases all its
@@ -391,7 +385,7 @@ int mv_create_engine_config(
  * @see mv_create_engine_config()
  */
 int mv_destroy_engine_config(
-        mv_engine_config_h engine_cfg);
+		mv_engine_config_h engine_cfg);
 
 /**
  * @brief Sets the double attribute to the configuration.
@@ -415,9 +409,9 @@ int mv_destroy_engine_config(
  * @see mv_engine_config_set_string_attribute()
  */
 int mv_engine_config_set_double_attribute(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        double value);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		double value);
 
 /**
  * @brief Sets the integer attribute to the configuration.
@@ -443,9 +437,9 @@ int mv_engine_config_set_double_attribute(
  * @see mv_barcode_generate_attr_text_e
  */
 int mv_engine_config_set_int_attribute(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        int value);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		int value);
 
 /**
  * @brief Sets the boolean attribute to the configuration.
@@ -469,9 +463,9 @@ int mv_engine_config_set_int_attribute(
  * @see mv_engine_config_set_string_attribute()
  */
 int mv_engine_config_set_bool_attribute(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        bool value);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		bool value);
 
 /**
  * @brief Sets the string attribute to the configuration.
@@ -495,9 +489,9 @@ int mv_engine_config_set_bool_attribute(
  * @see mv_engine_config_set_bool_attribute()
  */
 int mv_engine_config_set_string_attribute(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        const char *value);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		const char *value);
 
 /**
  * @brief Gets the double attribute from the configuration dictionary.
@@ -522,9 +516,9 @@ int mv_engine_config_set_string_attribute(
  * @see mv_engine_config_get_string_attribute()
  */
 int mv_engine_config_get_double_attribute(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        double *value);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		double *value);
 
 /**
  * @brief Gets the integer attribute from the configuration dictionary.
@@ -551,9 +545,9 @@ int mv_engine_config_get_double_attribute(
  * @see mv_barcode_generate_attr_text_e
  */
 int mv_engine_config_get_int_attribute(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        int *value);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		int *value);
 
 /**
  * @brief Gets the boolean attribute from the configuration dictionary.
@@ -578,9 +572,9 @@ int mv_engine_config_get_int_attribute(
  * @see mv_engine_config_get_string_attribute()
  */
 int mv_engine_config_get_bool_attribute(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        bool *value);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		bool *value);
 
 /**
  * @brief Gets the string attribute from the configuration dictionary.
@@ -607,9 +601,9 @@ int mv_engine_config_get_bool_attribute(
  * @see mv_engine_config_get_bool_attribute()
  */
 int mv_engine_config_get_string_attribute(
-        mv_engine_config_h engine_cfg,
-        const char *name,
-        char **value);
+		mv_engine_config_h engine_cfg,
+		const char *name,
+		char **value);
 
 /**
  * @brief Called to get information (type and name) once for each supported
@@ -628,9 +622,9 @@ int mv_engine_config_get_string_attribute(
  * @see mv_engine_config_foreach_supported_attribute()
  */
 typedef bool (*mv_supported_attribute_cb)(
-        mv_config_attribute_type_e attribute_type,
-        const char *attribute_name,
-        void *user_data);
+		mv_config_attribute_type_e attribute_type,
+		const char *attribute_name,
+		void *user_data);
 
 /**
  * @brief Traverses the list of supported attribute names and types.
@@ -670,8 +664,8 @@ typedef bool (*mv_supported_attribute_cb)(
  * @see mv_engine_config_get_string_attribute()
  */
 int mv_engine_config_foreach_supported_attribute(
-        mv_supported_attribute_cb callback,
-        void *user_data);
+		mv_supported_attribute_cb callback,
+		void *user_data);
 
 /**
  * @}

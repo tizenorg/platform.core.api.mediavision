@@ -141,7 +141,7 @@ private:
 											performed */
 
 	std::vector<cv::Mat> m_pyramid;  /**< The pyramid had been calculated for
-											the previous frame (or when
+											the previous frame(or when
 											initialize the model) */
 };
 

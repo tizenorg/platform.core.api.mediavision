@@ -39,11 +39,10 @@ extern "C" {
  *
  * @see mv_face_eye_condition_recognize()
  */
-typedef enum
-{
-    MV_FACE_EYES_OPEN,      /**< Eyes are open */
-    MV_FACE_EYES_CLOSED,    /**< Eyes are closed */
-    MV_FACE_EYES_NOT_FOUND  /**< The eyes condition wasn't determined */
+typedef enum {
+	MV_FACE_EYES_OPEN,      /**< Eyes are open */
+	MV_FACE_EYES_CLOSED,    /**< Eyes are closed */
+	MV_FACE_EYES_NOT_FOUND  /**< The eyes condition wasn't determined */
 } mv_face_eye_condition_e;
 
 /**
@@ -53,16 +52,15 @@ typedef enum
  *
  * @see mv_face_facial_expression_recognize()
  */
-typedef enum
-{
-    MV_FACE_UNKNOWN,    /**< Unknown face expression */
-    MV_FACE_NEUTRAL,    /**< Face expression is neutral */
-    MV_FACE_SMILE,      /**< Face expression is smiling */
-    MV_FACE_SADNESS,    /**< Face expression is sadness */
-    MV_FACE_SURPRISE,   /**< Face expression is surprise */
-    MV_FACE_ANGER,      /**< Face expression is anger */
-    MV_FACE_FEAR,       /**< Face expression is fear */
-    MV_FACE_DISGUST,    /**< Face expression is disgust */
+typedef enum {
+	MV_FACE_UNKNOWN,    /**< Unknown face expression */
+	MV_FACE_NEUTRAL,    /**< Face expression is neutral */
+	MV_FACE_SMILE,      /**< Face expression is smiling */
+	MV_FACE_SADNESS,    /**< Face expression is sadness */
+	MV_FACE_SURPRISE,   /**< Face expression is surprise */
+	MV_FACE_ANGER,      /**< Face expression is anger */
+	MV_FACE_FEAR,       /**< Face expression is fear */
+	MV_FACE_DISGUST,    /**< Face expression is disgust */
 } mv_face_facial_expression_e;
 
 /**

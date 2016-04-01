@@ -21,10 +21,9 @@
 
 #include <stddef.h>
 
-typedef enum
-{
-    FAIL_OR_SUCCESSS,
-    FAIL_OR_DONE
+typedef enum {
+	FAIL_OR_SUCCESSS,
+	FAIL_OR_DONE
 } notification_type_e;
 
 /**
@@ -35,8 +34,8 @@ typedef enum
  * @param [in] action_return_value   Return value of action
  */
 void print_fail_result(
-        const char *action_name,
-        int action_return_value);
+		const char *action_name,
+		int action_return_value);
 
 /**
  * @brief Prints success result of action.
@@ -63,9 +62,9 @@ void print_success_result(const char *action_name);
  * @param [in] notification_type_e   Type of notification
  */
 void print_action_result(
-        const char *action_name,
-        int action_return_value,
-        notification_type_e notification_type_e);
+		const char *action_name,
+		int action_return_value,
+		notification_type_e notification_type_e);
 
 /**
  * @brief Gets srting from console.
@@ -138,10 +137,10 @@ bool show_confirm_dialog(const char *title);
  *         otherwise a negative error value
  */
 int show_menu(
-        const char *title,
-        const int *options,
-        const char **names,
-        int number_of_option);
+		const char *title,
+		const int *options,
+		const char **names,
+		int number_of_option);
 
 /**
  * @brief Loads media source from JPEG image.
@@ -152,7 +151,7 @@ int show_menu(
  * @return @c 0 on success, otherwise a negative error value
  */
 int load_mv_source_from_file(
-        const char *path_to_image,
-        mv_source_h source);
+		const char *path_to_image,
+		mv_source_h source);
 
 #endif /* __MV_TESTSUITE_COMMON_H__ */
