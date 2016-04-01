@@ -60,7 +60,6 @@ public:
 	 */
 	static int convertSourceMVRGB2GrayCVNeon(mv_source_h mvSource, cv::Mat& cvSource);
 #endif
-
 };
 
 

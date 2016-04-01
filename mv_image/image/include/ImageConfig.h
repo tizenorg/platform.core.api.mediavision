@@ -67,7 +67,6 @@ const std::string DescriptorNames[DT_SIZE] = {
  * @since_tizen 3.0
  */
 struct FeaturesExtractingParams {
-
 	FeaturesExtractingParams();
 
 	KeypointType mKeypointType; /**< Keypoint's type. */

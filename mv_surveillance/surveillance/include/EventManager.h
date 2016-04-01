@@ -38,7 +38,6 @@ class EventManager;
  */
 class EventManagerDestroyer {
 public:
-
 	/**
 	 * @brief Default destructor.
 	 *
@@ -55,7 +54,6 @@ public:
 	void initialize(EventManager *pointer);
 
 private:
-
 	EventManager *__pInstance;
 };
 
@@ -68,7 +66,6 @@ private:
 
 class EventManager {
 public:
-
 	/**
 	 * @brief Gets EventManager instance.
 	 *
@@ -156,7 +153,6 @@ public:
 		StringVector& eventResValNames);
 
 private:
-
 	EventManager();
 
 	EventManager(const EventManager&);
@@ -172,7 +168,6 @@ private:
 	friend class EventManagerDestroyer;
 
 private:
-
 	static EventManager *__pInstance;
 
 	static EventManagerDestroyer Destroyer;
@@ -180,7 +175,6 @@ private:
 	static EventTypesMap SupportedEventTypes;
 
 private:
-
 	EventTriggersMap __eventTriggers;
 };
 

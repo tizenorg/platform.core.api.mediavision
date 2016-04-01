@@ -31,47 +31,43 @@ extern "C" {
 #define LOG_TAG "TIZEN_MEDIA_VISION"
 
 #define MEDIA_VISION_FUNCTION_ENTER() \
-        LOGI("[%s] <ENTER>", __FUNCTION__)
+		LOGI("[%s] <ENTER>", __FUNCTION__)
 
 #define MEDIA_VISION_FUNCTION_LEAVE() \
-        LOGI("[%s] <LEAVE>", __FUNCTION__)
+		LOGI("[%s] <LEAVE>", __FUNCTION__)
 
 #define MEDIA_VISION_ASSERT(function, msg) \
-        do \
-        { \
-            int error_code = function; \
-            if(error_code != MEDIA_VISION_ERROR_NONE) \
-            { \
-                LOGE("%s(0x%08x)", msg, error_code); \
-                return error_code; \
-            } \
-        } \
-        while(0)
+		do { \
+			int error_code = function; \
+			if(error_code != MEDIA_VISION_ERROR_NONE) { \
+				LOGE("%s(0x%08x)", msg, error_code); \
+				return error_code; \
+			} \
+		} \
+		while (0)
 
 #define MEDIA_VISION_CHECK_CONDITION(condition,error,msg) \
-        do \
-        { \
-            if(!(condition)) \
-            { \
-                LOGE("[%s] %s(0x%08x)", __FUNCTION__, msg, error); \
-                return error; \
-            } \
-        } \
-        while(0)
+		do { \
+			if(!(condition)) { \
+				LOGE("[%s] %s(0x%08x)", __FUNCTION__, msg, error); \
+				return error; \
+			} \
+		} \
+		while (0)
 
 #define MEDIA_VISION_INSTANCE_CHECK(arg) \
-        MEDIA_VISION_CHECK_CONDITION(arg != NULL, \
-                                     MEDIA_VISION_ERROR_INVALID_PARAMETER, \
-                                     "MEDIA_VISION_ERROR_INVALID_PARAMETER")
+		MEDIA_VISION_CHECK_CONDITION(arg != NULL, \
+									MEDIA_VISION_ERROR_INVALID_PARAMETER, \
+									"MEDIA_VISION_ERROR_INVALID_PARAMETER")
 
 #define MEDIA_VISION_NULL_ARG_CHECK(arg) \
-        MEDIA_VISION_CHECK_CONDITION(arg != NULL, \
-                                     MEDIA_VISION_ERROR_INVALID_PARAMETER, \
-                                     "MEDIA_VISION_ERROR_INVALID_PARAMETER")
+		MEDIA_VISION_CHECK_CONDITION(arg != NULL, \
+									MEDIA_VISION_ERROR_INVALID_PARAMETER, \
+									"MEDIA_VISION_ERROR_INVALID_PARAMETER")
 
 #define MEDIA_VISION_SUPPORT_CHECK(arg) \
-        MEDIA_VISION_CHECK_CONDITION(arg != false, MEDIA_VISION_ERROR_NOT_SUPPORTED, \
-                                     "MEDIA_VISION_ERROR_NOT_SUPPORTED")
+		MEDIA_VISION_CHECK_CONDITION(arg != false, MEDIA_VISION_ERROR_NOT_SUPPORTED, \
+									"MEDIA_VISION_ERROR_NOT_SUPPORTED")
 
 bool __mv_check_system_info_feature_supported();
 bool __mv_barcode_detect_check_system_info_feature_supported();

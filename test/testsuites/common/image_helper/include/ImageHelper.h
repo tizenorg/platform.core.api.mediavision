@@ -219,7 +219,6 @@ private:
             const unsigned char *pInBuffer,
             const ImageData& imageData,
             unsigned char **pOutBuffer);
-
 };
 
 } /* namespace Common */

@@ -173,7 +173,6 @@ private:
 			const std::vector<cv::Point2f>& roi);
 
 private:
-
 	FeaturesExtractingParams m_featureExtractingParams;
 
 	FeaturePack m_features;

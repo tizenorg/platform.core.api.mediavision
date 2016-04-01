@@ -73,8 +73,7 @@ struct HOGDescriptor {
 		histogramNormType(HOGDescriptor::L2Hys),
 		L2HysThreshold(0.2),
 		gammaCorrection(true),
-		nlevels(HOGDescriptor::DEFAULT_NLEVELS)
-	{}
+		nlevels(HOGDescriptor::DEFAULT_NLEVELS) {}
 
 	// constructor
 	HOGDescriptor(
@@ -99,8 +98,7 @@ struct HOGDescriptor {
 		histogramNormType(_histogramNormType),
 		L2HysThreshold(_L2HysThreshold),
 		gammaCorrection(_gammaCorrection),
-		nlevels(_nlevels)
-	{}
+		nlevels(_nlevels) {}
 
 	// default destructor
 	virtual ~HOGDescriptor() {}

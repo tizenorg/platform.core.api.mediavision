@@ -33,12 +33,11 @@ extern "C" {
  *
  * @since_tizen 3.0
  */
-typedef struct
-{
-    unsigned int trigger_id;     /**< Unique event trigger identifier */
-    const char *event_type;      /**< Type of the event */
-    int number_of_roi_points;    /**< Number of ROI (Region of interest) points */
-    mv_point_s *roi;             /**< ROI points array */
+typedef struct {
+	unsigned int trigger_id;     /**< Unique event trigger identifier */
+	const char *event_type;      /**< Type of the event */
+	int number_of_roi_points;    /**< Number of ROI (Region of interest) points */
+	mv_point_s *roi;             /**< ROI points array */
 } mv_surveillance_event_trigger_s;
 
 #ifdef __cplusplus

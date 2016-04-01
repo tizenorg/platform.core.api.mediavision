@@ -155,11 +155,9 @@ private:
 		void *user_data);
 
 private:
-
 	void runCallbacks(mv_source_h source);
 
 private:
-
 	struct TrackedRectangle {
 		cv::Rect rect;
 
