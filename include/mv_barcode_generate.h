@@ -38,7 +38,7 @@ extern "C" {
  * @brief Define MV_BARCODE_GENERATE_ATTR_TEXT to set text attribute
           of the engine configuration
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @remarks This attribute is only available for 1D barcode generation
  *
  * @see mv_barcode_generate_attr_text_e
@@ -50,7 +50,7 @@ extern "C" {
 /**
  * @brief Enumeration to text attribute
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  */
 typedef enum {
     MV_BARCODE_GENERATE_ATTR_TEXT_INVISIBLE,   /**< Invisible */
@@ -65,7 +65,7 @@ typedef enum {
  * message length. Also for QR codes the version may be selected as minimum
  * required to generate QR code with the input message length.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @remarks If the text attribute of engine configuration is set to
  *          MV_BARCODE_GENERATE_ATTR_TEXT_VISIBLE,
  *          MEDIA_VISION_ERROR_INVALID_OPERATION will be return
@@ -114,7 +114,7 @@ int mv_barcode_generate_source(
  * message length. Also for QR codes the version may be selected as minimum
  * required to generate QR code with the input message length.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @remarks If the text attribute of engine configuration is set to
  *          MV_BARCODE_GENERATE_ATTR_TEXT_VISIBLE,
  *          MEDIA_VISION_ERROR_INVALID_OPERATION will be return

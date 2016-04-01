@@ -32,14 +32,14 @@ namespace Barcode {
  * @brief This class implements barcode generation.
  * @details 1D Barcodes and 2D QR codes are supported.
  *
- * @since_tizen 2.4
+ * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  */
 class BarcodeGenerator {
 public:
 	/**
 	 * @brief This method generates Barcodes image according to options.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @param [in] imageFileName    Image file name which will be generated
 	 * @param [in] imageFormat      Image file format which will be generated
 	 * @param [in] imageWidth       Image file width which will be generated
@@ -68,7 +68,7 @@ public:
 	/**
 	 * @brief This method generates Barcodes image buffer according to options.
 	 *
-	 * @since_tizen 2.4
+	 * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
 	 * @param [out] imageBuffer        Image buffer with image to be generated
 	 * @param [out] imageWidth         Image buffer width which will be generated
 	 * @param [out] imageHeight        Image buffer height which will be generated
