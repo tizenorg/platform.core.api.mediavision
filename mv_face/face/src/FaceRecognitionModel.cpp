@@ -372,6 +372,17 @@ const std::set<int>& FaceRecognitionModel::getFaceLabels(void) const
 
 int FaceRecognitionModel::learn(const FaceRecognitionModelConfig& config)
 {
+	/* Check number of classes collected for learning, some algorithms
+	 * require specific class number constraints. For example, Fisherfaces
+	 * requires more that 1 class in training set */
+	if (MEDIA_VISION_FACE_MODEL_TYPE_FISHERFACES == config.mModelType &&
+			m_faceSamples.size() < 2) {
+		LOGE("Can't apply Fisherfaces learning algorithm. It requires at "
+				"least two classes (face labes) to learn on.");
+
+		return MEDIA_VISION_ERROR_INVALID_OPERATION;
+	}
+
 	bool isIncremental = false;
 	bool isUnisize = false;
 
@@ -456,30 +467,38 @@ int FaceRecognitionModel::recognize(const cv::Mat& image, FaceRecognitionResults
 {
 	if (!m_recognizer.empty() && m_canRecognize) {
 		double absConf = 0.0;
-		if ((MEDIA_VISION_FACE_MODEL_TYPE_EIGENFACES == m_learnAlgorithmConfig.mModelType ||
-			 MEDIA_VISION_FACE_MODEL_TYPE_FISHERFACES == m_learnAlgorithmConfig.mModelType) &&
-			(image.cols != m_learnAlgorithmConfig.mImgWidth ||
-			 image.rows != m_learnAlgorithmConfig.mImgHeight)) {
-			cv::Mat predictionImg(
-						m_learnAlgorithmConfig.mImgWidth,
-						m_learnAlgorithmConfig.mImgHeight,
-						CV_8UC1);
-			cv::resize(image, predictionImg, predictionImg.size());
-			m_recognizer->predict(predictionImg, results.mFaceLabel, absConf);
+		cv::Mat predictionImg(m_learnAlgorithmConfig.mImgWidth,
+				m_learnAlgorithmConfig.mImgHeight, CV_8UC1);
 
-			if (-1 != results.mFaceLabel) {
-				results.mConfidence = 1.0;
-				results.mIsRecognized = true;
-			} else {
-				results.mConfidence = 0.0;
-				results.mIsRecognized = false;
+		if ((MEDIA_VISION_FACE_MODEL_TYPE_EIGENFACES == m_learnAlgorithmConfig.mModelType ||
+				MEDIA_VISION_FACE_MODEL_TYPE_FISHERFACES == m_learnAlgorithmConfig.mModelType) &&
+				(image.cols != m_learnAlgorithmConfig.mImgWidth ||
+				image.rows != m_learnAlgorithmConfig.mImgHeight))
+			cv::resize(image, predictionImg, predictionImg.size());
+		else
+			predictionImg = image;
+
+		m_recognizer->predict(predictionImg, results.mFaceLabel, absConf);
+
+		if (-1 != results.mFaceLabel) {
+			double normShift = 7.5;
+			double normSmooth = 0.05;
+
+			if (MEDIA_VISION_FACE_MODEL_TYPE_EIGENFACES == m_learnAlgorithmConfig.mModelType) {
+				normShift = 5.0;
+				normSmooth = 0.0015;
+			} else if (MEDIA_VISION_FACE_MODEL_TYPE_FISHERFACES == m_learnAlgorithmConfig.mModelType) {
+				normShift = 5.0;
+				normSmooth = 0.01;
 			}
-		} else {
-			m_recognizer->predict(image, results.mFaceLabel, absConf);
+
 			/* Normalize the absolute value of the confidence */
-			absConf = exp(7.5 - (0.05 * absConf));
+			absConf = exp(normShift - (normSmooth * absConf));
 			results.mConfidence = absConf / (1 + absConf);
 			results.mIsRecognized = true;
+		} else {
+			results.mConfidence = 0.0;
+			results.mIsRecognized = false;
 		}
 
 		results.mFaceLocation = cv::Rect(0, 0, image.cols, image.rows);
