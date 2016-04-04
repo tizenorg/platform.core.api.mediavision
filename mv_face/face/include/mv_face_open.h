@@ -64,7 +64,7 @@ extern "C" {
  *
  * @see mv_face_detected_cb
  */
-int mv_face_detect_open(
+EXPORT_API int mv_face_detect_open(
 		mv_source_h source,
 		mv_engine_config_h engine_cfg,
 		mv_face_detected_cb detected_cb,
@@ -125,7 +125,7 @@ int mv_face_detect_open(
  *
  * @see mv_face_recognized_cb
  */
-int mv_face_recognize_open(
+EXPORT_API int mv_face_recognize_open(
 		mv_source_h source,
 		mv_face_recognition_model_h recognition_model,
 		mv_engine_config_h engine_cfg,
@@ -189,7 +189,7 @@ int mv_face_recognize_open(
  *
  * @see mv_face_tracked_cb
  */
-int mv_face_track_open(
+EXPORT_API int mv_face_track_open(
 		mv_source_h source,
 		mv_face_tracking_model_h tracking_model,
 		mv_engine_config_h engine_cfg,
@@ -232,7 +232,7 @@ int mv_face_track_open(
  *
  * @see mv_face_eye_condition_recognized_cb
  */
-int mv_face_eye_condition_recognize_open(
+EXPORT_API int mv_face_eye_condition_recognize_open(
 		mv_source_h source,
 		mv_engine_config_h engine_cfg,
 		mv_rectangle_s face_location,
@@ -273,7 +273,7 @@ int mv_face_eye_condition_recognize_open(
  *
  * @see mv_face_facial_expression_recognized_cb
  */
-int mv_face_facial_expression_recognize_open(
+EXPORT_API int mv_face_facial_expression_recognize_open(
 		mv_source_h source,
 		mv_engine_config_h engine_cfg,
 		mv_rectangle_s face_location,
@@ -312,7 +312,7 @@ int mv_face_facial_expression_recognize_open(
  *
  * @see mv_face_recognition_model_destroy_open()
  */
-int mv_face_recognition_model_create_open(
+EXPORT_API int mv_face_recognition_model_create_open(
 		mv_face_recognition_model_h *recognition_model);
 
 /**
@@ -328,7 +328,7 @@ int mv_face_recognition_model_create_open(
  *
  * @see mv_face_recognition_model_create_open()
  */
-int mv_face_recognition_model_destroy_open(
+EXPORT_API int mv_face_recognition_model_destroy_open(
 		mv_face_recognition_model_h recognition_model);
 
 /**
@@ -352,7 +352,7 @@ int mv_face_recognition_model_destroy_open(
  *
  * @see mv_face_recognition_model_create_open()
  */
-int mv_face_recognition_model_clone_open(
+EXPORT_API int mv_face_recognition_model_clone_open(
 		mv_face_recognition_model_h src,
 		mv_face_recognition_model_h *dst);
 
@@ -386,7 +386,7 @@ int mv_face_recognition_model_clone_open(
  * @see mv_face_recognition_model_load_open()
  * @see mv_face_recognition_model_create_open()
  */
-int mv_face_recognition_model_save_open(
+EXPORT_API int mv_face_recognition_model_save_open(
 		const char *file_name,
 		mv_face_recognition_model_h recognition_model);
 
@@ -419,7 +419,7 @@ int mv_face_recognition_model_save_open(
  * @see mv_face_recognition_model_save_open()
  * @see mv_face_recognition_model_destroy_open()
  */
-int mv_face_recognition_model_load_open(
+EXPORT_API int mv_face_recognition_model_load_open(
 		const char *file_name,
 		mv_face_recognition_model_h *recognition_model);
 
@@ -459,7 +459,7 @@ int mv_face_recognition_model_load_open(
  * @see mv_face_recognition_model_reset_open()
  * @see mv_face_recognition_model_learn_open()
  */
-int mv_face_recognition_model_add_open(
+EXPORT_API int mv_face_recognition_model_add_open(
 		const mv_source_h source,
 		mv_face_recognition_model_h recognition_model,
 		const mv_rectangle_s *example_location,
@@ -497,7 +497,7 @@ int mv_face_recognition_model_add_open(
  * @see mv_face_recognition_model_add_open()
  * @see mv_face_recognition_model_learn_open()
  */
-int mv_face_recognition_model_reset_open(
+EXPORT_API int mv_face_recognition_model_reset_open(
 		mv_face_recognition_model_h recognition_model,
 		const int *face_label);
 
@@ -554,7 +554,7 @@ int mv_face_recognition_model_reset_open(
  * @see mv_face_recognition_model_reset_open()
  * @see mv_face_recognize_open()
  */
-int mv_face_recognition_model_learn_open(
+EXPORT_API int mv_face_recognition_model_learn_open(
 		mv_engine_config_h engine_cfg,
 		mv_face_recognition_model_h recognition_model);
 
@@ -584,7 +584,7 @@ int mv_face_recognition_model_learn_open(
  * @see mv_face_recognition_model_reset_open()
  * @see mv_face_recognition_model_learn_open()
  */
-int mv_face_recognition_model_query_labels_open(
+EXPORT_API int mv_face_recognition_model_query_labels_open(
 		mv_face_recognition_model_h recognition_model,
 		int **labels,
 		unsigned int *number_of_labels);
@@ -627,7 +627,7 @@ int mv_face_recognition_model_query_labels_open(
  * @see mv_face_tracking_model_prepare_open()
  * @see mv_face_tracking_model_load_open()
  */
-int mv_face_tracking_model_create_open(
+EXPORT_API int mv_face_tracking_model_create_open(
 		mv_face_tracking_model_h *tracking_model);
 
 /**
@@ -644,7 +644,7 @@ int mv_face_tracking_model_create_open(
  *
  * @see mv_face_tracking_model_create_open()
  */
-int mv_face_tracking_model_destroy_open(
+EXPORT_API int mv_face_tracking_model_destroy_open(
 		mv_face_tracking_model_h tracking_model);
 
 /**
@@ -688,7 +688,7 @@ int mv_face_tracking_model_destroy_open(
  * @see mv_face_tracking_model_create_open()
  * @see mv_face_track_open()
  */
-int mv_face_tracking_model_prepare_open(
+EXPORT_API int mv_face_tracking_model_prepare_open(
 		mv_face_tracking_model_h tracking_model,
 		mv_engine_config_h engine_cfg,
 		mv_source_h source,
@@ -716,7 +716,7 @@ int mv_face_tracking_model_prepare_open(
  *
  * @see mv_face_tracking_model_create_open()
  */
-int mv_face_tracking_model_clone_open(
+EXPORT_API int mv_face_tracking_model_clone_open(
 		mv_face_tracking_model_h src,
 		mv_face_tracking_model_h *dst);
 
@@ -746,7 +746,7 @@ int mv_face_tracking_model_clone_open(
  * @see mv_face_tracking_model_load_open()
  * @see mv_face_tracking_model_create_open()
  */
-int mv_face_tracking_model_save_open(
+EXPORT_API int mv_face_tracking_model_save_open(
 		const char *file_name,
 		mv_face_tracking_model_h tracking_model);
 
@@ -780,7 +780,7 @@ int mv_face_tracking_model_save_open(
  * @see mv_face_tracking_model_save_open()
  * @see mv_face_tracking_model_destroy_open()
  */
-int mv_face_tracking_model_load_open(
+EXPORT_API int mv_face_tracking_model_load_open(
 		const char *file_name,
 		mv_face_tracking_model_h *tracking_model);
 

@@ -40,7 +40,7 @@ namespace surveillance {
  *
  * @since_tizen 3.0
  */
-class EventResultPersonRecognition : public EventResult {
+class EXPORT_API EventResultPersonRecognition : public EventResult {
 public:
 	/**
 	 * @brief Gets result value.
@@ -67,7 +67,7 @@ public:
  *
  * @since_tizen 3.0
  */
-class EventTriggerPersonRecognition : public EventTrigger {
+class EXPORT_API EventTriggerPersonRecognition : public EventTrigger {
 public:
 	/**
 	 * @brief Default constructor.

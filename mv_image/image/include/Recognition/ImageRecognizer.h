@@ -37,7 +37,7 @@ namespace Image {
  *
  * @since_tizen 3.0
  */
-class ImageRecognizer {
+class EXPORT_API ImageRecognizer {
 public:
 	/**
 	 * @brief   @ref ImageRecognizer constructor based on the scene @ref ImageObject.

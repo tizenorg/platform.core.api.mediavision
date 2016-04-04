@@ -32,7 +32,7 @@ namespace Face {
  *
  * @since_tizen 3.0
  */
-enum FaceRecognitionModelType {
+enum EXPORT_API FaceRecognitionModelType {
 	MEDIA_VISION_FACE_MODEL_TYPE_UNKNOWN = 0,     /**< Unknown algorithm type */
 	MEDIA_VISION_FACE_MODEL_TYPE_EIGENFACES = 1,  /**< Eigenfaces algorithm */
 	MEDIA_VISION_FACE_MODEL_TYPE_FISHERFACES = 2, /**< Fisherfaces algorithm */
@@ -45,7 +45,7 @@ enum FaceRecognitionModelType {
  *
  * @since_tizen 3.0
  */
-struct RecognitionParams {
+struct EXPORT_API RecognitionParams {
 	RecognitionParams(FaceRecognitionModelType algType);
 
 	RecognitionParams();
@@ -62,7 +62,7 @@ struct RecognitionParams {
  * @param [out] cvSource   The cv::Mat class, which will be filled.
  * @return @c 0 on success, otherwise a negative error value
  */
-int convertSourceMV2GrayCV(mv_source_h mvSource, cv::Mat& cvSource);
+EXPORT_API int convertSourceMV2GrayCV(mv_source_h mvSource, cv::Mat& cvSource);
 
 } /* Face */
 } /* MediaVision */

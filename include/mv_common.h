@@ -172,7 +172,7 @@ typedef void *mv_source_h;
  *
  * @see mv_destroy_source()
  */
-int mv_create_source(
+EXPORT_API int mv_create_source(
 		mv_source_h *source);
 
 /**
@@ -187,7 +187,7 @@ int mv_create_source(
  *
  * @see mv_create_source()
  */
-int mv_destroy_source(
+EXPORT_API int mv_destroy_source(
 		mv_source_h source);
 
 /**
@@ -210,7 +210,7 @@ int mv_destroy_source(
  * @see mv_create_source()
  * @see mv_destroy_source()
  */
-int mv_source_fill_by_media_packet(
+EXPORT_API int mv_source_fill_by_media_packet(
 		mv_source_h source,
 		media_packet_h media_packet);
 
@@ -234,7 +234,7 @@ int mv_source_fill_by_media_packet(
  *
  * @see mv_source_clear()
  */
-int mv_source_fill_by_buffer(
+EXPORT_API int mv_source_fill_by_buffer(
 		mv_source_h source,
 		unsigned char *data_buffer,
 		unsigned int buffer_size,
@@ -254,7 +254,7 @@ int mv_source_fill_by_buffer(
  *
  * @see mv_source_fill_by_buffer()
  */
-int mv_source_clear(
+EXPORT_API int mv_source_clear(
 		mv_source_h source);
 
 /**
@@ -277,7 +277,7 @@ int mv_source_clear(
  * @see mv_source_get_height()
  * @see mv_source_get_colorspace()
  */
-int mv_source_get_buffer(
+EXPORT_API int mv_source_get_buffer(
 		mv_source_h source,
 		unsigned char **data_buffer,
 		unsigned int *buffer_size);
@@ -297,7 +297,7 @@ int mv_source_get_buffer(
  * @see mv_source_get_colorspace()
  * @see mv_source_get_buffer()
  */
-int mv_source_get_height(
+EXPORT_API int mv_source_get_height(
 		mv_source_h source,
 		unsigned int *image_height);
 
@@ -316,7 +316,7 @@ int mv_source_get_height(
  * @see mv_source_get_colorspace()
  * @see mv_source_get_buffer()
  */
-int mv_source_get_width(
+EXPORT_API int mv_source_get_width(
 		mv_source_h source,
 		unsigned int *image_width);
 
@@ -335,7 +335,7 @@ int mv_source_get_width(
  * @see mv_source_get_height()
  * @see mv_source_get_buffer()
  */
-int mv_source_get_colorspace(
+EXPORT_API int mv_source_get_colorspace(
 		mv_source_h source,
 		mv_colorspace_e *image_colorspace);
 
@@ -366,7 +366,7 @@ int mv_source_get_colorspace(
  * @see mv_engine_config_get_bool_attribute()
  * @see mv_engine_config_get_string_attribute()
  */
-int mv_create_engine_config(
+EXPORT_API int mv_create_engine_config(
 		mv_engine_config_h *engine_cfg);
 
 /**
@@ -384,7 +384,7 @@ int mv_create_engine_config(
  * @see mv_engine_config_h
  * @see mv_create_engine_config()
  */
-int mv_destroy_engine_config(
+EXPORT_API int mv_destroy_engine_config(
 		mv_engine_config_h engine_cfg);
 
 /**
@@ -408,7 +408,7 @@ int mv_destroy_engine_config(
  * @see mv_engine_config_set_bool_attribute()
  * @see mv_engine_config_set_string_attribute()
  */
-int mv_engine_config_set_double_attribute(
+EXPORT_API int mv_engine_config_set_double_attribute(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		double value);
@@ -436,7 +436,7 @@ int mv_engine_config_set_double_attribute(
  * @see mv_barcode_detect_attr_target_e
  * @see mv_barcode_generate_attr_text_e
  */
-int mv_engine_config_set_int_attribute(
+EXPORT_API int mv_engine_config_set_int_attribute(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		int value);
@@ -462,7 +462,7 @@ int mv_engine_config_set_int_attribute(
  * @see mv_engine_config_set_int_attribute()
  * @see mv_engine_config_set_string_attribute()
  */
-int mv_engine_config_set_bool_attribute(
+EXPORT_API int mv_engine_config_set_bool_attribute(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		bool value);
@@ -488,7 +488,7 @@ int mv_engine_config_set_bool_attribute(
  * @see mv_engine_config_set_int_attribute()
  * @see mv_engine_config_set_bool_attribute()
  */
-int mv_engine_config_set_string_attribute(
+EXPORT_API int mv_engine_config_set_string_attribute(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		const char *value);
@@ -515,7 +515,7 @@ int mv_engine_config_set_string_attribute(
  * @see mv_engine_config_get_bool_attribute()
  * @see mv_engine_config_get_string_attribute()
  */
-int mv_engine_config_get_double_attribute(
+EXPORT_API int mv_engine_config_get_double_attribute(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		double *value);
@@ -544,7 +544,7 @@ int mv_engine_config_get_double_attribute(
  * @see mv_barcode_detect_attr_target_e
  * @see mv_barcode_generate_attr_text_e
  */
-int mv_engine_config_get_int_attribute(
+EXPORT_API int mv_engine_config_get_int_attribute(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		int *value);
@@ -571,7 +571,7 @@ int mv_engine_config_get_int_attribute(
  * @see mv_engine_config_get_int_attribute()
  * @see mv_engine_config_get_string_attribute()
  */
-int mv_engine_config_get_bool_attribute(
+EXPORT_API int mv_engine_config_get_bool_attribute(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		bool *value);
@@ -600,7 +600,7 @@ int mv_engine_config_get_bool_attribute(
  * @see mv_engine_config_get_int_attribute()
  * @see mv_engine_config_get_bool_attribute()
  */
-int mv_engine_config_get_string_attribute(
+EXPORT_API int mv_engine_config_get_string_attribute(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		char **value);
@@ -663,7 +663,7 @@ typedef bool (*mv_supported_attribute_cb)(
  * @see mv_engine_config_get_bool_attribute()
  * @see mv_engine_config_get_string_attribute()
  */
-int mv_engine_config_foreach_supported_attribute(
+EXPORT_API int mv_engine_config_foreach_supported_attribute(
 		mv_supported_attribute_cb callback,
 		void *user_data);
 

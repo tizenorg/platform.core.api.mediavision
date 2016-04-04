@@ -27,7 +27,7 @@ namespace Image {
  *
  * @since_tizen 3.0
  */
-class ObjectTracker {
+class EXPORT_API ObjectTracker {
 public:
 	/**
 	 * @brief @ref ObjectTracker destructor

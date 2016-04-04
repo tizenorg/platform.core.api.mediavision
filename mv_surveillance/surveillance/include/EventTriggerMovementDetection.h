@@ -38,7 +38,7 @@ namespace surveillance {
  *
  * @since_tizen 3.0
  */
-class EventResultMovementDetection : public EventResult {
+class EXPORT_API EventResultMovementDetection : public EventResult {
 public:
 	/**
 	 * @brief Gets result value.
@@ -63,7 +63,7 @@ public:
  *
  * @since_tizen 3.0
  */
-class EventTriggerMovementDetection : public EventTrigger {
+class EXPORT_API EventTriggerMovementDetection : public EventTrigger {
 public:
 	/**
 	 * @brief Default constructor.

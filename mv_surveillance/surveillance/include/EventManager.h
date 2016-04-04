@@ -36,7 +36,7 @@ class EventManager;
  *
  * @since_tizen 3.0
  */
-class EventManagerDestroyer {
+class EXPORT_API EventManagerDestroyer {
 public:
 	/**
 	 * @brief Default destructor.
@@ -64,7 +64,7 @@ private:
  * @since_tizen 3.0
  */
 
-class EventManager {
+class EXPORT_API EventManager {
 public:
 	/**
 	 * @brief Gets EventManager instance.

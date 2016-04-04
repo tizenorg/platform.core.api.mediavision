@@ -35,7 +35,7 @@ namespace Image {
  *
  * @since_tizen 3.0
  */
-class ImageTrackingModel {
+class EXPORT_API ImageTrackingModel {
 public:
 	/**
 	 * @brief   @ref ImageTrackingModel default constructor
@@ -120,11 +120,11 @@ public:
 	 */
 	int load(const char *filepath);
 
-	 friend std::ostream& operator << (
+	 EXPORT_API friend std::ostream& operator << (
 			std::ostream& os,
 			const ImageTrackingModel& obj);
 
-	friend std::istream& operator >> (
+	EXPORT_API friend std::istream& operator >> (
 			std::istream& is,
 			ImageTrackingModel& obj);
 

@@ -37,7 +37,7 @@ namespace Face {
  *
  * @since_tizen 3.0
  */
-class FaceEyeCondition {
+class EXPORT_API FaceEyeCondition {
 public:
 	/**
 	 * @brief Recognizes eye condition on the image with face location.

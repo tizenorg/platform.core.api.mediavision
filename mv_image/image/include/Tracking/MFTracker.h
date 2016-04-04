@@ -27,7 +27,7 @@ namespace Image {
  *
  * @since_tizen 3.0
  */
-class MFTracker : public ObjectTracker {
+class EXPORT_API MFTracker : public ObjectTracker {
 public:
 	struct Params {
 		/**

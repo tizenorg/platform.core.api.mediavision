@@ -40,7 +40,7 @@ namespace surveillance {
  *
  * @since_tizen 3.0
  */
-class EventTrigger {
+class EXPORT_API EventTrigger {
 public:
 	/**
 	 * @brief Default constructor.

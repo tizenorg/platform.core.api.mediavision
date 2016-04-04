@@ -37,7 +37,7 @@ namespace Image {
  *
  * @since_tizen 3.0
  */
-class ImageObject {
+class EXPORT_API ImageObject {
 public:
 	/**
 	 * @brief   @ref ImageObject default constructor.
@@ -187,9 +187,9 @@ private:
 
 	friend class ImageRecognizer;
 
-	friend std::ostream& operator << (std::ostream& os, const ImageObject& obj);
+	EXPORT_API friend std::ostream& operator << (std::ostream& os, const ImageObject& obj);
 
-	friend std::istream& operator >> (std::istream& is, ImageObject& obj);
+	EXPORT_API friend std::istream& operator >> (std::istream& is, ImageObject& obj);
 };
 
 } /* Image */

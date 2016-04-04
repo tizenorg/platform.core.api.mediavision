@@ -55,7 +55,7 @@ extern "C" {
  * @see mv_surveillance_event_trigger_s
  * @see mv_surveillance_unsubscribe_event_trigger_open()
  */
-int mv_surveillance_subscribe_event_trigger_open(
+EXPORT_API int mv_surveillance_subscribe_event_trigger_open(
 		mv_surveillance_event_trigger_h event_trigger,
 		int video_stream_id,
 		mv_engine_config_h engine_cfg,
@@ -82,7 +82,7 @@ int mv_surveillance_subscribe_event_trigger_open(
  * @see mv_surveillance_event_trigger_s
  * @see mv_surveillance_subscribe_event_trigger_open()
  */
-int mv_surveillance_unsubscribe_event_trigger_open(
+EXPORT_API int mv_surveillance_unsubscribe_event_trigger_open(
 		mv_surveillance_event_trigger_h event_trigger,
 		int video_stream_id);
 
@@ -102,7 +102,7 @@ int mv_surveillance_unsubscribe_event_trigger_open(
  * @see mv_surveillance_subscribe_event_trigger_open()
  * @see mv_surveillance_unsubscribe_event_trigger_open()
  */
-int mv_surveillance_push_source_open(
+EXPORT_API int mv_surveillance_push_source_open(
 		mv_source_h source,
 		int video_stream_id);
 
@@ -125,7 +125,7 @@ int mv_surveillance_push_source_open(
  * @see mv_surveillance_event_type_cb
  * @see mv_surveillance_foreach_event_result_value_name_open()
  */
-int mv_surveillance_foreach_event_type_open(
+EXPORT_API int mv_surveillance_foreach_event_type_open(
 		mv_surveillance_event_type_cb callback,
 		void *user_data);
 
@@ -154,7 +154,7 @@ int mv_surveillance_foreach_event_type_open(
  * @see mv_surveillance_foreach_event_type_open()
  * @see mv_surveillance_get_result_value_open()
  */
-int mv_surveillance_foreach_event_result_value_name_open(
+EXPORT_API int mv_surveillance_foreach_event_result_value_name_open(
 		const char *event_type,
 		mv_surveillance_event_result_name_cb callback,
 		void *user_data);
@@ -182,7 +182,7 @@ int mv_surveillance_foreach_event_result_value_name_open(
  * @see mv_surveillance_unsubscribe_event_trigger_open()
  * @see mv_surveillance_query_events_open()
  */
-int mv_surveillance_get_result_value_open(
+EXPORT_API int mv_surveillance_get_result_value_open(
 		mv_surveillance_result_h result,
 		const char *value_name,
 		void *value);

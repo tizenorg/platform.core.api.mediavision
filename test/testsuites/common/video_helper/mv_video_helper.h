@@ -82,7 +82,7 @@ typedef void (*mv_video_reader_eos_cb) (
  *
  * @see mv_destroy_video_reader()
  */
-int mv_create_video_reader(
+EXPORT_API int mv_create_video_reader(
         mv_video_reader_h *reader);
 
 /**
@@ -96,7 +96,7 @@ int mv_create_video_reader(
  *
  * @see mv_create_video_reader()
  */
-int mv_destroy_video_reader(
+EXPORT_API int mv_destroy_video_reader(
         mv_video_reader_h reader);
 
 /**
@@ -115,7 +115,7 @@ int mv_destroy_video_reader(
  *
  * @pre Create a video reader handle by calling @ref mv_create_video_reader()
  */
-int mv_video_reader_load(
+EXPORT_API int mv_video_reader_load(
         mv_video_reader_h reader,
         const char *path,
         image_data_s *image_data,
@@ -136,7 +136,7 @@ int mv_video_reader_load(
  *
  * @post Stop reader playback by calling @ref mv_video_reader_stop()
  */
-int mv_video_reader_start(
+EXPORT_API int mv_video_reader_start(
         mv_video_reader_h reader);
 
 /**
@@ -152,7 +152,7 @@ int mv_video_reader_start(
  * @pre Create a video reader handle by calling @ref mv_create_video_reader()
  *      and call @ref mv_video_reader_load()
  */
-int mv_video_reader_stop(
+EXPORT_API int mv_video_reader_stop(
         mv_video_reader_h reader);
 
 /**
@@ -173,7 +173,7 @@ int mv_video_reader_stop(
  * @see mv_video_reader_load()
  *
  */
-int mv_video_reader_set_new_sample_cb(
+EXPORT_API int mv_video_reader_set_new_sample_cb(
     mv_video_reader_h reader,
     mv_video_reader_new_sample_cb callback,
     void *user_data);
@@ -196,7 +196,7 @@ int mv_video_reader_set_new_sample_cb(
  * @see mv_video_reader_load()
  *
  */
-int mv_video_reader_set_eos_cb(
+EXPORT_API int mv_video_reader_set_eos_cb(
     mv_video_reader_h reader,
     mv_video_reader_eos_cb callback,
     void *user_data);
@@ -214,7 +214,7 @@ int mv_video_reader_set_eos_cb(
  *
  * @see mv_destroy_video_writer()
  */
-int mv_create_video_writer(
+EXPORT_API int mv_create_video_writer(
         mv_video_writer_h *writer);
 
 /**
@@ -229,7 +229,7 @@ int mv_create_video_writer(
  *
  * @see mv_create_video_writer()
  */
-int mv_destroy_video_writer(
+EXPORT_API int mv_destroy_video_writer(
         mv_video_writer_h writer);
 
 /**
@@ -248,7 +248,7 @@ int mv_destroy_video_writer(
  *
  * @pre Create a video writer handle by calling @ref mv_create_video_writer()
  */
-int mv_video_writer_init(
+EXPORT_API int mv_video_writer_init(
         mv_video_writer_h writer,
         const char *path,
         image_data_s image_data,
@@ -270,7 +270,7 @@ int mv_video_writer_init(
  * @pre Create a video writer handle by calling @ref mv_create_video_writer()
  *      and initialize video with @ref mv_video_writer_init()
  */
-int mv_video_writer_write_frame(
+EXPORT_API int mv_video_writer_write_frame(
     mv_video_writer_h writer,
     unsigned char *frame);
 

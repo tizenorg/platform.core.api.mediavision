@@ -35,7 +35,7 @@ namespace Image {
  *
  * @since_tizen 3.0
  */
-class FeaturePack {
+class EXPORT_API FeaturePack {
 public:
 	/**
 	 * @brief   @ref FeaturePack default constructor.

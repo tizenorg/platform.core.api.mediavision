@@ -98,7 +98,7 @@ typedef enum {
  *
  * @see mv_barcode_generate_image()
  */
-int mv_barcode_generate_source(
+EXPORT_API int mv_barcode_generate_source(
         mv_engine_config_h engine_cfg,
         const char *message,
         mv_barcode_type_e type,
@@ -155,7 +155,7 @@ int mv_barcode_generate_source(
  *
  * @see mv_barcode_generate_source()
  */
-int mv_barcode_generate_image(
+EXPORT_API int mv_barcode_generate_image(
         mv_engine_config_h engine_cfg,
         const char *message,
         int image_width,

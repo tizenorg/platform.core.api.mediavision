@@ -91,10 +91,10 @@ FOREACH(flag ${${fw_name}_CFLAGS})
     SET(EXTRA_CXXFLAGS "${EXTRA_CXXFLAGS} ${flag}")
 ENDFOREACH(flag)
 
-SET(CMAKE_C_FLAGS "-I./include -I./include/headers ${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} -fPIC -Wall -w")
+SET(CMAKE_C_FLAGS "-I./include -I./include/headers ${CMAKE_C_FLAGS} ${EXTRA_CFLAGS} -fPIC -Wall -w -fvisibility=hidden -flto")
 SET(CMAKE_C_FLAGS_DEBUG "-O0 -g")
 
-SET(CMAKE_CXX_FLAGS "-I./include -I./include/headers ${CMAKE_CXX_FLAGS} ${EXTRA_CXXFLAGS} -fPIC")
+SET(CMAKE_CXX_FLAGS "-I./include -I./include/headers ${CMAKE_CXX_FLAGS} ${EXTRA_CXXFLAGS} -fPIC -fvisibility=hidden -flto")
 SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -g --w")
 
 IF("${ARCH}" STREQUAL "arm")
@@ -103,6 +103,7 @@ ENDIF("${ARCH}" STREQUAL "arm")
 
 ADD_DEFINITIONS("-DPREFIX=\"${CMAKE_INSTALL_PREFIX}\"")
 ADD_DEFINITIONS("-DTIZEN_DEBUG")
+ADD_DEFINITIONS("-DEXPORT_API=__attribute__((visibility(\"default\")))")
 
 SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--as-needed -Wl,--rpath=${LIB_INSTALL_DIR}")
 
@@ -182,4 +183,3 @@ ADD_CUSTOM_COMMAND(
 )
 
 ENDIF(UNIX)
-

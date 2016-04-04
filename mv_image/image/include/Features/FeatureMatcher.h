@@ -24,7 +24,7 @@
 namespace MediaVision {
 namespace Image {
 
-class FeatureMatcher {
+class EXPORT_API FeatureMatcher {
 public:
 	enum MatchError{
 		InvalidFeaturePackFrom,

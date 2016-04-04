@@ -54,7 +54,7 @@ extern "C" {
  *
  * @see mv_barcode_generate_image_open()
  */
-int mv_barcode_generate_source_open(mv_engine_config_h engine_cfg,
+EXPORT_API int mv_barcode_generate_source_open(mv_engine_config_h engine_cfg,
 		const char *message,
 		mv_barcode_type_e type,
 		mv_barcode_qr_mode_e qr_enc_mode,
@@ -90,7 +90,7 @@ int mv_barcode_generate_source_open(mv_engine_config_h engine_cfg,
  *
  * @see mv_barcode_generate_source_open()
  */
-int mv_barcode_generate_image_open(
+EXPORT_API int mv_barcode_generate_image_open(
 		mv_engine_config_h engine_cfg,
 		const char *message,
 		int image_width,

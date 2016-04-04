@@ -22,7 +22,7 @@
 namespace MediaVision {
 namespace Image {
 
-class ORBExtractorFactory : public FeatureExtractorFactory {
+class EXPORT_API ORBExtractorFactory : public FeatureExtractorFactory {
 public:
 	ORBExtractorFactory(
 			float scaleFactor = 1.2f,

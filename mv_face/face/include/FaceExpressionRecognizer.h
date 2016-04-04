@@ -39,7 +39,7 @@ namespace Face {
  *
  * @since_tizen 3.0
  */
-struct FaceRecognizerConfig {
+struct EXPORT_API FaceRecognizerConfig {
     FaceRecognizerConfig();
     std::string mHaarcascadeFilepath;
 };
@@ -51,7 +51,7 @@ struct FaceRecognizerConfig {
  *
  * @since_tizen 3.0
  */
-class FaceExpressionRecognizer {
+class EXPORT_API FaceExpressionRecognizer {
 public:
 	/**
 	 * @brief Recognizes facial expression on the image with known face location.

@@ -31,7 +31,7 @@ namespace Image {
  *
  * @since_tizen 3.0
  */
-class CascadeTracker : public ObjectTracker {
+class EXPORT_API CascadeTracker : public ObjectTracker {
 public:
 	/**
 	 * @brief @ref CascadeTracker default constructor

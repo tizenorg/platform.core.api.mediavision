@@ -38,7 +38,7 @@ namespace Face {
  *
  * @since_tizen 3.0
  */
-struct FaceRecognitionModelConfig {
+struct EXPORT_API FaceRecognitionModelConfig {
 	/**
 	 * @brief Default constructor for the @ref FaceRecognitionModelConfig
 	 *
@@ -84,7 +84,7 @@ struct FaceRecognitionModelConfig {
  *
  * @since_tizen 3.0
  */
-struct FaceRecognitionResults {
+struct EXPORT_API FaceRecognitionResults {
 	/**
 	 * @brief Default constructor for the @ref FaceRecognitionResults
 	 *
@@ -106,7 +106,7 @@ struct FaceRecognitionResults {
  *
  * @since_tizen 3.0
  */
-class FaceRecognitionModel {
+class EXPORT_API FaceRecognitionModel {
 public:
 /**
 	 * @brief    Creates a FaceRecognitionModel class instance.

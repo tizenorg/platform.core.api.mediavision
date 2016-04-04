@@ -66,7 +66,7 @@ typedef struct
  * @see save_image_from_buffer()
  * @see destroy_loaded_buffer()
  */
-int load_image_to_buffer(
+EXPORT_API int load_image_to_buffer(
         const char *file_path,
         unsigned char **data_buffer,
         unsigned long *buffer_size,
@@ -86,7 +86,7 @@ int load_image_to_buffer(
  *
  * @see load_image_to_buffer()
  */
-int save_image_from_buffer(
+EXPORT_API int save_image_from_buffer(
         const char *file_path,
         unsigned char *data_buffer,
         const image_data_s *image_data,
@@ -101,7 +101,7 @@ int save_image_from_buffer(
  *
  * @see load_image_to_buffer()
  */
-int destroy_loaded_buffer(unsigned char *data_buffer);
+EXPORT_API int destroy_loaded_buffer(unsigned char *data_buffer);
 
 /**
  * @brief Draws the rectangle of specified size on the image data buffer.
@@ -121,7 +121,7 @@ int destroy_loaded_buffer(unsigned char *data_buffer);
  *                             be used for rectangle drawing
  * @return @c 0 on success, otherwise a negative error value
  */
-int draw_rectangle_on_buffer(
+EXPORT_API int draw_rectangle_on_buffer(
         int tl_vertex_x,
         int tl_vertex_y,
         int br_vertex_x,
@@ -145,7 +145,7 @@ int draw_rectangle_on_buffer(
  *                                be used for quadrangle drawing
  * @return @c 0 on success, otherwise a negative error value
  */
-int draw_quadrangle_on_buffer(
+EXPORT_API int draw_quadrangle_on_buffer(
         mv_quadrangle_s location,
         int thickness,
         const int rgb_color[3],
@@ -165,7 +165,7 @@ int draw_quadrangle_on_buffer(
  *                            a result of the conversion
  * @return @c 0 on success, otherwise a negative error value
  */
-int convert_buffer_to_RGB888(
+EXPORT_API int convert_buffer_to_RGB888(
         const unsigned char *in_buffer,
         const image_data_s *image_data,
         unsigned char **out_buffer);
@@ -179,7 +179,7 @@ int convert_buffer_to_RGB888(
  * @param [out] components_number    Number of components to be determined
  * @return @c 0 on success, otherwise a negative error value
  */
-int get_number_of_components(
+EXPORT_API int get_number_of_components(
         mv_colorspace_e colorspace,
         int *components_number);
 

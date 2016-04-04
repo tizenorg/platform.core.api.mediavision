@@ -36,7 +36,7 @@ namespace surveillance {
  *
  * @since_tizen 3.0
  */
-class SurveillanceHelper {
+class EXPORT_API SurveillanceHelper {
 public:
 	/**
 	 * @brief Converts mediavision source to cv::Mat in gray scale.

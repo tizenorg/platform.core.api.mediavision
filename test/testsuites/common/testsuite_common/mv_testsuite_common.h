@@ -33,7 +33,7 @@ typedef enum {
  * @param [in] action_name           Name of action which result will be printed
  * @param [in] action_return_value   Return value of action
  */
-void print_fail_result(
+EXPORT_API void print_fail_result(
 		const char *action_name,
 		int action_return_value);
 
@@ -43,7 +43,7 @@ void print_fail_result(
  * @since_tizen 3.0
  * @param [in] action_name           Name of action which result will be printed
  */
-void print_done_result(const char *action_name);
+EXPORT_API void print_done_result(const char *action_name);
 
 /**
  * @brief Prints success result of action.
@@ -51,7 +51,7 @@ void print_done_result(const char *action_name);
  * @since_tizen 3.0
  * @param [in] action_name           Name of action which result will be printed
  */
-void print_success_result(const char *action_name);
+EXPORT_API void print_success_result(const char *action_name);
 
 /**
  * @brief Prints action result.
@@ -61,7 +61,7 @@ void print_success_result(const char *action_name);
  * @param [in] action_return_value   Return value of action
  * @param [in] notification_type_e   Type of notification
  */
-void print_action_result(
+EXPORT_API void print_action_result(
 		const char *action_name,
 		int action_return_value,
 		notification_type_e notification_type_e);
@@ -75,7 +75,7 @@ void print_action_result(
  * @param [out] string    Output string which was got from console
  * @return Length of the output string on success, otherwise a negative error value
  */
-int input_string(const char *prompt, size_t max_len, char **string);
+EXPORT_API int input_string(const char *prompt, size_t max_len, char **string);
 
 /**
  * @brief Gets unsigned integer from console.
@@ -86,7 +86,7 @@ int input_string(const char *prompt, size_t max_len, char **string);
  * @param [out] size       The output unsigned integer which was got from console
  * @return @c 0 on success, otherwise a negative error value
  */
-int input_size(const char *prompt, size_t max_size, size_t *size);
+EXPORT_API int input_size(const char *prompt, size_t max_size, size_t *size);
 
 /**
  * @brief Gets integer from console.
@@ -98,7 +98,7 @@ int input_size(const char *prompt, size_t max_size, size_t *size);
  * @param [out] value       The output integer which was got from console
  * @return @c 0 on success, otherwise a negative error value
  */
-int input_int(const char *prompt, int min_value, int max_value, int *value);
+EXPORT_API int input_int(const char *prompt, int min_value, int max_value, int *value);
 
 /**
  * @brief Gets double from console.
@@ -110,7 +110,7 @@ int input_int(const char *prompt, int min_value, int max_value, int *value);
  * @param [out] value       The output double which was got from console
  * @return @c 0 on success, otherwise a negative error value
  */
-int input_double(const char *prompt, double min_value, double max_value, double *value);
+EXPORT_API int input_double(const char *prompt, double min_value, double max_value, double *value);
 
 /**
  * @brief Shows confirm dialog in console and gets answer (Yes/No).
@@ -120,7 +120,7 @@ int input_double(const char *prompt, double min_value, double max_value, double 
  *                      before input of the answer
  * @return false if answer is "No" and true if answer is "Yes"
  */
-bool show_confirm_dialog(const char *title);
+EXPORT_API bool show_confirm_dialog(const char *title);
 
 /**
  * @brief Shows menu in console and allows to get item from the array of options.
@@ -136,7 +136,7 @@ bool show_confirm_dialog(const char *title);
  * @return The selected item positive number from options array on success,
  *         otherwise a negative error value
  */
-int show_menu(
+EXPORT_API int show_menu(
 		const char *title,
 		const int *options,
 		const char **names,
@@ -150,7 +150,7 @@ int show_menu(
  * @param [in/out] source       The hadler to media source which will be filled
  * @return @c 0 on success, otherwise a negative error value
  */
-int load_mv_source_from_file(
+EXPORT_API int load_mv_source_from_file(
 		const char *path_to_image,
 		mv_source_h source);
 

@@ -24,7 +24,7 @@
 namespace MediaVision {
 namespace Image {
 
-class FeatureExtractorFactory {
+class EXPORT_API FeatureExtractorFactory {
 public:
 	virtual ~FeatureExtractorFactory();
 

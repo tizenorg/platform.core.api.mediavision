@@ -30,7 +30,7 @@ namespace Image {
  *
  * @since_tizen 3.0
  */
-class AsyncTracker : public ObjectTracker {
+class EXPORT_API AsyncTracker : public ObjectTracker {
 public:
 	/**
 	 * @brief @ref AsyncTracker copy constructor.

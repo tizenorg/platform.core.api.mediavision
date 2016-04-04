@@ -41,7 +41,7 @@ extern "C" {
  *
  * @see mv_destroy_source_c()
  */
-int mv_create_source_c(
+EXPORT_API int mv_create_source_c(
 		mv_source_h *source);
 
 /**
@@ -55,7 +55,7 @@ int mv_create_source_c(
  *
  * @see mv_create_source_c()
  */
-int mv_destroy_source_c(
+EXPORT_API int mv_destroy_source_c(
 		mv_source_h source);
 
 /**
@@ -77,7 +77,7 @@ int mv_destroy_source_c(
  * @see mv_create_source_c()
  * @see mv_destroy_source_c()
  */
-int mv_source_fill_by_media_packet_c(
+EXPORT_API int mv_source_fill_by_media_packet_c(
 		mv_source_h source,
 		media_packet_h media_packet);
 
@@ -100,7 +100,7 @@ int mv_source_fill_by_media_packet_c(
  *
  * @see mv_source_clear_c()
  */
-int mv_source_fill_by_buffer_c(
+EXPORT_API int mv_source_fill_by_buffer_c(
 		mv_source_h source,
 		unsigned char *data_buffer,
 		unsigned int buffer_size,
@@ -119,7 +119,7 @@ int mv_source_fill_by_buffer_c(
  *
  * @see mv_source_fill_by_buffer_c()
  */
-int mv_source_clear_c(
+EXPORT_API int mv_source_clear_c(
 		mv_source_h source);
 
 /**
@@ -141,7 +141,7 @@ int mv_source_clear_c(
  * @see mv_source_get_height_c()
  * @see mv_source_get_colorspace_c()
  */
-int mv_source_get_buffer_c(
+EXPORT_API int mv_source_get_buffer_c(
 		mv_source_h source,
 		unsigned char **data_buffer,
 		unsigned int *buffer_size);
@@ -160,7 +160,7 @@ int mv_source_get_buffer_c(
  * @see mv_source_get_colorspace_c()
  * @see mv_source_get_buffer_c()
  */
-int mv_source_get_height_c(
+EXPORT_API int mv_source_get_height_c(
 		mv_source_h source,
 		unsigned int *image_height);
 
@@ -178,7 +178,7 @@ int mv_source_get_height_c(
  * @see mv_source_get_colorspace_c()
  * @see mv_source_get_buffer_c()
  */
-int mv_source_get_width_c(
+EXPORT_API int mv_source_get_width_c(
 		mv_source_h source,
 		unsigned int *image_width);
 
@@ -196,7 +196,7 @@ int mv_source_get_width_c(
  * @see mv_source_get_height_c()
  * @see mv_source_get_buffer_c()
  */
-int mv_source_get_colorspace_c(
+EXPORT_API int mv_source_get_colorspace_c(
 		mv_source_h source,
 		mv_colorspace_e *image_colorspace);
 
@@ -221,7 +221,7 @@ int mv_source_get_colorspace_c(
  * @see mv_engine_config_get_bool_attribute_c()
  * @see mv_engine_config_get_string_attribute_c()
  */
-int mv_create_engine_config_c(
+EXPORT_API int mv_create_engine_config_c(
 		mv_engine_config_h *engine_cfg);
 
 /**
@@ -238,7 +238,7 @@ int mv_create_engine_config_c(
  * @see mv_engine_config_h
  * @see mv_create_engine_config_c()
  */
-int mv_destroy_engine_config_c(
+EXPORT_API int mv_destroy_engine_config_c(
 		mv_engine_config_h engine_cfg);
 
 /**
@@ -260,7 +260,7 @@ int mv_destroy_engine_config_c(
  * @see mv_engine_config_set_bool_attribute_c()
  * @see mv_engine_config_set_string_attribute_c()
  */
-int mv_engine_config_set_double_attribute_c(
+EXPORT_API int mv_engine_config_set_double_attribute_c(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		double value);
@@ -284,7 +284,7 @@ int mv_engine_config_set_double_attribute_c(
  * @see mv_engine_config_set_bool_attribute_c()
  * @see mv_engine_config_set_string_attribute_c()
  */
-int mv_engine_config_set_int_attribute_c(
+EXPORT_API int mv_engine_config_set_int_attribute_c(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		int value);
@@ -308,7 +308,7 @@ int mv_engine_config_set_int_attribute_c(
  * @see mv_engine_config_set_int_attribute_c()
  * @see mv_engine_config_set_string_attribute_c()
  */
-int mv_engine_config_set_bool_attribute_c(
+EXPORT_API int mv_engine_config_set_bool_attribute_c(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		bool attribute);
@@ -332,7 +332,7 @@ int mv_engine_config_set_bool_attribute_c(
  * @see mv_engine_config_set_int_attribute_c()
  * @see mv_engine_config_set_bool_attribute_c()
  */
-int mv_engine_config_set_string_attribute_c(
+EXPORT_API int mv_engine_config_set_string_attribute_c(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		const char *value);
@@ -358,7 +358,7 @@ int mv_engine_config_set_string_attribute_c(
  * @see mv_engine_config_get_bool_attribute_c()
  * @see mv_engine_config_get_string_attribute_c()
  */
-int mv_engine_config_get_double_attribute_c(
+EXPORT_API int mv_engine_config_get_double_attribute_c(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		double *value);
@@ -384,7 +384,7 @@ int mv_engine_config_get_double_attribute_c(
  * @see mv_engine_config_get_bool_attribute_c()
  * @see mv_engine_config_get_string_attribute_c()
  */
-int mv_engine_config_get_int_attribute_c(
+EXPORT_API int mv_engine_config_get_int_attribute_c(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		int *value);
@@ -410,7 +410,7 @@ int mv_engine_config_get_int_attribute_c(
  * @see mv_engine_config_get_int_attribute_c()
  * @see mv_engine_config_get_string_attribute_c()
  */
-int mv_engine_config_get_bool_attribute_c(
+EXPORT_API int mv_engine_config_get_bool_attribute_c(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		bool *value);
@@ -438,7 +438,7 @@ int mv_engine_config_get_bool_attribute_c(
  * @see mv_engine_config_get_int_attribute_c()
  * @see mv_engine_config_get_bool_attribute_c()
  */
-int mv_engine_config_get_string_attribute_c(
+EXPORT_API int mv_engine_config_get_string_attribute_c(
 		mv_engine_config_h engine_cfg,
 		const char *name,
 		char **value);
@@ -481,7 +481,7 @@ int mv_engine_config_get_string_attribute_c(
  * @see mv_engine_config_get_bool_attribute_c()
  * @see mv_engine_config_get_string_attribute_c()
  */
-int mv_engine_config_foreach_supported_attribute_c(
+EXPORT_API int mv_engine_config_foreach_supported_attribute_c(
 		mv_supported_attribute_cb callback,
 		void *user_data);
 

@@ -35,7 +35,7 @@ typedef std::map<std::string, int>::const_iterator DictIntConstIter;
 typedef std::map<std::string, bool>::const_iterator DictBoolConstIter;
 typedef std::map<std::string, std::string>::const_iterator DictStrConstIter;
 
-class EngineConfig {
+class EXPORT_API EngineConfig {
 public:
 	/**
 	 * @brief Engine configuration constructor.

@@ -36,7 +36,7 @@ namespace Face {
  *
  * @since_tizen 3.0
  */
-class FaceDetector {
+class EXPORT_API FaceDetector {
 public:
 	/**
 	 * @brief   Creates a FaceDetector.

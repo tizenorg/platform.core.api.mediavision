@@ -31,7 +31,7 @@ namespace surveillance {
  *
  * @since_tizen 3.0
  */
-class EventResult {
+class EXPORT_API EventResult {
 public:
 	/**
 	 * @brief Default destructor.

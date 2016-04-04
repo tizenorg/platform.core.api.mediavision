@@ -34,7 +34,7 @@ namespace Image {
  *
  * @since_tizen 3.0
  */
-class FeatureExtractor {
+class EXPORT_API FeatureExtractor {
 public:
 	FeatureExtractor();
 

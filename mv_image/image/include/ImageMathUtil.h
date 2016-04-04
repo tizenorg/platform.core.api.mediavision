@@ -41,7 +41,7 @@ const size_t NumberOfQuadrangleCorners = 4u; /* Number of quadrangle corneres */
  * @param [in] point2   The second point
  * @return distance between two points
  */
-float getDistance(
+EXPORT_API float getDistance(
 		const cv::Point2f& point1,
 		const cv::Point2f& point2);
 
@@ -54,7 +54,7 @@ float getDistance(
  * @param [in] point3   The third corner of triangle
  * @return area of triangle
  */
-float getTriangleArea(
+EXPORT_API float getTriangleArea(
 		const cv::Point2f& point1,
 		const cv::Point2f& point2,
 		const cv::Point2f& point3);
@@ -66,7 +66,7 @@ float getTriangleArea(
  * @param [in] points   Four corners of quadrangle
  * @return area of quadrangle
  */
-float getQuadrangleArea(
+EXPORT_API float getQuadrangleArea(
 		const cv::Point2f points[NumberOfQuadrangleCorners]);
 
 /**
@@ -77,7 +77,7 @@ float getQuadrangleArea(
  * @param [in] region  Contour of region
  * @return true if point is inside the region, otherwise return false
  */
-bool checkAccessory(
+EXPORT_API bool checkAccessory(
 		const cv::Point2f& point,
 		const std::vector<cv::Point2f>& region);
 
@@ -90,7 +90,7 @@ bool checkAccessory(
  * @param [in] rectange   Rectangle which will be cut
  * @param [in] maxSize    Maximum values of needed rectangle
  */
-void catRect(cv::Rect& rectange, const cv::Size& maxSize);
+EXPORT_API void catRect(cv::Rect& rectange, const cv::Size& maxSize);
 
 /**
  * @brief   Resizes a region.

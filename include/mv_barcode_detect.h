@@ -108,7 +108,7 @@ typedef void (*mv_barcode_detected_cb)(
  *
  * @see mv_barcode_detected_cb()
  */
-int mv_barcode_detect(
+EXPORT_API int mv_barcode_detect(
         mv_source_h source,
         mv_engine_config_h engine_cfg,
         mv_rectangle_s roi,

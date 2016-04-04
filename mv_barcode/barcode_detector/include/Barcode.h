@@ -28,7 +28,7 @@ namespace Barcode {
  * @class    Barcode
  * @brief    Handle to barcode object.
  */
-class Barcode {
+class EXPORT_API Barcode {
 public:
 	/**
 	 * @brief   Barcode constructor.

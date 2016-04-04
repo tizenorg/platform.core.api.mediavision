@@ -57,7 +57,7 @@ namespace modifiedcv {
 
 using namespace cv;
 
-struct HOGDescriptor {
+struct EXPORT_API HOGDescriptor {
 	enum { L2Hys = 0 };
 	enum { DEFAULT_NLEVELS = 64 };
 

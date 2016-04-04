@@ -39,7 +39,7 @@ namespace surveillance {
  *
  * @since_tizen 3.0
  */
-class EventResultPersonAppearance : public EventResult {
+class EXPORT_API EventResultPersonAppearance : public EventResult {
 public:
 	/**
 	 * @brief Gets result value.
@@ -69,7 +69,7 @@ public:
  *
  * @since_tizen 3.0
  */
-class EventTriggerPersonAppearance : public EventTrigger {
+class EXPORT_API EventTriggerPersonAppearance : public EventTrigger {
 public:
 	/**
 	 * @brief Default constructor.

@@ -46,7 +46,7 @@ namespace Common
  * @brief Helper class that provides set of useful methods
  *        for image management.
  */
-class ImageHelper
+class EXPORT_API ImageHelper
 {
 public:
     /**

@@ -35,7 +35,7 @@ namespace Barcode {
  * @return @c MEDIA_VISION_ERROR_NONE on success,
            otherwise a negative error value
  */
-int convertSourceMV2Zbar(mv_source_h mvSource, zbar::Image& zbarSource);
+EXPORT_API int convertSourceMV2Zbar(mv_source_h mvSource, zbar::Image& zbarSource);
 
 } /* Barcode */
 } /* MediaVision */

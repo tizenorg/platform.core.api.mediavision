@@ -29,7 +29,7 @@ namespace Image {
  *
  * @since_tizen 3.0
  */
-class RecognitionBasedTracker : public ObjectTracker {
+class EXPORT_API RecognitionBasedTracker : public ObjectTracker {
 public:
 	/**
 	 * @brief @ref RecognitionBasedTracker constructor.

@@ -54,7 +54,7 @@ extern "C" {
  *
  * @see mv_barcode_generate_image_lic()
  */
-int mv_barcode_generate_source_lic(
+EXPORT_API int mv_barcode_generate_source_lic(
 		mv_engine_config_h engine_cfg,
 		const char *message,
 		mv_barcode_type_e type,
@@ -88,7 +88,7 @@ int mv_barcode_generate_source_lic(
  *
  * @see mv_barcode_generate_source_lic()
  */
-int mv_barcode_generate_image_lic(
+EXPORT_API int mv_barcode_generate_image_lic(
 		mv_engine_config_h engine_cfg,
 		const char *message,
 		int image_width,

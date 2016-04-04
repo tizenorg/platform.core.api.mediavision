@@ -40,7 +40,7 @@ extern "C" {
  *
  * @post Free memory for mask_buffer.
  */
-int mv_get_mask_buffer(
+EXPORT_API int mv_get_mask_buffer(
 		unsigned int buffer_width,
 		unsigned int buffer_height,
 		mv_point_s *polygon,

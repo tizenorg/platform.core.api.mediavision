@@ -36,7 +36,7 @@ namespace Image {
  *
  * @since_tizen 3.0
  */
-class ImageContourStabilizator {
+class EXPORT_API ImageContourStabilizator {
 public:
 	/**
 	 * @brief Enumeration for stabilization return value

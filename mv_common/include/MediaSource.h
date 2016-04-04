@@ -33,7 +33,7 @@ namespace Common {
  * @details It is class which contains Media Source information. This class
  *          will be use in the Media Vision as simple image.
  */
-class MediaSource {
+class EXPORT_API MediaSource {
 public:
 	/**
 	 * @brief   Creates a MediaSource.

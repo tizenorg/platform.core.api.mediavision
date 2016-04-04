@@ -40,7 +40,7 @@ extern "C" {
  * @retval #MEDIA_VISION_ERROR_NONE Successful
  * @retval #MEDIA_VISION_ERROR_INVALID_PARAMETER Invalid parameter
  */
-int mv_absdiff(
+EXPORT_API int mv_absdiff(
 		uint8_t *__restrict__ src1,
 		uint8_t *__restrict__ src2,
 		int width,

@@ -29,7 +29,7 @@ namespace Barcode {
  *
  * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  */
-enum BarcodeType {
+enum EXPORT_API BarcodeType {
 	BARCODE_QR = 58,
 	BARCODE_UPCA = 34,
 	BARCODE_UPCE = 37,
@@ -46,7 +46,7 @@ enum BarcodeType {
  * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @remarks This is unavailable for 1D barcodes.
  */
-enum BarcodeQRErrorCorrectionLevel {
+enum EXPORT_API BarcodeQRErrorCorrectionLevel {
 	BARCODE_QR_ECC_UNAVAILABLE = 0,
 	BARCODE_QR_ECC_LOW = 1,
 	BARCODE_QR_ECC_MEDIUM = 2,
@@ -60,7 +60,7 @@ enum BarcodeQRErrorCorrectionLevel {
  * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @remarks This is unavailable for 1D barcodes.
  */
-enum BarcodeQREncodingMode {
+enum EXPORT_API BarcodeQREncodingMode {
 	BARCODE_QR_MODE_NUMERIC = 1,
 	BARCODE_QR_MODE_ALPHANUMERIC = 1,
 	BARCODE_QR_MODE_BYTE = 0,
@@ -74,7 +74,7 @@ enum BarcodeQREncodingMode {
  *
  * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  */
-enum BarcodeImageFormat {
+enum EXPORT_API BarcodeImageFormat {
 	BARCODE_IMAGE_JPG,
 	BARCODE_IMAGE_PNG,
 	BARCODE_IMAGE_BMP
@@ -85,7 +85,7 @@ enum BarcodeImageFormat {
  *
  * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  */
-enum BarcodeGenTextOpt {
+enum EXPORT_API BarcodeGenTextOpt {
 	BARCODE_GEN_TEXT_INVISIBLE,
 	BARCODE_GEN_TEXT_VISIBLE
 };
@@ -95,7 +95,7 @@ enum BarcodeGenTextOpt {
  *
  * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  */
-enum BarcodeError {
+enum EXPORT_API BarcodeError {
 	BARCODE_ERROR_NONE = 0,
 	BARCODE_WARNING_INVALID_OPTION = 2,
 	BARCODE_ERROR_TOO_LONG = 5,

@@ -31,7 +31,7 @@ namespace Image {
  *
  * @since_tizen 3.0
  */
-enum KeypointType {
+enum EXPORT_API KeypointType {
 	KT_INVALID = -1,  /**< Undefined keypoint's type */
 	KT_ORB,           /**< Oriented FAST keypoint's type */
 	KT_GFTT,          /**< Keypoint's type of good features to track */
@@ -48,7 +48,7 @@ const std::string KeypointNames[KT_SIZE] = {
  *
  * @since_tizen 3.0
  */
-enum DescriptorType {
+enum EXPORT_API DescriptorType {
 	DT_INVALID = -1,  /**< Undefined descriptor's type */
 	DT_ORB,           /**< Rotated BRIEF descriptor's type */
 	DT_BRIEF,         /**< Descriptor's type of binary robust independent
@@ -66,7 +66,7 @@ const std::string DescriptorNames[DT_SIZE] = {
  *
  * @since_tizen 3.0
  */
-struct FeaturesExtractingParams {
+struct EXPORT_API FeaturesExtractingParams {
 	FeaturesExtractingParams();
 
 	KeypointType mKeypointType; /**< Keypoint's type. */
@@ -88,7 +88,7 @@ struct FeaturesExtractingParams {
  *
  * @since_tizen 3.0
  */
-struct RecognitionParams {
+struct EXPORT_API RecognitionParams {
 	RecognitionParams(
 			int minMatchesNumber,
 			double requiredMatchesPart,
@@ -114,7 +114,7 @@ struct RecognitionParams {
  *
  * @since_tizen 3.0
  */
-struct StabilizationParams {
+struct EXPORT_API StabilizationParams {
 	StabilizationParams(
 			bool isEnabled,
 			int historyAmount,
@@ -155,7 +155,7 @@ struct StabilizationParams {
  *
  * @since_tizen 3.0
  */
-struct TrackingParams {
+struct EXPORT_API TrackingParams {
 	TrackingParams(
 			FeaturesExtractingParams framesFeaturesExtractingParams,
 			RecognitionParams recognitionParams,

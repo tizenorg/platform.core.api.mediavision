@@ -29,7 +29,7 @@ namespace Image {
  *
  * @since_tizen 3.0
  */
-class FeatureSubstitutionTracker : public ObjectTracker {
+class EXPORT_API FeatureSubstitutionTracker : public ObjectTracker {
 public:
 	/**
 	 * @brief @ref FeatureSubstitutionTracker constructor.

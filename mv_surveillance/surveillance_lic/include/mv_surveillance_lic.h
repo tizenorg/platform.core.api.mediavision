@@ -52,7 +52,7 @@ extern "C" {
  * @see mv_surveillance_event_trigger_s
  * @see mv_surveillance_unsubscribe_event_trigger_lic()
  */
-int mv_surveillance_subscribe_event_trigger_lic(
+EXPORT_API int mv_surveillance_subscribe_event_trigger_lic(
         mv_surveillance_event_trigger_h event_trigger,
         mv_engine_config_h engine_cfg,
         mv_surveillance_event_occurred_cb callback,
@@ -76,7 +76,7 @@ int mv_surveillance_subscribe_event_trigger_lic(
  * @see mv_surveillance_event_trigger_s
  * @see mv_surveillance_subscribe_event_trigger_lic()
  */
-int mv_surveillance_unsubscribe_event_trigger_lic(
+EXPORT_API int mv_surveillance_unsubscribe_event_trigger_lic(
         mv_surveillance_event_trigger_h event_trigger);
 
 /**
@@ -95,7 +95,7 @@ int mv_surveillance_unsubscribe_event_trigger_lic(
  * @see mv_surveillance_subscribe_event_trigger_lic()
  * @see mv_surveillance_unsubscribe_event_trigger_lic()
  */
-int mv_surveillance_push_source_lic(
+EXPORT_API int mv_surveillance_push_source_lic(
         mv_source_h source,
         int video_stream_id);
 
@@ -118,7 +118,7 @@ int mv_surveillance_push_source_lic(
  * @see mv_surveillance_event_type_cb
  * @see mv_surveillance_foreach_event_result_value_name_lic()
  */
-int mv_surveillance_foreach_event_type_lic(
+EXPORT_API int mv_surveillance_foreach_event_type_lic(
         mv_surveillance_event_type_cb callback,
         void *user_data);
 
@@ -147,7 +147,7 @@ int mv_surveillance_foreach_event_type_lic(
  * @see mv_surveillance_foreach_event_type_lic()
  * @see mv_surveillance_get_result_value_lic()
  */
-int mv_surveillance_foreach_event_result_value_name_lic(
+EXPORT_API int mv_surveillance_foreach_event_result_value_name_lic(
         const char *event_type,
         mv_surveillance_event_result_value_name_cb callback,
         void *user_data);
@@ -175,7 +175,7 @@ int mv_surveillance_foreach_event_result_value_name_lic(
  * @see mv_surveillance_unsubscribe_event_trigger_lic()
  * @see mv_surveillance_query_events_lic()
  */
-int mv_surveillance_get_result_value_lic(
+EXPORT_API int mv_surveillance_get_result_value_lic(
         mv_surveillance_result_h result,
         const char *value_name,
         void *value);

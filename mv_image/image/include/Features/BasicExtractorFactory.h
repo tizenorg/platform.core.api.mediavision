@@ -22,7 +22,7 @@
 namespace MediaVision {
 namespace Image {
 
-class BasicExtractorFactory : public FeatureExtractorFactory {
+class EXPORT_API BasicExtractorFactory : public FeatureExtractorFactory {
 public:
 	BasicExtractorFactory(KeypointType keypointsType, DescriptorType descType);
 

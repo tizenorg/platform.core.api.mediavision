@@ -34,7 +34,7 @@ namespace Barcode {
  *
  * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  */
-class BarcodeGenerator {
+class EXPORT_API BarcodeGenerator {
 public:
 	/**
 	 * @brief This method generates Barcodes image according to options.

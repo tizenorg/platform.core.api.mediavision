@@ -59,7 +59,7 @@ by authors to outperform MIL). During the implementation period the code at
 <http://www.aonsquared.co.uk/node/5>, the courtesy of the author Arthur Amarra, was used for the
 reference purpose.
  */
-class TrackerMedianFlow : public virtual Algorithm {
+class EXPORT_API TrackerMedianFlow : public virtual Algorithm {
 public:
 	struct Params {
 		/**

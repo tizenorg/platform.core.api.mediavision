@@ -858,7 +858,7 @@ typedef bool (*mv_surveillance_event_result_name_cb)(
  * @see mv_surveillance_event_trigger_destroy()
  * @see mv_surveillance_foreach_supported_event_type()
  */
-int mv_surveillance_event_trigger_create(
+EXPORT_API int mv_surveillance_event_trigger_create(
         const char *event_type,
         mv_surveillance_event_trigger_h *trigger);
 
@@ -875,7 +875,7 @@ int mv_surveillance_event_trigger_create(
  *
  * @see mv_surveillance_event_trigger_create
  */
-int mv_surveillance_event_trigger_destroy(
+EXPORT_API int mv_surveillance_event_trigger_destroy(
         mv_surveillance_event_trigger_h trigger);
 
 /**
@@ -894,7 +894,7 @@ int mv_surveillance_event_trigger_destroy(
  * @pre Event trigger has to be created by
  *      @ref mv_surveillance_event_trigger_create() function
  */
-int mv_surveillance_get_event_trigger_type(
+EXPORT_API int mv_surveillance_get_event_trigger_type(
         mv_surveillance_event_trigger_h trigger,
         char **event_type);
 
@@ -924,7 +924,7 @@ int mv_surveillance_get_event_trigger_type(
  * @see mv_surveillance_event_trigger_h
  * @see mv_surveillance_get_event_trigger_roi()
  */
-int mv_surveillance_set_event_trigger_roi(
+EXPORT_API int mv_surveillance_set_event_trigger_roi(
         mv_surveillance_event_trigger_h trigger,
         int number_of_points,
         mv_point_s *roi);
@@ -952,7 +952,7 @@ int mv_surveillance_set_event_trigger_roi(
  * @see mv_surveillance_event_trigger_h
  * @see mv_surveillance_set_event_trigger_roi()
  */
-int mv_surveillance_get_event_trigger_roi(
+EXPORT_API int mv_surveillance_get_event_trigger_roi(
         mv_surveillance_event_trigger_h trigger,
         int *number_of_points,
         mv_point_s **roi);
@@ -991,7 +991,7 @@ int mv_surveillance_get_event_trigger_roi(
  * @see mv_surveillance_unsubscribe_event_trigger()
  * @see mv_surveillance_push_source()
  */
-int mv_surveillance_subscribe_event_trigger(
+EXPORT_API int mv_surveillance_subscribe_event_trigger(
         mv_surveillance_event_trigger_h trigger,
         int video_stream_id,
         mv_engine_config_h engine_cfg,
@@ -1019,7 +1019,7 @@ int mv_surveillance_subscribe_event_trigger(
  * @see mv_surveillance_event_trigger_h
  * @see mv_surveillance_subscribe_event_trigger()
  */
-int mv_surveillance_unsubscribe_event_trigger(
+EXPORT_API int mv_surveillance_unsubscribe_event_trigger(
         mv_surveillance_event_trigger_h trigger,
         int video_stream_id);
 
@@ -1051,7 +1051,7 @@ int mv_surveillance_unsubscribe_event_trigger(
  * @see mv_surveillance_subscribe_event_trigger()
  * @see mv_surveillance_unsubscribe_event_trigger()
  */
-int mv_surveillance_push_source(
+EXPORT_API int mv_surveillance_push_source(
         mv_source_h source,
         int video_stream_id);
 
@@ -1074,7 +1074,7 @@ int mv_surveillance_push_source(
  * @see mv_surveillance_event_type_cb
  * @see mv_surveillance_foreach_event_result_name()
  */
-int mv_surveillance_foreach_supported_event_type(
+EXPORT_API int mv_surveillance_foreach_supported_event_type(
         mv_surveillance_event_type_cb callback,
         void *user_data);
 
@@ -1103,7 +1103,7 @@ int mv_surveillance_foreach_supported_event_type(
  * @see mv_surveillance_foreach_supported_event_type()
  * @see mv_surveillance_get_result_value()
  */
-int mv_surveillance_foreach_event_result_name(
+EXPORT_API int mv_surveillance_foreach_event_result_name(
         const char *event_type,
         mv_surveillance_event_result_name_cb callback,
         void *user_data);
@@ -1138,7 +1138,7 @@ int mv_surveillance_foreach_event_result_name(
  * @see mv_surveillance_foreach_supported_event_type()
  * @see mv_surveillance_foreach_event_result_name()
  */
-int mv_surveillance_get_result_value(
+EXPORT_API int mv_surveillance_get_result_value(
         mv_surveillance_result_h result,
         const char *name,
         void *value);

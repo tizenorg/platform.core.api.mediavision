@@ -33,7 +33,7 @@ namespace Face {
  *
  * @since_tizen 3.0
  */
-struct FaceTrackingResults {
+struct EXPORT_API FaceTrackingResults {
 	/**
 	 * @brief Default constructor for the @ref FaceTrackingResults
 	 *
@@ -56,7 +56,7 @@ struct FaceTrackingResults {
  *
  * @since_tizen 3.0
  */
-class FaceTrackingModel {
+class EXPORT_API FaceTrackingModel {
 public:
 	/**
 	 * @brief    Creates a FaceTrackingModel class instance.

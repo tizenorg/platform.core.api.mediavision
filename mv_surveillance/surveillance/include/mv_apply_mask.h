@@ -40,7 +40,7 @@ extern "C" {
  * @retval #MEDIA_VISION_ERROR_NONE Successful
  * @retval #MEDIA_VISION_ERROR_INVALID_PARAMETER Invalid parameter
  */
-int mv_apply_mask(
+EXPORT_API int mv_apply_mask(
 		uint8_t *src_buffer,
 		uint8_t *__restrict mask,
 		int width,

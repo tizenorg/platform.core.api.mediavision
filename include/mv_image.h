@@ -305,7 +305,7 @@ typedef void (*mv_image_recognized_cb)(
  * @see mv_image_object_destroy()
  * @see mv_engine_config_h
  */
-int mv_image_recognize(
+EXPORT_API int mv_image_recognize(
         mv_source_h source,
         const mv_image_object_h *image_objects,
         int number_of_objects,
@@ -411,7 +411,7 @@ typedef void (*mv_image_tracked_cb)(
  * @see mv_image_tracking_model_set_target()
  * @see mv_image_tracking_model_destroy()
  */
-int mv_image_track(
+EXPORT_API int mv_image_track(
         mv_source_h source,
         mv_image_tracking_model_h image_tracking_model,
         mv_engine_config_h engine_cfg,
@@ -438,7 +438,7 @@ int mv_image_track(
  * @see mv_image_object_destroy()
  * @see mv_image_object_h
  */
-int mv_image_object_create(
+EXPORT_API int mv_image_object_create(
         mv_image_object_h *image_object);
 
 /**
@@ -456,7 +456,7 @@ int mv_image_object_create(
  * @see mv_image_object_create()
  * @see mv_image_object_h
  */
-int mv_image_object_destroy(
+EXPORT_API int mv_image_object_destroy(
         mv_image_object_h image_object);
 
 /**
@@ -497,7 +497,7 @@ int mv_image_object_destroy(
  * @see mv_image_object_destroy()
  * @see mv_engine_config_h
  */
-int mv_image_object_fill(
+EXPORT_API int mv_image_object_fill(
         mv_image_object_h image_object,
         mv_engine_config_h engine_cfg,
         mv_source_h source,
@@ -533,7 +533,7 @@ int mv_image_object_fill(
  * @see mv_image_object_destroy()
  * @see mv_engine_config_h
  */
-int mv_image_object_get_recognition_rate(
+EXPORT_API int mv_image_object_get_recognition_rate(
         mv_image_object_h image_object,
         double *recognition_rate);
 
@@ -559,7 +559,7 @@ int mv_image_object_get_recognition_rate(
  * @see mv_image_object_create()
  * @see mv_image_object_destroy()
  */
-int mv_image_object_set_label(
+EXPORT_API int mv_image_object_set_label(
         mv_image_object_h image_object,
         int label);
 
@@ -587,7 +587,7 @@ int mv_image_object_set_label(
  * @see mv_image_object_create()
  * @see mv_image_object_destroy()
  */
-int mv_image_object_get_label(
+EXPORT_API int mv_image_object_get_label(
         mv_image_object_h image_object,
         int *label);
 
@@ -609,7 +609,7 @@ int mv_image_object_get_label(
  * @see mv_image_object_create()
  * @see mv_image_object_destroy()
  */
-int mv_image_object_clone(
+EXPORT_API int mv_image_object_clone(
         mv_image_object_h src,
         mv_image_object_h *dst);
 
@@ -636,7 +636,7 @@ int mv_image_object_clone(
  * @see mv_image_object_load()
  * @see mv_image_object_destroy()
  */
-int mv_image_object_save(
+EXPORT_API int mv_image_object_save(
         const char *file_name, mv_image_object_h image_object);
 
 /**
@@ -664,7 +664,7 @@ int mv_image_object_save(
  * @see mv_image_object_save()
  * @see mv_image_object_destroy()
  */
-int mv_image_object_load(
+EXPORT_API int mv_image_object_load(
         const char *file_name, mv_image_object_h *image_object);
 
 /**********************************/
@@ -685,7 +685,7 @@ int mv_image_object_load(
  *
  * @see mv_image_tracking_model_destroy()
  */
-int mv_image_tracking_model_create(
+EXPORT_API int mv_image_tracking_model_create(
         mv_image_tracking_model_h *image_tracking_model);
 
 /**
@@ -719,7 +719,7 @@ int mv_image_tracking_model_create(
  * @see mv_image_track()
  * @see mv_image_tracking_model_destroy()
  */
-int mv_image_tracking_model_set_target(
+EXPORT_API int mv_image_tracking_model_set_target(
         mv_image_object_h image_object,
         mv_image_tracking_model_h image_tracking_model);
 
@@ -738,7 +738,7 @@ int mv_image_tracking_model_set_target(
  *
  * @see mv_image_tracking_model_create()
  */
-int mv_image_tracking_model_destroy(
+EXPORT_API int mv_image_tracking_model_destroy(
         mv_image_tracking_model_h image_tracking_model);
 
 /**
@@ -770,7 +770,7 @@ int mv_image_tracking_model_destroy(
  * @see mv_image_track()
  * @see mv_image_tracking_model_destroy()
  */
-int mv_image_tracking_model_refresh(
+EXPORT_API int mv_image_tracking_model_refresh(
         mv_image_tracking_model_h image_tracking_model,
         mv_engine_config_h engine_cfg);
 
@@ -793,7 +793,7 @@ int mv_image_tracking_model_refresh(
  * @see mv_image_tracking_model_create()
  * @see mv_image_tracking_model_destroy()
  */
-int mv_image_tracking_model_clone(
+EXPORT_API int mv_image_tracking_model_clone(
         mv_image_tracking_model_h src,
         mv_image_tracking_model_h *dst);
 
@@ -822,7 +822,7 @@ int mv_image_tracking_model_clone(
  * @see mv_image_tracking_model_load()
  * @see mv_image_tracking_model_destroy()
  */
-int mv_image_tracking_model_save(
+EXPORT_API int mv_image_tracking_model_save(
         const char *file_name, mv_image_tracking_model_h image_tracking_model);
 
 /**
@@ -850,7 +850,7 @@ int mv_image_tracking_model_save(
  * @see mv_image_tracking_model_save()
  * @see mv_image_tracking_model_destroy()
  */
-int mv_image_tracking_model_load(
+EXPORT_API int mv_image_tracking_model_load(
         const char *file_name, mv_image_tracking_model_h *image_tracking_model);
 
 /**
