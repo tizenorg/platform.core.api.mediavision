@@ -19,7 +19,7 @@
 
 #include <dlog.h>
 
-//#define ROOTSTRAP_OUT // enables logs to console
+/* #define ROOTSTRAP_OUT // enables logs to console */
 
 #define TEXT_RED     "\x1b[31m"
 #define TEXT_GREEN   "\x1b[32m"
@@ -32,40 +32,36 @@
 #ifdef ROOTSTRAP_OUT
 
 #define LOGD(...)                                 \
-do                                                \
-{                                                 \
-    printf("<%s:%d>", __FUNCTION__, __LINE__);    \
-    printf(TEXT_CYAN);                            \
-    printf(__VA_ARGS__);                          \
-    printf(TEXT_RESET "\n");                      \
-} while(0)
+do {                                              \
+	printf("<%s:%d>", __FUNCTION__, __LINE__);    \
+	printf(TEXT_CYAN);                            \
+	printf(__VA_ARGS__);                          \
+	printf(TEXT_RESET "\n");                      \
+} while (0)
 
 #define LOGI(...)                                 \
-do                                                \
-{                                                 \
-    printf("<%s:%d>", __FUNCTION__, __LINE__);    \
-    printf(TEXT_GREEN);                           \
-    printf(__VA_ARGS__);                          \
-    printf(TEXT_RESET "\n");                      \
-} while(0)
+do  {                                             \
+	printf("<%s:%d>", __FUNCTION__, __LINE__);    \
+	printf(TEXT_GREEN);                           \
+	printf(__VA_ARGS__);                          \
+	printf(TEXT_RESET "\n");                      \
+} while (0)
 
 #define LOGW(...)                                 \
-do                                                \
-{                                                 \
-    printf("<%s:%d>", __FUNCTION__, __LINE__);    \
-    printf(TEXT_YELLOW);                          \
-    printf(__VA_ARGS__);                          \
-    printf(TEXT_RESET "\n");                      \
-} while(0)
+do {                                              \
+	printf("<%s:%d>", __FUNCTION__, __LINE__);    \
+	printf(TEXT_YELLOW);                          \
+	printf(__VA_ARGS__);                          \
+	printf(TEXT_RESET "\n");                      \
+} while (0)
 
 #define LOGE(...)                                 \
-do                                                \
-{                                                 \
-    printf("<%s:%d>", __FUNCTION__, __LINE__);    \
-    printf(TEXT_RED);                             \
-    printf(__VA_ARGS__);                          \
-    printf(TEXT_RESET "\n");                      \
-} while(0)
+do {                                              \
+	printf("<%s:%d>", __FUNCTION__, __LINE__);    \
+	printf(TEXT_RED);                             \
+	printf(__VA_ARGS__);                          \
+	printf(TEXT_RESET "\n");                      \
+} while (0)
 
 #endif
 

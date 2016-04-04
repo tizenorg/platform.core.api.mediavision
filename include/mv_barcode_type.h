@@ -37,17 +37,16 @@ extern "C" {
  *
  * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  */
-typedef enum
-{
-    MV_BARCODE_QR,          /**< 2D barcode - Quick Response code */
-    MV_BARCODE_UPC_A,       /**< 1D barcode - Universal Product Code with 12-digit */
-    MV_BARCODE_UPC_E,       /**< 1D barcode - Universal Product Code with 6-digit */
-    MV_BARCODE_EAN_8,       /**< 1D barcode - International Article Number with 8-digit */
-    MV_BARCODE_EAN_13,      /**< 1D barcode - International Article Number with 13-digit */
-    MV_BARCODE_CODE128,     /**< 1D barcode - Code 128 */
-    MV_BARCODE_CODE39,      /**< 1D barcode - Code 39 */
-    MV_BARCODE_I2_5,        /**< 1D barcode - Interleaved Two of Five */
-    MV_BARCODE_UNDEFINED    /**< Undefined */
+typedef enum {
+	MV_BARCODE_QR,          /**< 2D barcode - Quick Response code */
+	MV_BARCODE_UPC_A,       /**< 1D barcode - Universal Product Code with 12-digit */
+	MV_BARCODE_UPC_E,       /**< 1D barcode - Universal Product Code with 6-digit */
+	MV_BARCODE_EAN_8,       /**< 1D barcode - International Article Number with 8-digit */
+	MV_BARCODE_EAN_13,      /**< 1D barcode - International Article Number with 13-digit */
+	MV_BARCODE_CODE128,     /**< 1D barcode - Code 128 */
+	MV_BARCODE_CODE39,      /**< 1D barcode - Code 39 */
+	MV_BARCODE_I2_5,        /**< 1D barcode - Interleaved Two of Five */
+	MV_BARCODE_UNDEFINED    /**< Undefined */
 } mv_barcode_type_e;
 
 /**
@@ -56,13 +55,12 @@ typedef enum
  * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @remarks This is unavailable for 1D barcodes
  */
-typedef enum
-{
-    MV_BARCODE_QR_ECC_LOW,           /**< Recovery up to  7% losses */
-    MV_BARCODE_QR_ECC_MEDIUM,        /**< Recovery up to 15% losses */
-    MV_BARCODE_QR_ECC_QUARTILE,      /**< Recovery up to 25% losses */
-    MV_BARCODE_QR_ECC_HIGH,          /**< Recovery up to 30% losses */
-    MV_BARCODE_QR_ECC_UNAVAILABLE    /**< Unavailable  */
+typedef enum {
+	MV_BARCODE_QR_ECC_LOW,           /**< Recovery up to  7% losses */
+	MV_BARCODE_QR_ECC_MEDIUM,        /**< Recovery up to 15% losses */
+	MV_BARCODE_QR_ECC_QUARTILE,      /**< Recovery up to 25% losses */
+	MV_BARCODE_QR_ECC_HIGH,          /**< Recovery up to 30% losses */
+	MV_BARCODE_QR_ECC_UNAVAILABLE    /**< Unavailable  */
 } mv_barcode_qr_ecc_e;
 
 /**
@@ -71,13 +69,12 @@ typedef enum
  * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  * @remarks This is unavailable for 1D barcodes
  */
-typedef enum
-{
-    MV_BARCODE_QR_MODE_NUMERIC,         /**< Numeric digits */
-    MV_BARCODE_QR_MODE_ALPHANUMERIC,    /**< Alphanumeric characters */
-    MV_BARCODE_QR_MODE_BYTE,            /**< Raw 8-bit bytes */
-    MV_BARCODE_QR_MODE_UTF8,            /**< UTF-8 character encoding */
-    MV_BARCODE_QR_MODE_UNAVAILABLE      /**< Unavailable */
+typedef enum {
+	MV_BARCODE_QR_MODE_NUMERIC,         /**< Numeric digits */
+	MV_BARCODE_QR_MODE_ALPHANUMERIC,    /**< Alphanumeric characters */
+	MV_BARCODE_QR_MODE_BYTE,            /**< Raw 8-bit bytes */
+	MV_BARCODE_QR_MODE_UTF8,            /**< UTF-8 character encoding */
+	MV_BARCODE_QR_MODE_UNAVAILABLE      /**< Unavailable */
 } mv_barcode_qr_mode_e;
 
 /**
@@ -85,13 +82,12 @@ typedef enum
  *
  * @since_tizen @if MOBILE 2.4 @else 3.0 @endif
  */
-typedef enum
-{
-    MV_BARCODE_IMAGE_FORMAT_UNAVAILABLE = -1, /** Unavailable image format */
-    MV_BARCODE_IMAGE_FORMAT_BMP,    /**< BMP image format */
-    MV_BARCODE_IMAGE_FORMAT_JPG,    /**< JPEG image format */
-    MV_BARCODE_IMAGE_FORMAT_PNG,    /**< PNG image format */
-    MV_BARCODE_IMAGE_FORMAT_NUM,    /**< The number of supported image format */
+typedef enum {
+	MV_BARCODE_IMAGE_FORMAT_UNAVAILABLE = -1, /** Unavailable image format */
+	MV_BARCODE_IMAGE_FORMAT_BMP,    /**< BMP image format */
+	MV_BARCODE_IMAGE_FORMAT_JPG,    /**< JPEG image format */
+	MV_BARCODE_IMAGE_FORMAT_PNG,    /**< PNG image format */
+	MV_BARCODE_IMAGE_FORMAT_NUM,    /**< The number of supported image format */
 } mv_barcode_image_format_e;
 
 /**

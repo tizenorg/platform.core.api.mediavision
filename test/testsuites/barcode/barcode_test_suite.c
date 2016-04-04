@@ -120,7 +120,7 @@ int convert_rgb_to(unsigned char *src_buffer, unsigned char **dst_buffer,
 
 	int picture_size = avpicture_get_size(pixel_format,
 			image_data.image_width, image_data.image_height);
-	if(picture_size < 0) {
+	if (picture_size < 0) {
 		avpicture_free(&dst_picture);
 		MEDIA_VISION_FUNCTION_LEAVE();
 		return MEDIA_VISION_ERROR_OUT_OF_MEMORY;

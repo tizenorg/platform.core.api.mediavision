@@ -84,7 +84,7 @@ static void appsink_eos(GstAppSink *appsink, gpointer user_data);
 static GstFlowReturn appsink_newsample(GstAppSink *appsink, gpointer user_data);
 static void cb_newpad(GstElement *decodebin, GstPad *new_pad, gpointer user_data);
 
-static GstPadProbeReturn pad_probe_data_cb (GstPad *pad, GstPadProbeInfo *info, gpointer user_data);
+static GstPadProbeReturn pad_probe_data_cb(GstPad *pad, GstPadProbeInfo *info, gpointer user_data);
 
 /* video reader */
 int mv_create_video_reader(
@@ -892,14 +892,14 @@ static void cb_newpad(
 	g_object_unref(video_pad);
 }
 
-static GstPadProbeReturn pad_probe_data_cb (
+static GstPadProbeReturn pad_probe_data_cb(
 	GstPad *pad,
 	GstPadProbeInfo *info,
 	gpointer user_data)
 {
-	if (user_data == NULL) {
+	if (user_data == NULL)
 		return GST_PAD_PROBE_PASS;
-	}
+
 	mv_video_reader_s *reader = (mv_video_reader_s *) user_data;
 
 	if (reader->caps == NULL) {
