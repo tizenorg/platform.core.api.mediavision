@@ -32,6 +32,7 @@ typedef struct {
 	mv_barcode_type_e type;
 	mv_barcode_qr_ecc_e ecc;
 	mv_barcode_qr_mode_e mode;
+	int is_hrt;
 	int version;
 	size_t width;
 	size_t height;
@@ -41,6 +42,8 @@ typedef struct {
 	char *file_name;
 	char *out_file_name;
 	unsigned char *out_buffer_ptr;
+	char *front_color;
+	char *back_color;
 } barcode_model_s;
 
 typedef enum {
@@ -400,13 +403,49 @@ int generate_barcode_to_image(barcode_model_s model)
 	if (model.message   == NULL ||
 		model.file_name == NULL) {
 		MEDIA_VISION_FUNCTION_LEAVE();
+
 		return MEDIA_VISION_ERROR_INVALID_PARAMETER;
 	}
 
 	LOGI("Call the mv_barcode_generate_image() function");
 
-	const int err = mv_barcode_generate_image(
-				NULL,
+	mv_engine_config_h mv_engine_config;
+	int err = mv_create_engine_config(&mv_engine_config);
+
+	if (MEDIA_VISION_ERROR_NONE != err) {
+		printf("ERROR: Errors were occurred during creating the media engine "
+				"config: %i\n", err);
+		MEDIA_VISION_FUNCTION_LEAVE();
+
+		return err;
+	}
+
+	err = mv_engine_config_set_int_attribute(mv_engine_config,
+											MV_BARCODE_GENERATE_ATTR_TEXT,
+											model.is_hrt);
+	if (MEDIA_VISION_ERROR_NONE != err) {
+		printf("ERROR: Errors were occured during set integer attribute to "
+				"media engine config: %i\n", err);
+	}
+
+	err = mv_engine_config_set_string_attribute(mv_engine_config,
+											MV_BARCODE_GENERATE_ATTR_COLOR_FRONT,
+											model.front_color);
+	if (MEDIA_VISION_ERROR_NONE != err) {
+		printf("ERROR: Errors were occured during set string attribute to "
+				"media engine config: %i\n", err);
+	}
+
+	err = mv_engine_config_set_string_attribute(mv_engine_config,
+											MV_BARCODE_GENERATE_ATTR_COLOR_BACK,
+											model.back_color);
+	if (MEDIA_VISION_ERROR_NONE != err) {
+		printf("ERROR: Errors were occured during set string attribute to "
+				"media engine config: %i\n", err);
+	}
+
+	err = mv_barcode_generate_image(
+				mv_engine_config,
 				model.message,
 				model.width,
 				model.height,
@@ -418,6 +457,12 @@ int generate_barcode_to_image(barcode_model_s model)
 				model.out_image_format);
 
 	MEDIA_VISION_FUNCTION_LEAVE();
+
+	int err2 = mv_destroy_engine_config(mv_engine_config);
+	if (MEDIA_VISION_ERROR_NONE != err2) {
+		printf("ERROR: Errors were occurred during destroying the media engine "
+					"config: %i\n", err2);
+	}
 
 	return err;
 }
@@ -441,9 +486,9 @@ int generate_barcode_to_source(barcode_model_s model)
 		printf("ERROR: Error occurred when trying to create Media Vision "
 				"source. Error code: %i\n", err);
 
-			MEDIA_VISION_FUNCTION_LEAVE();
+		MEDIA_VISION_FUNCTION_LEAVE();
 
-			return err;
+		return err;
 	}
 
 	LOGI("mv_source_h creation finished");
@@ -455,6 +500,22 @@ int generate_barcode_to_source(barcode_model_s model)
 	if (MEDIA_VISION_ERROR_NONE != err) {
 		printf("ERROR: Errors were occurred during creating the media engine "
 				"config: %i\n", err);
+	}
+
+	err = mv_engine_config_set_string_attribute(mv_engine_config,
+											MV_BARCODE_GENERATE_ATTR_COLOR_FRONT,
+											model.front_color);
+	if (MEDIA_VISION_ERROR_NONE != err) {
+		printf("ERROR: Errors were occured during set string attribute to "
+				"media engine config: %i\n", err);
+	}
+
+	err = mv_engine_config_set_string_attribute(mv_engine_config,
+											MV_BARCODE_GENERATE_ATTR_COLOR_BACK,
+											model.back_color);
+	if (MEDIA_VISION_ERROR_NONE != err) {
+		printf("ERROR: Errors were occured during set string attribute to "
+				"media engine config: %i\n", err);
 	}
 
 	err = mv_barcode_generate_source(
@@ -912,6 +973,35 @@ mv_barcode_qr_ecc_e select_ecc(void)
 	return selected_ecc;
 }
 
+int select_attribute_text(void)
+{
+	MEDIA_VISION_FUNCTION_ENTER();
+
+	int sel_opt = 0;
+	int selected_attr = 0;
+	const int options[2] = { 1, 2 };
+	const char *names[2] = { "Invisible", "Visible" };
+
+	while (sel_opt == 0) {
+		sel_opt = show_menu("Select attribute text", options, names, 2);
+		switch (sel_opt) {
+		case 1:
+			selected_attr = 0;
+			break;
+		case 2:
+			selected_attr = 1;
+			break;
+		default:
+			sel_opt = 0;
+			break;
+		}
+	}
+
+	MEDIA_VISION_FUNCTION_LEAVE();
+
+	return selected_attr;
+}
+
 int select_version(void)
 {
 	MEDIA_VISION_FUNCTION_ENTER();
@@ -999,10 +1089,11 @@ int perform_detect()
 		MV_BARCODE_UNDEFINED,
 		MV_BARCODE_QR_ECC_UNAVAILABLE,
 		MV_BARCODE_QR_MODE_UNAVAILABLE,
+		0,
 		0, 0, 0,
 		MV_BARCODE_IMAGE_FORMAT_PNG,
 		MEDIA_VISION_COLORSPACE_INVALID,
-		NULL, NULL, NULL, NULL };
+		NULL, NULL, NULL, NULL, NULL, NULL };
 
 	while (input_string("Input file name to be analyzed:", 1024, &(detect_model.file_name)) == -1)
 		printf("Incorrect input! Try again.\n");
@@ -1080,10 +1171,11 @@ int perform_generate(void)
 			MV_BARCODE_UNDEFINED,
 			MV_BARCODE_QR_ECC_UNAVAILABLE,
 			MV_BARCODE_QR_MODE_UNAVAILABLE,
+			0,
 			0, 0, 0,
 			MV_BARCODE_IMAGE_FORMAT_PNG,
 			MEDIA_VISION_COLORSPACE_INVALID,
-			NULL, NULL, NULL, NULL };
+			NULL, NULL, NULL, NULL, NULL, NULL };
 
 	generation_fcn_e gen_fcn = select_gen_function();
 	generate_model.type = select_type();
@@ -1096,6 +1188,11 @@ int perform_generate(void)
 		LOGI("Barcode ecc level has been selected");
 		generate_model.version = select_version();
 		LOGI("Barcode version has been selected");
+	}
+
+	if (generate_model.type != MV_BARCODE_QR) {
+		generate_model.is_hrt = select_attribute_text();
+		LOGI("Barcode readable text attribute has been selected");
 	}
 
 	if (gen_fcn == MV_TS_GENERATE_TO_IMAGE_FCN) {
@@ -1112,6 +1209,16 @@ int perform_generate(void)
 		printf("Incorrect input! Try again.\n");
 
 	LOGI("Barcode output file name has been specified");
+
+	while (input_string("Input foreground color (ex:black is 000000):", 1024, &generate_model.front_color) == -1)
+		printf("Incorrect input! Try again.\n");
+
+	LOGI("Foreground color is %s", generate_model.front_color);
+
+	while (input_string("Input background color (ex:white is ffffff):", 1024, &generate_model.back_color) == -1)
+		printf("Incorrect input! Try again.\n");
+
+	LOGI("Background color is %s", generate_model.back_color);
 
 	if (gen_fcn == MV_TS_GENERATE_TO_IMAGE_FCN) {
 		while (input_size("Input image width:", 10000, &generate_model.width) == -1)
@@ -1135,6 +1242,12 @@ int perform_generate(void)
 
 	if (generate_model.file_name != NULL)
 		free(generate_model.file_name);
+
+	if (generate_model.front_color != NULL)
+		free(generate_model.front_color);
+
+	if (generate_model.back_color != NULL)
+		free(generate_model.back_color);
 
 	if (err != MEDIA_VISION_ERROR_NONE) {
 		LOGE("Barcode generation failed with error code (0x%08x)", err);
