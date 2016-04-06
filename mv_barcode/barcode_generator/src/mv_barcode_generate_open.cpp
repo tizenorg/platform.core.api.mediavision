@@ -221,16 +221,65 @@ int mv_barcode_generate_source_open(
 	unsigned int imageChannels = 0u;
 
 	int showText = 0;
-	error = mv_engine_config_get_int_attribute(engine_cfg, "MV_BARCODE_GENERATE_ATTR_TEXT", &showText);
-	if (error != MEDIA_VISION_ERROR_NONE) {
-		LOGW("mv_engine_config_get_int_attribute failed");
-		return error;
+	char value;
+	char *fgcolour = NULL;
+	char *bgcolour = NULL;
+
+	if (engine_cfg != NULL) {
+		error = mv_engine_config_get_int_attribute(engine_cfg, "MV_BARCODE_GENERATE_ATTR_TEXT", &showText);
+		if (error != MEDIA_VISION_ERROR_NONE) {
+			LOGW("mv_engine_config_get_int_attribute failed");
+			return error;
+		}
+
+		if (showText == BARCODE_GEN_TEXT_VISIBLE && type == MV_BARCODE_QR) {
+			LOGW("QR code generation with visible text is not supported");
+			return MEDIA_VISION_ERROR_INVALID_OPERATION;
+		}
+
+		/* set color value */
+		error = mv_engine_config_get_string_attribute(engine_cfg, "MV_BARCODE_GENERATE_ATTR_COLOR_FRONT", &fgcolour);
+		if (error != MEDIA_VISION_ERROR_NONE) {
+			if (fgcolour) {
+				delete [] fgcolour;
+				fgcolour = NULL;
+			}
+
+			LOGW("mv_engine_config_get_string_attribute failed");
+			return error;
+		}
+
+		error = mv_engine_config_get_string_attribute(engine_cfg, "MV_BARCODE_GENERATE_ATTR_COLOR_BACK", &bgcolour);
+		if (error != MEDIA_VISION_ERROR_NONE) {
+			if (bgcolour) {
+				delete [] bgcolour;
+				bgcolour = NULL;
+			}
+
+			LOGW("mv_engine_config_get_string_attribute failed");
+			return error;
+		}
 	}
 
-	if (showText == BARCODE_GEN_TEXT_VISIBLE && type == MV_BARCODE_QR) {
-		LOGW("QR code generation with visible text is not supported");
-		return MEDIA_VISION_ERROR_INVALID_OPERATION;
-	}
+	/*
+	The input colorspace is RGB but the generators' is BGR.
+	Replace the value of R with that of B
+	*/
+	value = fgcolour[0];
+	fgcolour[0] = fgcolour[4];
+	fgcolour[4] = value;
+
+	value = fgcolour[1];
+	fgcolour[1] = fgcolour[5];
+	fgcolour[5] = value;
+
+	value = bgcolour[0];
+	bgcolour[0] = bgcolour[4];
+	bgcolour[4] = value;
+
+	value = bgcolour[1];
+	bgcolour[1] = bgcolour[5];
+	bgcolour[5] = value;
 
 	error = BarcodeGenerator::generateBarcodeToBuffer(
 					&imageBuffer,
@@ -242,7 +291,19 @@ int mv_barcode_generate_source_open(
 					convertEncodingMode(qr_enc_mode),
 					convertECC(qr_ecc),
 					qr_version,
-					showText);
+					showText,
+					fgcolour,
+					bgcolour);
+
+	if (fgcolour != NULL) {
+		delete [] fgcolour;
+		fgcolour = NULL;
+	}
+
+	if (bgcolour != NULL) {
+		delete [] bgcolour;
+		bgcolour = NULL;
+	}
 
 	if (error != BARCODE_ERROR_NONE) {
 		LOGE("Barcode generation to the buffer failed");
@@ -316,8 +377,12 @@ int mv_barcode_generate_image_open(
 	}
 
 	int showText = 0;
+	char value;
+	char *fgcolour = NULL;
+	char *bgcolour = NULL;
 
 	if (engine_cfg != NULL) {
+		/* set visible text attribute */
 		error = mv_engine_config_get_int_attribute(engine_cfg, "MV_BARCODE_GENERATE_ATTR_TEXT", &showText);
 		if (error != MEDIA_VISION_ERROR_NONE) {
 			LOGW("mv_engine_config_get_int_attribute failed");
@@ -328,7 +393,50 @@ int mv_barcode_generate_image_open(
 			LOGW("QR code generation with visible text is not supported");
 			return MEDIA_VISION_ERROR_INVALID_OPERATION;
 		}
+
+		/* set color value */
+		error = mv_engine_config_get_string_attribute(engine_cfg, "MV_BARCODE_GENERATE_ATTR_COLOR_FRONT", &fgcolour);
+		if (error != MEDIA_VISION_ERROR_NONE) {
+			if (fgcolour) {
+				delete [] fgcolour;
+				fgcolour = NULL;
+			}
+
+			LOGW("mv_engine_config_get_string_attribute failed");
+			return error;
+		}
+
+		error = mv_engine_config_get_string_attribute(engine_cfg, "MV_BARCODE_GENERATE_ATTR_COLOR_BACK", &bgcolour);
+		if (error != MEDIA_VISION_ERROR_NONE) {
+			if (bgcolour) {
+				delete [] bgcolour;
+				bgcolour = NULL;
+			}
+
+			LOGW("mv_engine_config_get_string_attribute failed");
+			return error;
+		}
 	}
+
+	/*
+	The input colorspace is RGB but the generators' is BGR.
+	Replace the value of R with that of B
+	*/
+	value = fgcolour[0];
+	fgcolour[0] = fgcolour[4];
+	fgcolour[4] = value;
+
+	value = fgcolour[1];
+	fgcolour[1] = fgcolour[5];
+	fgcolour[5] = value;
+
+	value = bgcolour[0];
+	bgcolour[0] = bgcolour[4];
+	bgcolour[4] = value;
+
+	value = bgcolour[1];
+	bgcolour[1] = bgcolour[5];
+	bgcolour[5] = value;
 
 	error = BarcodeGenerator::generateBarcodeToImage(
 							std::string(image_path),
@@ -340,7 +448,19 @@ int mv_barcode_generate_image_open(
 							convertEncodingMode(qr_enc_mode),
 							convertECC(qr_ecc),
 							qr_version,
-							showText);
+							showText,
+							fgcolour,
+							bgcolour);
+
+	if (fgcolour != NULL) {
+		delete [] fgcolour;
+		fgcolour = NULL;
+	}
+
+	if (bgcolour != NULL) {
+		delete [] bgcolour;
+		bgcolour = NULL;
+	}
 
 	if (error != BARCODE_ERROR_NONE) {
 		LOGE("Barcode generation to the image file failed");
