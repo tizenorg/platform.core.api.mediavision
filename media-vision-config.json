@@ -42,6 +42,16 @@
              "value" : 0
         },
         {
+             "name"  : "MV_BARCODE_GENERATE_ATTR_COLOR_FRONT",
+             "type"  : "string",
+             "value" : "000000"
+        },
+        {
+             "name"  : "MV_BARCODE_GENERATE_ATTR_COLOR_BACK",
+             "type"  : "string",
+             "value" : "ffffff"
+        },
+        {
             "name" : "MV_BARCODE_DETECT_ATTR_TARGET",
             "type" : "integer",
             "value" : 0
