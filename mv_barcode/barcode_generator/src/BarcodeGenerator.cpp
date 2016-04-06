@@ -70,6 +70,8 @@ int createBarcode(
 		BarcodeQRErrorCorrectionLevel correctionLevel,
 		int qrVersion,
 		int showText,
+		char *fgcolour,
+		char *bgcolour,
 		zint_symbol *symbol)
 {
 	/* set input values */
@@ -81,8 +83,20 @@ int createBarcode(
 	symbol->show_hrt = showText;
 
 	/* set default values */
-	std::strncpy(symbol->fgcolour, "000000", 10);
-	std::strncpy(symbol->bgcolour, "ffffff", 10);
+	if (fgcolour) {
+		std::strncpy(symbol->fgcolour, fgcolour, 10);
+	} else {
+		std::strncpy(symbol->fgcolour, "000000", 10);
+	}
+
+	if (bgcolour) {
+		std::strncpy(symbol->bgcolour, bgcolour, 10);
+	} else {
+		std::strncpy(symbol->bgcolour, "ffffff", 10);
+	}
+
+	LOGI("Check colors: front %s, back %s", symbol->fgcolour, symbol->bgcolour);
+
 	symbol->border_width = 1;
 	symbol->height = 50;
 
@@ -190,7 +204,9 @@ int BarcodeGenerator::generateBarcodeToImage(
 		BarcodeQREncodingMode encodingMode,
 		BarcodeQRErrorCorrectionLevel correctionLevel,
 		int qrVersion,
-		int showText)
+		int showText,
+		char *fgcolour,
+		char *bgcolour)
 {
 	zint_symbol *symbol = ZBarcode_Create();
 
@@ -206,6 +222,8 @@ int BarcodeGenerator::generateBarcodeToImage(
 					correctionLevel,
 					qrVersion,
 					showText,
+					fgcolour,
+					bgcolour,
 					symbol);
 
 	if (error != BARCODE_ERROR_NONE) {
@@ -241,7 +259,9 @@ int BarcodeGenerator::generateBarcodeToBuffer(
 		BarcodeQREncodingMode encodingMode,
 		BarcodeQRErrorCorrectionLevel correctionLevel,
 		int qrVersion,
-		int showText)
+		int showText,
+		char *fgcolour,
+		char *bgcolour)
 {
 	zint_symbol *symbol = ZBarcode_Create();
 
@@ -258,6 +278,8 @@ int BarcodeGenerator::generateBarcodeToBuffer(
 					correctionLevel,
 					qrVersion,
 					showText,
+					fgcolour,
+					bgcolour,
 					symbol);
 
 	if (error != BARCODE_ERROR_NONE) {

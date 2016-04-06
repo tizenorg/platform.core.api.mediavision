@@ -41,6 +41,8 @@ typedef struct {
 	char *file_name;
 	char *out_file_name;
 	unsigned char *out_buffer_ptr;
+	char *front_color;
+	char *back_color;
 } barcode_model_s;
 
 typedef enum {
@@ -400,13 +402,41 @@ int generate_barcode_to_image(barcode_model_s model)
 	if (model.message   == NULL ||
 		model.file_name == NULL) {
 		MEDIA_VISION_FUNCTION_LEAVE();
+
 		return MEDIA_VISION_ERROR_INVALID_PARAMETER;
 	}
 
 	LOGI("Call the mv_barcode_generate_image() function");
 
-	const int err = mv_barcode_generate_image(
-				NULL,
+	mv_engine_config_h mv_engine_config;
+	int err = mv_create_engine_config(&mv_engine_config);
+
+	if (MEDIA_VISION_ERROR_NONE != err) {
+		printf("ERROR: Errors were occurred during creating the media engine "
+				"config: %i\n", err);
+		MEDIA_VISION_FUNCTION_LEAVE();
+
+		return err;
+	}
+
+	err = mv_engine_config_set_string_attribute(mv_engine_config,
+											MV_BARCODE_GENERATE_ATTR_COLOR_FRONT,
+											model.front_color);
+	if (MEDIA_VISION_ERROR_NONE != err) {
+		printf("ERROR: Errors were occured during set string attribute to "
+				"media engine config: %i\n", err);
+	}
+
+	err = mv_engine_config_set_string_attribute(mv_engine_config,
+											MV_BARCODE_GENERATE_ATTR_COLOR_BACK,
+											model.back_color);
+	if (MEDIA_VISION_ERROR_NONE != err) {
+		printf("ERROR: Errors were occured during set string attribute to "
+				"media engine config: %i\n", err);
+	}
+
+	err = mv_barcode_generate_image(
+				mv_engine_config,
 				model.message,
 				model.width,
 				model.height,
@@ -418,6 +448,12 @@ int generate_barcode_to_image(barcode_model_s model)
 				model.out_image_format);
 
 	MEDIA_VISION_FUNCTION_LEAVE();
+
+	int err2 = mv_destroy_engine_config(mv_engine_config);
+	if (MEDIA_VISION_ERROR_NONE != err2) {
+		printf("ERROR: Errors were occurred during destroying the media engine "
+					"config: %i\n", err2);
+	}
 
 	return err;
 }
@@ -441,9 +477,9 @@ int generate_barcode_to_source(barcode_model_s model)
 		printf("ERROR: Error occurred when trying to create Media Vision "
 				"source. Error code: %i\n", err);
 
-			MEDIA_VISION_FUNCTION_LEAVE();
+		MEDIA_VISION_FUNCTION_LEAVE();
 
-			return err;
+		return err;
 	}
 
 	LOGI("mv_source_h creation finished");
@@ -455,6 +491,22 @@ int generate_barcode_to_source(barcode_model_s model)
 	if (MEDIA_VISION_ERROR_NONE != err) {
 		printf("ERROR: Errors were occurred during creating the media engine "
 				"config: %i\n", err);
+	}
+
+	err = mv_engine_config_set_string_attribute(mv_engine_config,
+											MV_BARCODE_GENERATE_ATTR_COLOR_FRONT,
+											model.front_color);
+	if (MEDIA_VISION_ERROR_NONE != err) {
+		printf("ERROR: Errors were occured during set string attribute to "
+				"media engine config: %i\n", err);
+	}
+
+	err = mv_engine_config_set_string_attribute(mv_engine_config,
+											MV_BARCODE_GENERATE_ATTR_COLOR_BACK,
+											model.back_color);
+	if (MEDIA_VISION_ERROR_NONE != err) {
+		printf("ERROR: Errors were occured during set string attribute to "
+				"media engine config: %i\n", err);
 	}
 
 	err = mv_barcode_generate_source(
@@ -1083,7 +1135,7 @@ int perform_generate(void)
 			0, 0, 0,
 			MV_BARCODE_IMAGE_FORMAT_PNG,
 			MEDIA_VISION_COLORSPACE_INVALID,
-			NULL, NULL, NULL, NULL };
+			NULL, NULL, NULL, NULL, NULL, NULL };
 
 	generation_fcn_e gen_fcn = select_gen_function();
 	generate_model.type = select_type();
@@ -1112,6 +1164,16 @@ int perform_generate(void)
 		printf("Incorrect input! Try again.\n");
 
 	LOGI("Barcode output file name has been specified");
+
+	while (input_string("Input foreground color (ex:black is 000000):", 1024, &generate_model.front_color) == -1)
+		printf("Incorrect input! Try again.\n");
+
+	LOGI("Foreground color is %s", generate_model.front_color);
+
+	while (input_string("Input background color (ex:white is ffffff):", 1024, &generate_model.back_color) == -1)
+		printf("Incorrect input! Try again.\n");
+
+	LOGI("Background color is %s", generate_model.back_color);
 
 	if (gen_fcn == MV_TS_GENERATE_TO_IMAGE_FCN) {
 		while (input_size("Input image width:", 10000, &generate_model.width) == -1)
