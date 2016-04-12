@@ -290,7 +290,7 @@ int ImageHelper::convertBufferToRGB888(
         unsigned char **pOutBuffer)
 {
     // todo: support more colorspaces:
-    switch(imageData.imageColorspace)
+    switch (imageData.imageColorspace)
     {
         case MEDIA_VISION_COLORSPACE_Y800:
             return convertY800ToRGB(pInBuffer, imageData, pOutBuffer);
