@@ -160,7 +160,7 @@ bool MFTracker::update(const cv::Mat& image)
 	cv::Mat oldImage = m_image;
 
 	cv::Rect_<float> oldBox = m_boundingBox;
-	if(!medianFlowImpl(oldImage, image, oldBox))
+	if (!medianFlowImpl(oldImage, image, oldBox))
 		return false;
 
 	image.copyTo(m_image);
@@ -286,7 +286,7 @@ cv::Rect_<float> MFTracker::vote(
 	const int n = (int)oldPoints.size();
 	std::vector<float> buf(std::max(n*(n-1) / 2, 3), 0.f);
 
-	if(oldPoints.size() == 1) {
+	if (oldPoints.size() == 1) {
 		newRect.x = oldRect.x+newPoints[0].x-oldPoints[0].x;
 		newRect.y = oldRect.y+newPoints[0].y-oldPoints[0].y;
 		newRect.width = oldRect.width;
@@ -297,19 +297,19 @@ cv::Rect_<float> MFTracker::vote(
 
 	float xshift = 0.f;
 	float yshift = 0.f;
-	for(int i = 0; i < n; i++)
+	for (int i = 0; i < n; i++)
 		buf[i] = newPoints[i].x - oldPoints[i].x;
 
 	xshift = getMedian(buf, n);
 	newCenter.x += xshift;
-	for(int idx = 0; idx < n; idx++)
+	for (int idx = 0; idx < n; idx++)
 		buf[idx] = newPoints[idx].y - oldPoints[idx].y;
 
 	yshift = getMedian(buf, n);
 	newCenter.y += yshift;
 	mD = cv::Point2f(xshift, yshift);
 
-	if(oldPoints.size() == 1) {
+	if (oldPoints.size() == 1) {
 		newRect.x = newCenter.x - oldRect.width / 2.f;
 		newRect.y = newCenter.y - oldRect.height / 2.f;
 		newRect.width = oldRect.width;
@@ -321,7 +321,7 @@ cv::Rect_<float> MFTracker::vote(
 	float nd = 0.f;
 	float od = 0.f;
 	for (int i = 0, ctr = 0; i < n; i++) {
-		for(int j = 0; j < i; j++) {
+		for (int j = 0; j < i; j++) {
 			nd = l2distance(newPoints[i], newPoints[j]);
 			od = l2distance(oldPoints[i], oldPoints[j]);
 			buf[ctr] = (od == 0.f ? 0.f : nd / od);
@@ -346,7 +346,7 @@ void MFTracker::check_FB(
 {
 	const size_t numberOfOldPoints = oldPoints.size();
 
-	if(status.empty())
+	if (status.empty())
 		status = std::vector<bool>(numberOfOldPoints, true);
 
 	std::vector<uchar> LKstatus(numberOfOldPoints);
@@ -400,7 +400,7 @@ void MFTracker::check_NCC(
 	}
 
 	float median = getMedian(NCC) - FloatEps;
-	for(size_t idx = 0u; idx < oldPoints.size(); idx++)
+	for (size_t idx = 0u; idx < oldPoints.size(); idx++)
 		status[idx] = status[idx] && (NCC[idx] > median);
 }
 
