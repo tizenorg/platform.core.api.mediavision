@@ -236,9 +236,8 @@ int EventTriggerPersonRecognition::pushSource(
 		return error;
 	}
 
-	if (buffer_size != width * height)
-	{
-		// Unexcepted behaviour
+	if (buffer_size != width * height) {
+		/* Unexcepted behaviour */
 		LOGE("Grayscale source interpretation failed.");
 		return MEDIA_VISION_ERROR_INTERNAL;
 	}

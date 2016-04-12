@@ -200,7 +200,7 @@ int ImageObject::save(const char *fileName) const
 		return MEDIA_VISION_ERROR_PERMISSION_DENIED;
 	}
 
-	out<<(*this);
+	out << (*this);
 
 	out.close();
 	LOGI("[%s] Image object is saved.", __FUNCTION__);
@@ -244,44 +244,44 @@ int ImageObject::load(const char *fileName)
 
 std::ostream& operator << (std::ostream& os, const ImageObject& obj)
 {
-	os<<std::setprecision(7);
+	os << std::setprecision(7);
 
-	os<<obj.m_isEmpty<<'\n';
-	os<<obj.m_isLabeled<<'\n';
-	os<<obj.m_label<<'\n';
+	os << obj.m_isEmpty << '\n';
+	os << obj.m_isLabeled << '\n';
+	os << obj.m_label << '\n';
 
-	os<<obj.m_boundingContour.size()<<'\n';
+	os << obj.m_boundingContour.size() << '\n';
 	for (size_t pointNum = 0u; pointNum < obj.m_boundingContour.size(); ++pointNum) {
-		os<<obj.m_boundingContour[pointNum].x<<' ';
-		os<<obj.m_boundingContour[pointNum].y<<'\n';
+		os << obj.m_boundingContour[pointNum].x << ' ';
+		os << obj.m_boundingContour[pointNum].y << '\n';
 	}
 
 	const size_t numberOfKeypoints = obj.m_features.m_objectKeypoints.size();
-	os<<numberOfKeypoints<<'\n';
+	os << numberOfKeypoints << '\n';
 	for (size_t keypointNum = 0u; keypointNum < numberOfKeypoints; ++keypointNum) {
-		os<<obj.m_features.m_objectKeypoints[keypointNum].pt.x<<' ';
-		os<<obj.m_features.m_objectKeypoints[keypointNum].pt.y<<' ';
-		os<<obj.m_features.m_objectKeypoints[keypointNum].size<<' ';
-		os<<obj.m_features.m_objectKeypoints[keypointNum].response<<' ';
-		os<<obj.m_features.m_objectKeypoints[keypointNum].angle<<' ';
-		os<<obj.m_features.m_objectKeypoints[keypointNum].octave<<' ';
-		os<<obj.m_features.m_objectKeypoints[keypointNum].class_id<<'\n';
+		os << obj.m_features.m_objectKeypoints[keypointNum].pt.x << ' ';
+		os << obj.m_features.m_objectKeypoints[keypointNum].pt.y << ' ';
+		os << obj.m_features.m_objectKeypoints[keypointNum].size << ' ';
+		os << obj.m_features.m_objectKeypoints[keypointNum].response << ' ';
+		os << obj.m_features.m_objectKeypoints[keypointNum].angle << ' ';
+		os << obj.m_features.m_objectKeypoints[keypointNum].octave << ' ';
+		os << obj.m_features.m_objectKeypoints[keypointNum].class_id << '\n';
 	}
 
 	const int numberOfDescriptors = obj.m_features.m_objectDescriptors.rows;
 	const int sizeOfDescriptor = obj.m_features.m_objectDescriptors.cols;
 
-	os<<numberOfDescriptors<<' ';
-	os<<sizeOfDescriptor<<' ';
-	os<<obj.m_features.m_objectDescriptors.type()<<'\n';
+	os << numberOfDescriptors << ' ';
+	os << sizeOfDescriptor << ' ';
+	os << obj.m_features.m_objectDescriptors.type() << '\n';
 
 	for (int descriptorNum = 0; descriptorNum < numberOfDescriptors;
-				++descriptorNum, os<<'\n') {
+				++descriptorNum, os << '\n') {
 		for (int featureNum = 0; featureNum < sizeOfDescriptor;
 					++featureNum) {
-				os<<(int)obj.m_features.m_objectDescriptors.at<uchar>(
+				os << (int)obj.m_features.m_objectDescriptors.at<uchar>(
 				descriptorNum,
-				featureNum)<<' ';
+				featureNum) << ' ';
 		}
 	}
 
@@ -302,54 +302,54 @@ std::istream& operator >> (std::istream& is, ImageObject& obj)
 		return is; \
 	}
 
-	is>>temporal.m_isEmpty;
+	is >> temporal.m_isEmpty;
 	MEDIA_VISION_CHECK_IFSTREAM
-	is>>temporal.m_isLabeled;
+	is >> temporal.m_isLabeled;
 	MEDIA_VISION_CHECK_IFSTREAM
-	is>>temporal.m_label;
+	is >> temporal.m_label;
 	MEDIA_VISION_CHECK_IFSTREAM
 
-	is>>numberOfContourPoints;
+	is >> numberOfContourPoints;
 	MEDIA_VISION_CHECK_IFSTREAM
 
 	temporal.m_boundingContour.resize(numberOfContourPoints);
 	for (size_t pointNum = 0; pointNum < numberOfContourPoints; ++pointNum) {
-		is>>temporal.m_boundingContour[pointNum].x;
+		is >> temporal.m_boundingContour[pointNum].x;
 		MEDIA_VISION_CHECK_IFSTREAM
-		is>>temporal.m_boundingContour[pointNum].y;
+		is >> temporal.m_boundingContour[pointNum].y;
 		MEDIA_VISION_CHECK_IFSTREAM
 	}
 
-	is>>numberOfKeypoints;
+	is >> numberOfKeypoints;
 	temporal.m_features.m_objectKeypoints.resize(numberOfKeypoints);
 	for (size_t keypointNum = 0; keypointNum < numberOfKeypoints; ++keypointNum) {
-		is>>temporal.m_features.m_objectKeypoints[keypointNum].pt.x;
+		is >> temporal.m_features.m_objectKeypoints[keypointNum].pt.x;
 		MEDIA_VISION_CHECK_IFSTREAM
-		is>>temporal.m_features.m_objectKeypoints[keypointNum].pt.y;
+		is >> temporal.m_features.m_objectKeypoints[keypointNum].pt.y;
 		MEDIA_VISION_CHECK_IFSTREAM
-		is>>temporal.m_features.m_objectKeypoints[keypointNum].size;
+		is >> temporal.m_features.m_objectKeypoints[keypointNum].size;
 		MEDIA_VISION_CHECK_IFSTREAM
-		is>>temporal.m_features.m_objectKeypoints[keypointNum].response;
+		is >> temporal.m_features.m_objectKeypoints[keypointNum].response;
 		MEDIA_VISION_CHECK_IFSTREAM
-		is>>temporal.m_features.m_objectKeypoints[keypointNum].angle;
+		is >> temporal.m_features.m_objectKeypoints[keypointNum].angle;
 		MEDIA_VISION_CHECK_IFSTREAM
-		is>>temporal.m_features.m_objectKeypoints[keypointNum].octave;
+		is >> temporal.m_features.m_objectKeypoints[keypointNum].octave;
 		MEDIA_VISION_CHECK_IFSTREAM
-		is>>temporal.m_features.m_objectKeypoints[keypointNum].class_id;
+		is >> temporal.m_features.m_objectKeypoints[keypointNum].class_id;
 		MEDIA_VISION_CHECK_IFSTREAM
 	}
 
-	is>>rows;
+	is >> rows;
 	MEDIA_VISION_CHECK_IFSTREAM
-	is>>cols;
+	is >> cols;
 	MEDIA_VISION_CHECK_IFSTREAM
-	is>>descriptorType;
+	is >> descriptorType;
 	MEDIA_VISION_CHECK_IFSTREAM
 	temporal.m_features.m_objectDescriptors = cv::Mat(rows, cols, descriptorType);
 	int value = 0;
 	for (int descriptorNum = 0; descriptorNum < rows; ++descriptorNum) {
 		for (int featureNum = 0; featureNum < cols; ++featureNum) {
-			is>>value;
+			is >> value;
 			MEDIA_VISION_CHECK_IFSTREAM
 
 			temporal.m_features.m_objectDescriptors.at<uchar>(descriptorNum, featureNum) =

@@ -228,7 +228,7 @@ int ImageTrackingModel::save(const char *filepath) const
 	LOGD("prefixPath: %s", prefixPath.c_str());
 
 	/* check the directory is available */
-	if (access(prefixPath.c_str(),F_OK)) {
+	if (access(prefixPath.c_str(), F_OK)) {
 		LOGE("Can't save tracking model. Path[%s] doesn't existed.", filePath.c_str());
 
 		return MEDIA_VISION_ERROR_INVALID_PATH;
@@ -242,7 +242,7 @@ int ImageTrackingModel::save(const char *filepath) const
 		return MEDIA_VISION_ERROR_PERMISSION_DENIED;
 	}
 
-	out<<(*this);
+	out << (*this);
 
 	out.close();
 	LOGI("[%s] Image tracking model is saved.", __FUNCTION__);
@@ -256,7 +256,7 @@ int ImageTrackingModel::load(const char *filepath)
 
 	filePath = std::string(filepath);
 
-	if (access(filePath.c_str(),F_OK)) {
+	if (access(filePath.c_str(), F_OK)) {
 		LOGE("Can't load tracking model. Path[%s] doesn't existed.", filepath);
 
 		return MEDIA_VISION_ERROR_INVALID_PATH;
@@ -285,22 +285,22 @@ int ImageTrackingModel::load(const char *filepath)
 
 std::ostream& operator << (std::ostream& os, const ImageTrackingModel& obj)
 {
-	os<<std::setprecision(7);
+	os << std::setprecision(7);
 
-	os<<obj.m_target;
-	os<<obj.m_stabilizationParams.mIsEnabled<<'\n';
-	os<<obj.m_stabilizationParams.mHistoryAmount<<'\n';
-	os<<obj.m_stabilizationParams.mStabilizationSpeed<<'\n';
-	os<<obj.m_stabilizationParams.mStabilizationAcceleration<<'\n';
-	os<<obj.m_stabilizationParams.mTolerantShift<<'\n';
-	os<<obj.m_stabilizationParams.mTolerantShiftExtra<<'\n';
+	os << obj.m_target;
+	os << obj.m_stabilizationParams.mIsEnabled << '\n';
+	os << obj.m_stabilizationParams.mHistoryAmount << '\n';
+	os << obj.m_stabilizationParams.mStabilizationSpeed << '\n';
+	os << obj.m_stabilizationParams.mStabilizationAcceleration << '\n';
+	os << obj.m_stabilizationParams.mTolerantShift << '\n';
+	os << obj.m_stabilizationParams.mTolerantShiftExtra << '\n';
 
 	const size_t numberOfContourPoints = obj.m_location.size();
-	os<<numberOfContourPoints<<'\n';
+	os << numberOfContourPoints << '\n';
 	for (size_t pointNum = 0u; pointNum < numberOfContourPoints; ++pointNum)
-		os<<' '<<obj.m_location[pointNum].x<<' '<<obj.m_location[pointNum].y;
+		os << ' ' << obj.m_location[pointNum].x << ' ' << obj.m_location[pointNum].y;
 
-	os<<'\n';
+	os << '\n';
 
 	return os;
 }
@@ -315,26 +315,26 @@ std::istream& operator >> (std::istream& is, ImageTrackingModel& obj)
 	ImageObject target;
 	std::vector<cv::Point> location;
 
-	is>>target;
+	is >> target;
 	MEDIA_VISION_CHECK_IFSTREAM
 
 	StabilizationParams params;
-	is>>params.mIsEnabled;
-	is>>params.mHistoryAmount;
-	is>>params.mStabilizationSpeed;
-	is>>params.mStabilizationAcceleration;
-	is>>params.mTolerantShift;
-	is>>params.mTolerantShiftExtra;
+	is >> params.mIsEnabled;
+	is >> params.mHistoryAmount;
+	is >> params.mStabilizationSpeed;
+	is >> params.mStabilizationAcceleration;
+	is >> params.mTolerantShift;
+	is >> params.mTolerantShiftExtra;
 
 	size_t numberOfContourPoints = 0u;
-	is>>numberOfContourPoints;
+	is >> numberOfContourPoints;
 	MEDIA_VISION_CHECK_IFSTREAM
 
 	location.resize(numberOfContourPoints);
 	for (size_t pointNum = 0u; pointNum < numberOfContourPoints; ++pointNum) {
-		is>>location[pointNum].x;
+		is >> location[pointNum].x;
 		MEDIA_VISION_CHECK_IFSTREAM
-		is>>location[pointNum].y;
+		is >> location[pointNum].y;
 		MEDIA_VISION_CHECK_IFSTREAM
 	}
 

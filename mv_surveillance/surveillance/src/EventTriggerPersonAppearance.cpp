@@ -88,8 +88,7 @@ int EventResultPersonAppearance::getResultValue(const char *valueName,
 			MAX_VALUE_NAME_LENGHT) == 0) {
 		size_t * const numberOfAppearedPersons = (size_t*) value;
 		*numberOfAppearedPersons = __appearedLocations.size();
-	}
-	else if (strncmp(valueName, MV_SURVEILLANCE_PERSONS_APPEARED_LOCATIONS,
+	} else if (strncmp(valueName, MV_SURVEILLANCE_PERSONS_APPEARED_LOCATIONS,
 			MAX_VALUE_NAME_LENGHT) == 0) {
 		mv_rectangle_s * const appearedLocations = (mv_rectangle_s*) value;
 
@@ -97,13 +96,11 @@ int EventResultPersonAppearance::getResultValue(const char *valueName,
 
 		for (size_t i = 0u; i < numberOfAppearedPersons; ++i)
 			appearedLocations[i] = __appearedLocations[i];
-	}
-	else if (strncmp(valueName, MV_SURVEILLANCE_PERSONS_TRACKED_NUMBER,
+	} else if (strncmp(valueName, MV_SURVEILLANCE_PERSONS_TRACKED_NUMBER,
 			MAX_VALUE_NAME_LENGHT) == 0) {
 		size_t * const numberOfTrackedPersons = (size_t*) value;
 		*numberOfTrackedPersons = __trackedLocations.size();
-	}
-	else if (strncmp(valueName, MV_SURVEILLANCE_PERSONS_TRACKED_LOCATIONS,
+	} else if (strncmp(valueName, MV_SURVEILLANCE_PERSONS_TRACKED_LOCATIONS,
 			MAX_VALUE_NAME_LENGHT) == 0) {
 		mv_rectangle_s * const trackedLocations = (mv_rectangle_s*) value;
 
@@ -111,13 +108,11 @@ int EventResultPersonAppearance::getResultValue(const char *valueName,
 
 		for (size_t i = 0u; i < numberOfTrackedPersons; ++i)
 			trackedLocations[i] = __trackedLocations[i];
-	}
-	else if (strncmp(valueName, MV_SURVEILLANCE_PERSONS_DISAPPEARED_NUMBER,
+	} else if (strncmp(valueName, MV_SURVEILLANCE_PERSONS_DISAPPEARED_NUMBER,
 			MAX_VALUE_NAME_LENGHT) == 0) {
 		size_t * const numberOfDisappearedPersons = (size_t*) value;
 		*numberOfDisappearedPersons = __disappearedLocations.size();
-	}
-	else if (strncmp(valueName, MV_SURVEILLANCE_PERSONS_DISAPPEARED_LOCATIONS,
+	} else if (strncmp(valueName, MV_SURVEILLANCE_PERSONS_DISAPPEARED_LOCATIONS,
 			MAX_VALUE_NAME_LENGHT) == 0) {
 		mv_rectangle_s * const disappearedLocations = (mv_rectangle_s*) value;
 
@@ -125,8 +120,7 @@ int EventResultPersonAppearance::getResultValue(const char *valueName,
 
 		for (size_t i = 0u; i < numberOfDisappearedPersons; ++i)
 			disappearedLocations[i] = __disappearedLocations[i];
-	}
-	else {
+	} else {
 		LOGE("This value name doesn't exist. Getting result value failed.");
 		return MEDIA_VISION_ERROR_INVALID_PARAMETER;
 	}
@@ -335,8 +329,7 @@ void EventTriggerPersonAppearance::movementDetectedCB(
 		for (size_t idx = 0u; idx < hogRectsSize; ++idx)
 			if (!trackChecks[idx])
 				trigger->__appearedRects.push_back(hogRects[idx]);
-	}
-	else {
+	} else {
 		/* 4.2 Try to track */
 		CVRectanglesConstIter appearedIter = trigger->__appearedRects.begin();
 		for (; appearedIter != trigger->__appearedRects.end(); ++appearedIter)
@@ -376,14 +369,13 @@ void EventTriggerPersonAppearance::movementDetectedCB(
 				}
 			}
 
-			if (tracked)
+			if (tracked) {
 				++iter;
-			else {
+			} else {
 				if (iter->framesCount == 0) {
 					trigger->__disappearedRects.push_back(iter->rect);
 					iter = trigger->__trackedRects.erase(iter);
-				}
-				else {
+				} else {
 					--(iter->framesCount);
 					++iter;
 				}

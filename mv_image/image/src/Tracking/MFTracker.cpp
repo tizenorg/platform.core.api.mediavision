@@ -29,8 +29,8 @@ namespace {
 			size = (int)values.size();
 
 		std::vector<T> copy(values.begin(), values.begin() + size);
-		std::sort(copy.begin(),copy.end());
-		if(size%2==0)
+		std::sort(copy.begin(), copy.end());
+		if (size%2 == 0)
 			return (copy[size/2-1]+copy[size/2])/((T)2.0);
 		else
 			return copy[(size - 1) / 2];
@@ -160,7 +160,7 @@ bool MFTracker::update(const cv::Mat& image)
 	cv::Mat oldImage = m_image;
 
 	cv::Rect_<float> oldBox = m_boundingBox;
-	if(!medianFlowImpl(oldImage, image, oldBox))
+	if (!medianFlowImpl(oldImage, image, oldBox))
 		return false;
 
 	image.copyTo(m_image);
@@ -260,8 +260,7 @@ bool MFTracker::medianFlowImpl(
 		displacements.push_back(sqrt(di[idx].ddot(di[idx])));
 	}
 
-	m_confidence =
-				(10.f - getMedian(displacements,(int)displacements.size())) / 10.f;
+	m_confidence = (10.f - getMedian(displacements, (int)displacements.size())) / 10.f;
 
 	if (m_confidence < 0.f) {
 		m_confidence = 0.f;
@@ -285,32 +284,32 @@ cv::Rect_<float> MFTracker::vote(
 			oldRect.y + oldRect.height / 2.f);
 
 	const int n = (int)oldPoints.size();
-	std::vector<float> buf(std::max( n*(n-1) / 2, 3), 0.f);
+	std::vector<float> buf(std::max(n*(n-1) / 2, 3), 0.f);
 
-	if(oldPoints.size() == 1) {
+	if (oldPoints.size() == 1) {
 		newRect.x = oldRect.x+newPoints[0].x-oldPoints[0].x;
 		newRect.y = oldRect.y+newPoints[0].y-oldPoints[0].y;
-		newRect.width=oldRect.width;
-		newRect.height=oldRect.height;
+		newRect.width = oldRect.width;
+		newRect.height = oldRect.height;
 
 		return newRect;
 	}
 
 	float xshift = 0.f;
 	float yshift = 0.f;
-	for(int i = 0; i < n; i++)
+	for (int i = 0; i < n; i++)
 		buf[i] = newPoints[i].x - oldPoints[i].x;
 
 	xshift = getMedian(buf, n);
 	newCenter.x += xshift;
-	for(int idx = 0; idx < n; idx++)
+	for (int idx = 0; idx < n; idx++)
 		buf[idx] = newPoints[idx].y - oldPoints[idx].y;
 
 	yshift = getMedian(buf, n);
 	newCenter.y += yshift;
 	mD = cv::Point2f(xshift, yshift);
 
-	if(oldPoints.size() == 1) {
+	if (oldPoints.size() == 1) {
 		newRect.x = newCenter.x - oldRect.width / 2.f;
 		newRect.y = newCenter.y - oldRect.height / 2.f;
 		newRect.width = oldRect.width;
@@ -322,7 +321,7 @@ cv::Rect_<float> MFTracker::vote(
 	float nd = 0.f;
 	float od = 0.f;
 	for (int i = 0, ctr = 0; i < n; i++) {
-		for(int j = 0; j < i; j++) {
+		for (int j = 0; j < i; j++) {
 			nd = l2distance(newPoints[i], newPoints[j]);
 			od = l2distance(oldPoints[i], oldPoints[j]);
 			buf[ctr] = (od == 0.f ? 0.f : nd / od);
@@ -347,7 +346,7 @@ void MFTracker::check_FB(
 {
 	const size_t numberOfOldPoints = oldPoints.size();
 
-	if(status.empty())
+	if (status.empty())
 		status = std::vector<bool>(numberOfOldPoints, true);
 
 	std::vector<uchar> LKstatus(numberOfOldPoints);
@@ -397,12 +396,11 @@ void MFTracker::check_NCC(
 		const float prod = p1.dot(p2);
 		const float sq1 = sqrt(n1 * n1 - s1 * s1 / N);
 		const float sq2 = sqrt(n2 * n2 - s2 * s2 / N);
-		NCC[idx] = (sq2==0 ? sq1 / std::abs(sq1)
-							: (prod - s1 * s2 / N) / sq1 / sq2);
+		NCC[idx] = (sq2 == 0 ? sq1 / std::abs(sq1) : (prod - s1 * s2 / N) / sq1 / sq2);
 	}
 
 	float median = getMedian(NCC) - FloatEps;
-	for(size_t idx = 0u; idx < oldPoints.size(); idx++)
+	for (size_t idx = 0u; idx < oldPoints.size(); idx++)
 		status[idx] = status[idx] && (NCC[idx] > median);
 }
 
