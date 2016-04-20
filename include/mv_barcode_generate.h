@@ -48,6 +48,24 @@ extern "C" {
                                                                     1-visible */
 
 /**
+ * @brief Defines MV_BARCODE_GENERATE_ATTR_COLOR_FRONT to set
+		  Barcode's foreground color attribute of the engine configuration.
+ *
+ * @since_tizen 3.0
+ * @remarks This attribute represents RGB color as a hex triplet with six digits.
+ */
+#define MV_BARCODE_GENERATE_ATTR_COLOR_FRONT "MV_BARCODE_GENERATE_ATTR_COLOR_FRONT"
+
+/**
+ * @brief Defines MV_BARCODE_GENERATE_ATTR_COLOR_BACK to set
+		  Barcode's background color attribute of the engine configuration.
+ *
+ * @since_tizen 3.0
+ * @remarks This attribute represents RGB color as a hex triplet with six digits.
+ */
+#define MV_BARCODE_GENERATE_ATTR_COLOR_BACK "MV_BARCODE_GENERATE_ATTR_COLOR_BACK"
+
+/**
  * @brief Enumeration to text attribute
  *
  * @since_tizen @if MOBILE 2.4 @else 3.0 @endif

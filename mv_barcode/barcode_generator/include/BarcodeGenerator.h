@@ -50,6 +50,8 @@ public:
 	 * @param [in] correctionLevel  Error correction level (for QR codes only)
 	 * @param [in] qrVersion        QR code version (1 ~ 40, 0 for 1D barcodes)
 	 * @param [in] showText         Show text or not
+	 * @param [in] fgcolour         Foreground colour of barcode
+	 * @param [in] bgcolour         Background colour of barcode
 	 * @return BARCODE_ERROR_NONE from BarcodeError which is 0 if success,
 	 *         BarcodeError value otherwise
 	 */
@@ -63,7 +65,9 @@ public:
 		BarcodeQREncodingMode encodingMode = BARCODE_QR_MODE_UNAVAILABLE,
 		BarcodeQRErrorCorrectionLevel correctionLevel = BARCODE_QR_ECC_UNAVAILABLE,
 		int qrVersion = 0,
-		int showText = 0);
+		int showText = 0,
+		char *fgcolour = NULL,
+		char *bgcolur = NULL);
 
 	/**
 	 * @brief This method generates Barcodes image buffer according to options.
@@ -79,6 +83,8 @@ public:
 	 * @param [in] correctionLevel     Error correction level (for QR codes only)
 	 * @param [in] qrVersion           QR code version (1 ~ 40, 0 for 1D barcodes)
 	 * @param [in] showText            Show text or not
+	 * @param [in] fgcolour         Foreground colour of barcode
+	 * @param [in] bgcolour         Background colour of barcode
 	 * @return BARCODE_ERROR_NONE from BarcodeError which is 0 if success,
 	 *         BarcodeError value otherwise
 	 */
@@ -92,7 +98,9 @@ public:
 		BarcodeQREncodingMode encodingMode = BARCODE_QR_MODE_UNAVAILABLE,
 		BarcodeQRErrorCorrectionLevel correctionLevel = BARCODE_QR_ECC_UNAVAILABLE,
 		int qrVersion = 0,
-		int showText = 0);
+		int showText = 0,
+		char *fgcolour = NULL,
+		char *bgcolur = NULL);
 };
 
 } /* Barcode */
