@@ -24,4 +24,4 @@ add_executable(${PROJECT_NAME} ${MV_TEST_SUITE_SRC_LIST} ${MV_TEST_SUITE_INC_LIS
 
 target_link_libraries(${PROJECT_NAME} capi-media-vision dlog avcodec avformat avutil swscale mv_image_helper)
 
-install(TARGETS ${PROJECT_NAME} DESTINATION ${testsuites_dir})
+install(TARGETS ${PROJECT_NAME} DESTINATION ${testbin_dir})

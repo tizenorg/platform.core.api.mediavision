@@ -1,6 +1,6 @@
 Name:        capi-media-vision
 Summary:     Media Vision library for Tizen Native API
-Version:     0.3.14
+Version:     0.3.15
 Release:     0
 Group:       Multimedia/Framework
 License:     Apache-2.0 and BSD-2.0
@@ -25,6 +25,7 @@ BuildRequires: libavutil-devel
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-base-1.0)
 BuildRequires: pkgconfig(gstreamer-app-1.0)
+BuildRequires: pkgconfig(libtzplatform-config)
 
 %description
 Media Vision library for Tizen Native API. Includes barcode detecting, barcode generating, face and image modules.
@@ -57,17 +58,19 @@ export CFLAGS="$CFLAGS -DENABLE_NEON"
 export CXXFLAGS="$CXXFLAGS -DENABLE_NEON"
 %endif
 
+export CFLAGS+=" -DMV_CONFIG_PATH=\\\"%{TZ_SYS_RO_SHARE}/config/%{name}/\\\""
+export CXXFLAGS+=" -DMV_CONFIG_PATH=\\\"%{TZ_SYS_RO_SHARE}/config/%{name}/\\\""
 MAJORVER=`echo %{version} | awk 'BEGIN {FS="."}{print $1}'`
-%cmake . -DFULLVER=%{version} -DMAJORVER=${MAJORVER}
+%cmake . -DFULLVER=%{version} -DMAJORVER=${MAJORVER} -DTZ_SYS_BIN=%TZ_SYS_BIN
 
 make %{?jobs:-j%jobs}
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/license/
-mkdir -p %{buildroot}/usr/share/config/%{name}
-cp LICENSE.APLv2 %{buildroot}/usr/share/license/%{name}
-cp media-vision-config.json %{buildroot}/usr/share/config/%{name}/
+mkdir -p %{buildroot}%{_datadir}/license/
+mkdir -p %{buildroot}%{_datadir}/config/%{name}
+cp LICENSE.APLv2 %{buildroot}%{_datadir}/license/%{name}
+cp media-vision-config.json %{buildroot}%{_datadir}/config/%{name}/
 
 %make_install
 
@@ -82,8 +85,7 @@ cp media-vision-config.json %{buildroot}/usr/share/config/%{name}/
 %{_libdir}/libmv*.so
 
 %files devel
-#%{_datadir}/config/%{name}/media-vision-config.json
 %{_includedir}/media/*.h
 %{_libdir}/pkgconfig/*.pc
 %{_libdir}/lib%{name}.so
-/opt/usr/devel/media/testsuites/*
+%TZ_SYS_BIN/*

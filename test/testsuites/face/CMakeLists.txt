@@ -31,4 +31,4 @@ target_link_libraries(${PROJECT_NAME} capi-media-vision
                                       mv_video_helper
                                       mv_testsuite_common)
 
-install(TARGETS ${PROJECT_NAME} DESTINATION ${testsuites_dir})
+install(TARGETS ${PROJECT_NAME} DESTINATION ${testbin_dir})

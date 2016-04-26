@@ -20,6 +20,8 @@
 
 #include <json-glib/json-glib.h>
 
+#define MV_ENGINE_CONFIG_FILE_NAME "media-vision-config.json"
+
 /**
  * @file   EngineConfig.cpp
  * @brief  Engine Configuration class methods implementation.
@@ -28,8 +30,7 @@
 namespace MediaVision {
 namespace Common {
 
-std::string EngineConfig::DefConfigFilePath =
-	std::string("/usr/share/config/capi-media-vision/media-vision-config.json");
+std::string EngineConfig::DefConfigFilePath;
 
 std::map<std::string, double> EngineConfig::DefDblDict;
 std::map<std::string, int> EngineConfig::DefIntDict;
@@ -38,6 +39,11 @@ std::map<std::string, std::string> EngineConfig::DefStrDict;
 
 EngineConfig::EngineConfig()
 {
+	DefConfigFilePath = MV_CONFIG_PATH;
+	DefConfigFilePath += MV_ENGINE_CONFIG_FILE_NAME;
+
+	LOGE("Default Engine config file location is %s", DefConfigFilePath.c_str());
+
 	// Force load default attributes from configuration file
 	cacheDictionaries(false);
 
