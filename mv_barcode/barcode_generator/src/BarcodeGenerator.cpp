@@ -94,8 +94,8 @@ int createBarcode(
 
 	if (bgcolour) {
 		std::strncpy(symbol->bgcolour, bgcolour, 10);
-		if (strlen(fgcolour) > 9) {
-			symbol->fgcolour[9] = '\0';
+		if (strlen(bgcolour) > 9) {
+			symbol->bgcolour[9] = '\0';
 		}
 	} else {
 		std::strncpy(symbol->bgcolour, "ffffff", 10);
