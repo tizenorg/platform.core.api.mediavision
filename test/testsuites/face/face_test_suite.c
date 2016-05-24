@@ -1358,6 +1358,7 @@ int perform_mv_face_tracking_model_prepare(mv_face_tracking_model_h model)
 		err = load_mv_source_from_file(init_frame_file_name, preparation_frame);
 
 	free(init_frame_file_name);
+	init_frame_file_name = NULL;
 
 	if (MEDIA_VISION_ERROR_NONE != err) {
 		printf(TEXT_RED "ERROR: Errors were occurred during preparation "
@@ -1451,6 +1452,8 @@ int perform_mv_face_tracking_model_prepare(mv_face_tracking_model_h model)
 				"source! Error code: %i\n" TEXT_RESET, err2);
 	}
 
+	mv_destroy_engine_config(eng_config);
+	eng_config = NULL;
 	return err;
 }
 

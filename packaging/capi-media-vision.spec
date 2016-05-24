@@ -1,7 +1,7 @@
 Name:        capi-media-vision
 Summary:     Media Vision library for Tizen Native API
-Version:     0.3.17
-Release:     1
+Version:     0.3.18
+Release:     0
 Group:       Multimedia/Framework
 License:     Apache-2.0 and BSD-2.0
 Source0:     %{name}-%{version}.tar.gz

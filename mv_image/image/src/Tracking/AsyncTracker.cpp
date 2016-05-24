@@ -78,8 +78,10 @@ bool AsyncTracker::track(
 
 	const int err = pthread_create(&m_thread, NULL, asyncTrack, this);
 
-	if (0 == err)
+	if (0 == err) {
+		pthread_join(m_thread, NULL);
 		return getResult(result);
+	}
 
 	pthread_spin_lock(&m_isRunGuard);
 	m_isRun = false;

@@ -726,13 +726,16 @@ int mv_face_recognition_model_query_labels_open(
 
 	const std::set<int>& learnedLabels = pRecModel->getFaceLabels();
 	*number_of_labels = learnedLabels.size();
-	(*labels) = (int*)malloc(sizeof(int) * (*number_of_labels));
 
-	std::set<int>::const_iterator it = learnedLabels.begin();
-	int i = 0;
-	for (; it != learnedLabels.end(); ++it) {
-		(*labels)[i] = *it;
-		++i;
+	if ((*number_of_labels)) {
+		(*labels) = (int*)malloc(sizeof(int) * (*number_of_labels));
+
+		std::set<int>::const_iterator it = learnedLabels.begin();
+		int i = 0;
+		for (; it != learnedLabels.end(); ++it) {
+			(*labels)[i] = *it;
+			++i;
+		}
 	}
 
 	LOGD("List of the labels learned by the recognition model has been retrieved");
