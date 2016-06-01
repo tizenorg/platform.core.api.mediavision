@@ -264,27 +264,27 @@ int mv_barcode_generate_source_open(
 			LOGW("mv_engine_config_get_string_attribute failed");
 			return error;
 		}
+
+		/*
+		The input colorspace is RGB but the generators' is BGR.
+		Replace the value of R with that of B
+		*/
+		value = fgcolour[0];
+		fgcolour[0] = fgcolour[4];
+		fgcolour[4] = value;
+
+		value = fgcolour[1];
+		fgcolour[1] = fgcolour[5];
+		fgcolour[5] = value;
+
+		value = bgcolour[0];
+		bgcolour[0] = bgcolour[4];
+		bgcolour[4] = value;
+
+		value = bgcolour[1];
+		bgcolour[1] = bgcolour[5];
+		bgcolour[5] = value;
 	}
-
-	/*
-	The input colorspace is RGB but the generators' is BGR.
-	Replace the value of R with that of B
-	*/
-	value = fgcolour[0];
-	fgcolour[0] = fgcolour[4];
-	fgcolour[4] = value;
-
-	value = fgcolour[1];
-	fgcolour[1] = fgcolour[5];
-	fgcolour[5] = value;
-
-	value = bgcolour[0];
-	bgcolour[0] = bgcolour[4];
-	bgcolour[4] = value;
-
-	value = bgcolour[1];
-	bgcolour[1] = bgcolour[5];
-	bgcolour[5] = value;
 
 	error = BarcodeGenerator::generateBarcodeToBuffer(
 					&imageBuffer,
@@ -426,27 +426,28 @@ int mv_barcode_generate_image_open(
 			LOGW("mv_engine_config_get_string_attribute failed");
 			return error;
 		}
+
+		/*
+		The input colorspace is RGB but the generators' is BGR.
+		Replace the value of R with that of B
+		*/
+		value = fgcolour[0];
+		fgcolour[0] = fgcolour[4];
+		fgcolour[4] = value;
+
+		value = fgcolour[1];
+		fgcolour[1] = fgcolour[5];
+		fgcolour[5] = value;
+
+		value = bgcolour[0];
+		bgcolour[0] = bgcolour[4];
+		bgcolour[4] = value;
+
+		value = bgcolour[1];
+		bgcolour[1] = bgcolour[5];
+		bgcolour[5] = value;
+
 	}
-
-	/*
-	The input colorspace is RGB but the generators' is BGR.
-	Replace the value of R with that of B
-	*/
-	value = fgcolour[0];
-	fgcolour[0] = fgcolour[4];
-	fgcolour[4] = value;
-
-	value = fgcolour[1];
-	fgcolour[1] = fgcolour[5];
-	fgcolour[5] = value;
-
-	value = bgcolour[0];
-	bgcolour[0] = bgcolour[4];
-	bgcolour[4] = value;
-
-	value = bgcolour[1];
-	bgcolour[1] = bgcolour[5];
-	bgcolour[5] = value;
 
 	error = BarcodeGenerator::generateBarcodeToImage(
 							std::string(image_path),
