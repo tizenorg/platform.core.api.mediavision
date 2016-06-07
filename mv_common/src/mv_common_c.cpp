@@ -22,6 +22,7 @@
 #include <mv_private.h>
 
 #include <string.h>
+#include <stdlib.h>
 #include <media_packet.h>
 
 int mv_create_source_c(
@@ -512,11 +513,11 @@ int mv_engine_config_get_string_attribute_c(
 
 	LOGD("Convert string to char*");
 	int stringSize = attributeValue.size();
-	(*value) = new char[stringSize + 1];
+	(*value) = (char *)malloc(sizeof(char) * (stringSize + 1));
 
 	if (attributeValue.copy(*value, stringSize) != attributeValue.size()) {
 		LOGE("Conversion from string to char* failed");
-		delete[] (*value);
+		free(*value);
 		(*value) = NULL;
 		return MEDIA_VISION_ERROR_INVALID_OPERATION;
 	}
