@@ -241,7 +241,7 @@ int mv_barcode_generate_source_open(
 		error = mv_engine_config_get_string_attribute(engine_cfg, "MV_BARCODE_GENERATE_ATTR_COLOR_FRONT", &fgcolour);
 		if (error != MEDIA_VISION_ERROR_NONE) {
 			if (fgcolour) {
-				delete [] fgcolour;
+				free(fgcolour);
 				fgcolour = NULL;
 			}
 
@@ -252,12 +252,12 @@ int mv_barcode_generate_source_open(
 		error = mv_engine_config_get_string_attribute(engine_cfg, "MV_BARCODE_GENERATE_ATTR_COLOR_BACK", &bgcolour);
 		if (error != MEDIA_VISION_ERROR_NONE) {
 			if (bgcolour) {
-				delete [] bgcolour;
+				free(bgcolour);
 				bgcolour = NULL;
 			}
 
 			if (fgcolour) {
-				delete [] fgcolour;
+				free(fgcolour);
 				fgcolour = NULL;
 			}
 
@@ -301,12 +301,12 @@ int mv_barcode_generate_source_open(
 					bgcolour);
 
 	if (fgcolour != NULL) {
-		delete [] fgcolour;
+		free(fgcolour);
 		fgcolour = NULL;
 	}
 
 	if (bgcolour != NULL) {
-		delete [] bgcolour;
+		free(bgcolour);
 		bgcolour = NULL;
 	}
 
@@ -403,7 +403,7 @@ int mv_barcode_generate_image_open(
 		error = mv_engine_config_get_string_attribute(engine_cfg, "MV_BARCODE_GENERATE_ATTR_COLOR_FRONT", &fgcolour);
 		if (error != MEDIA_VISION_ERROR_NONE) {
 			if (fgcolour) {
-				delete [] fgcolour;
+				free(fgcolour);
 				fgcolour = NULL;
 			}
 
@@ -414,12 +414,12 @@ int mv_barcode_generate_image_open(
 		error = mv_engine_config_get_string_attribute(engine_cfg, "MV_BARCODE_GENERATE_ATTR_COLOR_BACK", &bgcolour);
 		if (error != MEDIA_VISION_ERROR_NONE) {
 			if (bgcolour) {
-				delete [] bgcolour;
+				free(bgcolour);
 				bgcolour = NULL;
 			}
 
 			if (fgcolour) {
-				delete [] fgcolour;
+				free(fgcolour);
 				fgcolour = NULL;
 			}
 
@@ -464,12 +464,12 @@ int mv_barcode_generate_image_open(
 							bgcolour);
 
 	if (fgcolour != NULL) {
-		delete [] fgcolour;
+		free(fgcolour);
 		fgcolour = NULL;
 	}
 
 	if (bgcolour != NULL) {
-		delete [] bgcolour;
+		free(bgcolour);
 		bgcolour = NULL;
 	}
 

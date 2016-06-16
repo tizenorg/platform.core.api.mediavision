@@ -100,7 +100,8 @@ int mv_face_detect_open(
 		LOGI("Haarcascade file was set as default");
 		haarcascadeFilePathStr = std::string(haarcascadeFilepath);
 
-		delete[] haarcascadeFilepath;
+		free(haarcascadeFilepath);
+		haarcascadeFilepath = NULL;
 	} else {
 		LOGE("Error occurred during face detection haarcascade file receiving."
 				" (%i)", error);

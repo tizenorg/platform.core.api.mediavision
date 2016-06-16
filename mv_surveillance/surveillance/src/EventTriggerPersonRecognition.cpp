@@ -174,14 +174,18 @@ int EventTriggerPersonRecognition::parseEngineConfig(mv_engine_config_h engineCo
 		LOGE("Failed to load face recognition model. Check %s attribute of the "
 				"engine config.", MV_SURVEILLANCE_FACE_RECOGNITION_MODEL_FILE_PATH);
 
-		if (modelPath != NULL)
-			delete[] modelPath;
+		if (modelPath != NULL) {
+			free(modelPath);
+			modelPath = NULL;
+		}
 
 		return MEDIA_VISION_ERROR_INVALID_PARAMETER;
 	}
 
-	if (modelPath != NULL)
-		delete[] modelPath;
+	if (modelPath != NULL) {
+		free(modelPath);
+		modelPath = NULL;
+	}
 
 	return MEDIA_VISION_ERROR_NONE;
 }
