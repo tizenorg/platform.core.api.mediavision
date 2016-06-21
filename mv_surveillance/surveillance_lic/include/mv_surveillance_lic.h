@@ -155,7 +155,7 @@ int mv_surveillance_foreach_event_result_value_name_lic(
 /**
  * @brief Gets result value.
  * @details See the output values names in the event types descriptions located
- *          in /usr/share/config/capi-media-vision/surveillance-event-types.txt.
+ *          in /usr/share/capi-media-vision/surveillance-event-types.txt.
  *
  * @since_tizen 3.0
  * @param [in] result           The handle to the event result
