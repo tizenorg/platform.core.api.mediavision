@@ -1,6 +1,6 @@
 Name:        capi-media-vision
 Summary:     Media Vision library for Tizen Native API
-Version:     0.3.19
+Version:     0.3.20
 Release:     0
 Group:       Multimedia/Framework
 License:     Apache-2.0 and BSD-2.0
@@ -58,8 +58,8 @@ export CFLAGS="$CFLAGS -DENABLE_NEON"
 export CXXFLAGS="$CXXFLAGS -DENABLE_NEON"
 %endif
 
-export CFLAGS+=" -DMV_CONFIG_PATH=\\\"%{TZ_SYS_RO_SHARE}/config/%{name}/\\\""
-export CXXFLAGS+=" -DMV_CONFIG_PATH=\\\"%{TZ_SYS_RO_SHARE}/config/%{name}/\\\""
+export CFLAGS+=" -DMV_CONFIG_PATH=\\\"%{TZ_SYS_RO_SHARE}/%{name}/\\\""
+export CXXFLAGS+=" -DMV_CONFIG_PATH=\\\"%{TZ_SYS_RO_SHARE}/%{name}/\\\""
 MAJORVER=`echo %{version} | awk 'BEGIN {FS="."}{print $1}'`
 %cmake . -DFULLVER=%{version} -DMAJORVER=${MAJORVER} -DTZ_SYS_BIN=%TZ_SYS_BIN
 
@@ -68,9 +68,9 @@ make %{?jobs:-j%jobs}
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}%{_datadir}/license/
-mkdir -p %{buildroot}%{_datadir}/config/%{name}
+mkdir -p %{buildroot}%{_datadir}/%{name}
 cp LICENSE.APLv2 %{buildroot}%{_datadir}/license/%{name}
-cp media-vision-config.json %{buildroot}%{_datadir}/config/%{name}/
+cp media-vision-config.json %{buildroot}%{_datadir}/%{name}/
 
 %make_install
 
@@ -80,7 +80,7 @@ cp media-vision-config.json %{buildroot}%{_datadir}/config/%{name}/
 %files
 %manifest capi-media-vision.manifest
 %{_datadir}/license/%{name}
-%{_datadir}/config/%{name}/media-vision-config.json
+%{_datadir}/%{name}/media-vision-config.json
 %{_libdir}/libcapi-media-vision.so.*
 %{_libdir}/libmv*.so
 
