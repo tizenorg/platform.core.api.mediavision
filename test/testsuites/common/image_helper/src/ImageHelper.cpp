@@ -108,9 +108,7 @@ int ImageHelper::saveImageFromBuffer(
     if (resultFilePath.empty())
     {
         resultFilePath = defaultFilePath;
-    }
-    else
-    {
+    } else {
         for (size_t extNum = 0; extNum < jpgExtensions.size(); ++extNum)
         {
             if (resultFilePath.size() >= jpgExtensions[extNum].size())
