@@ -138,8 +138,10 @@ int EventTriggerPersonRecognition::parseEngineConfig(mv_engine_config_h engineCo
 			&modelPath);
 
 	if (error != MEDIA_VISION_ERROR_NONE) {
-		if (modelPath != NULL)
-			delete[] modelPath;
+		if (modelPath != NULL) {
+			free(modelPath);
+			modelPath = NULL;
+		}
 
 		LOGE("Getting recognition model from engine configuration failed.");
 
@@ -154,8 +156,10 @@ int EventTriggerPersonRecognition::parseEngineConfig(mv_engine_config_h engineCo
 		LOGE("Loading recognition model from file %s failed.",
 				modelPath);
 
-		if (modelPath != NULL)
-			delete[] modelPath;
+		if (modelPath != NULL) {
+			free(modelPath);
+			modelPath = NULL;
+		}
 
 		return error;
 	}
