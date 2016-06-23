@@ -34,7 +34,6 @@ namespace {
 			return (copy[size/2-1]+copy[size/2])/((T)2.0);
 		else
 			return copy[(size - 1) / 2];
-
 	}
 
 	inline float l2distance(cv::Point2f p1, cv::Point2f p2) {
