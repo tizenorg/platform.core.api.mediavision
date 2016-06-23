@@ -191,7 +191,6 @@ FaceRecognitionModel::~FaceRecognitionModel()
 int FaceRecognitionModel::save(const std::string& fileName)
 {
 	if (!m_recognizer.empty()) {
-
 		std::string filePath;
 
 		filePath = fileName;

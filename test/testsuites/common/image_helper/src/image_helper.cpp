@@ -54,18 +54,14 @@ int load_image_to_buffer(
         image_data_s *image_data)
 {
     if (image_data == NULL)
-    {
         return MEDIA_VISION_ERROR_INVALID_PARAMETER;
-    }
 
     int err;
     ImageHelper::ImageData imageData;
     err = ImageHelper::loadImageToBuffer(file_path, data_buffer, buffer_size, &imageData);
 
     if (err == MEDIA_VISION_ERROR_NONE)
-    {
         *image_data = convertToCData(imageData);
-    }
 
     return err;
 }
@@ -77,9 +73,7 @@ int save_image_from_buffer(
         int quality)
 {
     if (image_data == NULL)
-    {
         return MEDIA_VISION_ERROR_INVALID_PARAMETER;
-    }
 
     ImageHelper::ImageData imageData = convertToCppData(*image_data);
     return ImageHelper::saveImageFromBuffer(file_path, data_buffer, imageData, quality);
@@ -101,9 +95,7 @@ int draw_rectangle_on_buffer(
         unsigned char *data_buffer)
 {
     if (image_data == NULL)
-    {
         return MEDIA_VISION_ERROR_INVALID_PARAMETER;
-    }
 
     ImageHelper::ImageData imageData = convertToCppData(*image_data);
 
@@ -125,9 +117,7 @@ int draw_quadrangle_on_buffer(
         unsigned char *data_buffer)
 {
     if (image_data == NULL)
-    {
         return MEDIA_VISION_ERROR_INVALID_PARAMETER;
-    }
 
     ImageHelper::ImageData imageData = convertToCppData(*image_data);
 
@@ -147,9 +137,7 @@ int convert_buffer_to_RGB888(
         unsigned char **out_buffer)
 {
     if (image_data == NULL)
-    {
         return MEDIA_VISION_ERROR_INVALID_PARAMETER;
-    }
 
     ImageHelper::ImageData imageData = convertToCppData(*image_data);
     return ImageHelper::convertBufferToRGB888(in_buffer, imageData, out_buffer);

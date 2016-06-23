@@ -446,7 +446,6 @@ int mv_barcode_generate_image_open(
 		value = bgcolour[1];
 		bgcolour[1] = bgcolour[5];
 		bgcolour[5] = value;
-
 	}
 
 	error = BarcodeGenerator::generateBarcodeToImage(

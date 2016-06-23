@@ -109,7 +109,7 @@ size_t matchesSelection(
 
 		if (abs(filterAmount - leftLimit) <= (int)allowableError)
 			break;
-        
+
 		if ((int)filterAmount > leftLimit) {
 			requiredNumber -= leftLimit - startLeftLimit;
 
@@ -143,10 +143,10 @@ FeatureMatcher::MatchError FeatureMatcher::match(
 {
 	if (MinimumNumberOfFeatures > from.m_objectKeypoints.size())
 		return InvalidFeaturePackFrom;
-    
+
 	if (MinimumNumberOfFeatures > to.m_objectKeypoints.size())
 		return InvalidFeaturePackTo;
-    
+
 	if (from.m_descriptorsType != to.m_descriptorsType)
 		return DisparateTypes;
 

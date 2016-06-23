@@ -104,7 +104,7 @@ float ORBExtractorFactory::computeRecognitionRate(
 		size_t xCellIdx = keypoints[i].pt.x / cellWidth;
 		if (xCellIdx >= xCellsNumber)
 			xCellIdx = xCellsNumber - 1;
-        
+
 		size_t yCellIdx = keypoints[i].pt.y / cellHeight;
 		if (yCellIdx >= yCellsNumber)
 			yCellIdx = yCellsNumber - 1;
